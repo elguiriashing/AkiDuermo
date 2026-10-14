@@ -81,6 +81,79 @@ describe("independent AkiDuermo boundaries", () => {
     ).toBe(421);
     expect(mocks.refresh).not.toHaveBeenCalled();
   });
+  it.each(["/unknown", "/membership", "/en/account/subscription"])(
+    "never transfers credentials across origins from %s",
+    async (path) => {
+      const keys = [
+        "CoDe",
+        "TOKEN",
+        "token_hash",
+        "Access_Token",
+        "REFRESH_TOKEN",
+        "id_token",
+        "Client_Secret",
+        "Password",
+        "STATE",
+        "error_description",
+      ];
+      const params = new URLSearchParams({
+        source: "saved",
+        q: "hotel España",
+        safe: "one",
+        from: "untrusted",
+      });
+      params.append("safe", "two");
+      keys.forEach((key) => params.append(key, "private-value"));
+      const request = new NextRequest(
+        `https://akiduermo.com${path}?${params}#access_token=hidden-browser-secret`,
+        { headers: { host: "akiduermo.com" } },
+      );
+      const response = await middleware(request);
+      expect(response.status).toBe(307);
+      const destination = new URL(response.headers.get("location")!);
+      expect(destination.origin).toBe("https://akipasa.com");
+      expect(destination.hash).toBe("#redirected");
+      expect(destination.searchParams.get("source")).toBe("saved");
+      expect(destination.searchParams.get("q")).toBe("hotel España");
+      expect(destination.searchParams.getAll("safe")).toEqual(["one", "two"]);
+      expect(destination.href).not.toContain("private-value");
+      expect(destination.href).not.toContain("hidden-browser-secret");
+      keys.forEach((key) =>
+        expect(destination.searchParams.has(key)).toBe(false),
+      );
+      if (path !== "/unknown")
+        expect(destination.searchParams.get("from")).toBe("akiduermo");
+      expect(mocks.refresh).not.toHaveBeenCalled();
+    },
+  );
+  it.each(["/unknown", "/membership", "/es/account/subscription"])(
+    "rejects non-read cross-origin requests at %s",
+    async (path) => {
+      for (const method of ["POST", "PUT", "DELETE"]) {
+        const response = await middleware(
+          new NextRequest(`https://akiduermo.com${path}?code=secret`, {
+            method,
+            headers: { host: "akiduermo.com" },
+            body: "private-body",
+          }),
+        );
+        expect(response.status).toBe(404);
+        expect(response.headers.has("location")).toBe(false);
+      }
+    },
+  );
+  it("leaves auth callbacks local with their code and safe return task intact", async () => {
+    mocks.refresh.mockResolvedValueOnce(NextResponse.next());
+    const request = new NextRequest(
+      "https://akiduermo.com/en/auth/callback?code=local-pkce-code&next=%2Fbookings",
+      { headers: { host: "akiduermo.com" } },
+    );
+    const response = await middleware(request);
+    expect(response.headers.has("location")).toBe(false);
+    expect(response.headers.get("x-middleware-next")).toBe("1");
+    expect(request.nextUrl.searchParams.get("code")).toBe("local-pkce-code");
+    expect(request.nextUrl.searchParams.get("next")).toBe("/bookings");
+  });
   it.each(["en", "es"])(
     "keeps localized product roots on this app in %s",
     async (locale) => {

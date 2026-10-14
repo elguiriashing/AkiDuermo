@@ -3,6 +3,28 @@ import { refreshSession } from "@/lib/supabase/middleware";
 import { isStayRequestOrigin } from "@/lib/public-request-origin";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { stayHostRoute, stayHostMethodAllowed } from "@/lib/akiduermo-routing";
+const credentialQueryKeys = new Set([
+  "code",
+  "token",
+  "token_hash",
+  "access_token",
+  "refresh_token",
+  "id_token",
+  "client_secret",
+  "password",
+  "state",
+  "error_description",
+]);
+function crossOriginRedirect(target: URL) {
+  for (const key of Array.from(target.searchParams.keys())) {
+    if (credentialQueryKeys.has(key.toLowerCase()))
+      target.searchParams.delete(key);
+  }
+  // An explicit harmless fragment prevents browser inheritance of a source fragment,
+  // which is never available to the server for inspection.
+  target.hash = "redirected";
+  return NextResponse.redirect(target, 307);
+}
 export async function middleware(request: NextRequest) {
   const host = request.headers.get("host") || request.nextUrl.host;
   const protocol = ["localhost", "127.0.0.1"].includes(host.split(":")[0])
@@ -36,8 +58,9 @@ export async function middleware(request: NextRequest) {
       `/${membership[1] || locale}/${membership[2].startsWith("account/") ? "account/subscription" : "membership"}`,
       "https://akipasa.com",
     );
+    target.search = request.nextUrl.search;
     target.searchParams.set("from", "akiduermo");
-    return NextResponse.redirect(target, 307);
+    return crossOriginRedirect(target);
   }
   if (!stayHostMethodAllowed(path, request.method))
     return new NextResponse(null, { status: 404 });
@@ -52,7 +75,7 @@ export async function middleware(request: NextRequest) {
     target.hostname = "akipasa.com";
     target.protocol = "https:";
     target.port = "";
-    return NextResponse.redirect(target, 307);
+    return crossOriginRedirect(new URL(target.toString()));
   }
   const session = await refreshSession(request);
   // Product routes are actual root routes in this independent app. Rewriting
