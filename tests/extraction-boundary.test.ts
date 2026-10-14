@@ -90,6 +90,8 @@ describe("independent AkiDuermo boundaries", () => {
         "token_hash",
         "Access_Token",
         "REFRESH_TOKEN",
+        "Provider_Token",
+        "PROVIDER_REFRESH_TOKEN",
         "id_token",
         "Client_Secret",
         "Password",

@@ -9,6 +9,8 @@ const credentialQueryKeys = new Set([
   "token_hash",
   "access_token",
   "refresh_token",
+  "provider_token",
+  "provider_refresh_token",
   "id_token",
   "client_secret",
   "password",
