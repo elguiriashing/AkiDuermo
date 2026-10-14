@@ -1,5 +1,5 @@
-const CACHE = "akipasa-shell-v3-brand";
-const SHELL = ["/offline.html", "/icon.svg"];
+const CACHE = "akiduermo-shell-v1";
+const SHELL = ["/offline.html", "/pwa/duermo-192.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));
