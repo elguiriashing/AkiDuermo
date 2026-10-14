@@ -9,3 +9,5 @@ Node 22+ and npm are required. Run `npm ci`, copy `.env.example` to ignored `.en
 Root, `/stays/[slug]`, `/saved`, `/map`, `/account`, `/bookings`, `/settings`, localized auth callback/recovery and terms run independently. Membership aliases navigate to AkiPasa's authoritative catalogue/account billing with `from=akiduermo`. Property management navigates to https://akibusiness.com and remains protected by that application's existing tenant authorization. No checkout, webhook or scheduler is duplicated here.
 
 See [migration and deployment contract](docs/EXTRACTION.md). Production release, custom domains and provider redirect configuration are separately gated; a successful local build is not live acceptance.
+
+The initial remote-main [migration contract](docs/INITIAL_MIGRATION_CONTRACT.md) is preserved. This extraction candidate extends that groundwork; its production readiness checklist remains unfulfilled until provider and deployed acceptance pass.
