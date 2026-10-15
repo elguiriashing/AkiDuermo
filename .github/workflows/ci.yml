@@ -1,9 +1,9 @@
 name: AkiDuermo CI
 on:
   push:
-    branches: [main, "migration/**"]
+    branches: [main, "migration/**", "mission/organisation-location-cutover"]
   pull_request:
-    branches: [main]
+    branches: [main, "migration/five-product-duermo"]
 permissions:
   contents: read
 concurrency:

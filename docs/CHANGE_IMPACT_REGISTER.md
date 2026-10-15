@@ -1465,3 +1465,8 @@ legacy imported-listing provenance on a newly independent property. Detail now
 carries an explicit independent identity marker and EN/ES copy describes a
 property-managed listing without claiming verification. Legacy wording remains
 unchanged; rendered and browser regression assertions cover the distinction.
+
+Stacked review CI: the mission branch and PR targeting the existing extraction
+branch run both accommodation modes and retain aggregate `verify`. This adds no
+deploy trigger. The watched extraction branch itself remains untouched until
+Cloudflare production-build configuration is safely contained.
