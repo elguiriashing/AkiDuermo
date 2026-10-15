@@ -330,10 +330,15 @@ export function StayProperty({
                     )}
                   </dt>
                   <dd>
-                    {text(
-                      "Imported listing · awaiting property verification",
-                      "Ficha importada · pendiente de verificación",
-                    )}
+                    {stay.independentProperty
+                      ? text(
+                          "Property-managed listing",
+                          "Ficha gestionada por el alojamiento",
+                        )
+                      : text(
+                          "Imported listing · awaiting property verification",
+                          "Ficha importada · pendiente de verificación",
+                        )}
                   </dd>
                 </div>
                 <div>

@@ -9,6 +9,7 @@ import { createSupabasePublicClient } from "./supabase/public";
 import { cleanStayName, safePropertyWebsite, type Stay } from "./akiduermo";
 import { normalizeAddressLabel } from "./maps";
 export type StayDetail = Stay & {
+  independentProperty?: boolean;
   latitude?: number;
   longitude?: number;
   descriptionEs: string;
@@ -136,6 +137,7 @@ export const loadStayDetail = cache(
       typeof data.longitude === "number"
         ? { latitude: data.latitude, longitude: data.longitude }
         : {}),
+      independentProperty,
       id: data.id,
       slug: data.slug,
       name: cleanStayName(data.name),

@@ -1459,3 +1459,9 @@ Validation: full `npm run check` passed lint, TypeScript, 239 application tests 
 Deployment-guard follow-up: local Cloudflare preview uses the isolated generated
 config and explicit Wrangler `--local` rather than the blocked default config.
 This preserves local Worker emulation without permitting a remote deploy.
+
+Independent-property visual follow-up: actual mobile fixture screenshot showed
+legacy imported-listing provenance on a newly independent property. Detail now
+carries an explicit independent identity marker and EN/ES copy describes a
+property-managed listing without claiming verification. Legacy wording remains
+unchanged; rendered and browser regression assertions cover the distinction.

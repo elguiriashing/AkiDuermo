@@ -79,6 +79,18 @@ for (const property of properties)
             exact: true,
           }),
         ).toBeVisible();
+        if (property.slug === "fixture-independent-stay") {
+          await expect(
+            page.getByText(
+              locale === "es"
+                ? "Ficha gestionada por el alojamiento"
+                : "Property-managed listing",
+            ),
+          ).toBeVisible();
+          await expect(
+            page.getByText(/Imported listing|Ficha importada/),
+          ).toHaveCount(0);
+        }
         const privacy = page.getByRole("complementary", {
           name: locale === "es" ? "Opciones de privacidad" : "Privacy choices",
         });
