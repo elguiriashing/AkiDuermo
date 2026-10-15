@@ -1,3 +1,14 @@
+## 2026-10-15 | Contain draft-branch production deployment
+
+Default Wrangler and npm deployment now fail closed because `akiduermo` already
+serves production. Dedicated `akiduermo-preview` releases retain exact-source CI
+and real public configuration gates and check custom domains, account zone routes
+and schedules. CI dry-run uses a generated isolated config with immutable dry-run
+arguments. No routes, locales, roles, booking API, storage, identity or application
+queries change. Regression tests exercise denied default/production arguments,
+provider failure and occupied preview targets. Remote build trigger removal and
+new preview callback approval require provider access; see EXTRACTION.md.
+
 # Change Impact Register
 
 ## 2026-10-14 | AkiConduzco mobility foundation (implementation candidate)

@@ -9,13 +9,14 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "check": "node scripts/maplibre-attribution-patch.mjs --check && node --test scripts/release-source.test.mjs scripts/maplibre-attribution-patch.test.mjs && npm run lint && npm run typecheck && npm test",
+    "check": "node scripts/maplibre-attribution-patch.mjs --check && node --test scripts/deployment-guard.test.mjs scripts/release-source.test.mjs scripts/maplibre-attribution-patch.test.mjs && npm run lint && npm run typecheck && npm test",
     "build:cloudflare": "node scripts/maplibre-attribution-patch.mjs --check && node scripts/run-cloudflare.mjs build",
     "preview:cloudflare": "npm run build:cloudflare && opennextjs-cloudflare preview",
-    "deploy:cloudflare": "npm run build:cloudflare && opennextjs-cloudflare deploy",
+    "deploy:cloudflare": "node scripts/deployment-guard.mjs",
     "postinstall": "node scripts/maplibre-attribution-patch.mjs",
     "format:check": "prettier --check .",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "dry-run:cloudflare": "node scripts/deployment-guard.mjs dry-run"
   },
   "dependencies": {
     "@supabase/ssr": "0.7.0",

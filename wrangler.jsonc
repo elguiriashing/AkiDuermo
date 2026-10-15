@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "akiduermo",
+  "build": { "command": "node scripts/deployment-guard.mjs" },
   "main": "custom-worker.ts",
   "compatibility_date": "2026-07-22",
   "compatibility_flags": ["nodejs_compat"],
