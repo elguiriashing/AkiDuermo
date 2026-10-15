@@ -1,3 +1,4 @@
+import { independentAccommodationEnabled } from "@/lib/independent-accommodation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
   stayMutationSchema,
@@ -20,7 +21,9 @@ export async function GET(request: Request) {
     const { data, error } = await db
       .from("accommodation_reservations")
       .select(
-        "id,venue_id,check_in,check_out,guests,status,quoted_total_cents,quote_snapshot",
+        independentAccommodationEnabled()
+          ? "id,venue_id,property_id,check_in,check_out,guests,status,quoted_total_cents,quote_snapshot"
+          : "id,venue_id,check_in,check_out,guests,status,quoted_total_cents,quote_snapshot",
       )
       .eq("profile_id", user.id)
       .order("created_at", { ascending: false })

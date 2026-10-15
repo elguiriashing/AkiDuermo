@@ -1,3 +1,7 @@
+import {
+  independentAccommodationEnabled,
+  publicAccommodationListSchema,
+} from "@/lib/independent-accommodation";
 import { loadFeatureFlags } from "@/lib/feature-flags";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -57,23 +61,54 @@ export async function GET(request: Request) {
       .map((part) => ({ name: part.trim().split("=")[0] })),
   );
   const supabase = createSupabasePublicClient();
-  const flags = await loadFeatureFlags(supabase);
-  let query = supabase
-    .from("venues")
-    .select(
-      "id,slug,name,address,accommodation_type,website_url,cities(name_es)",
-      { count: "exact" },
-    )
-    .eq("status", "published")
-    .eq("discovery_vertical", "accommodation");
-  if (flags.venue_relevance) query = query.eq("discovery_enabled", true);
-  if (type !== "all") query = query.eq("accommodation_type", type);
-  if (search)
-    query = query.textSearch("search_document", search, { config: "simple" });
-  const { data, error, count } = await query
-    .order("name")
-    .order("id")
-    .range((page - 1) * 12, page * 12 - 1);
+  const independent = independentAccommodationEnabled();
+  const catalogue = independent
+    ? await (async () => {
+        const result = await supabase.rpc("accommodation_public_properties", {
+          p_search: q,
+          p_type: type,
+          p_limit: 12,
+          p_offset: (page - 1) * 12,
+        });
+        const parsed = publicAccommodationListSchema.safeParse(result.data);
+        if (result.error || !parsed.success)
+          return {
+            data: [],
+            error: result.error || new Error("Invalid catalogue"),
+            count: 0,
+          };
+        return {
+          data: parsed.data.rows.map((row) => ({
+            ...row,
+            cities: { name_es: row.city },
+          })),
+          error: null,
+          count: parsed.data.total,
+        };
+      })()
+    : await (async () => {
+        const flags = await loadFeatureFlags(supabase);
+        let query = supabase
+          .from("venues")
+          .select(
+            "id,slug,name,address,accommodation_type,website_url,cities(name_es)",
+            { count: "exact" },
+          )
+          .eq("status", "published")
+          .eq("discovery_vertical", "accommodation");
+        if (flags.venue_relevance) query = query.eq("discovery_enabled", true);
+        if (type !== "all") query = query.eq("accommodation_type", type);
+        if (search)
+          query = query.textSearch("search_document", search, {
+            config: "simple",
+          });
+        const { data, error, count } = await query
+          .order("name")
+          .order("id")
+          .range((page - 1) * 12, page * 12 - 1);
+        return { data, error, count };
+      })();
+  const { data, error, count } = catalogue;
   if (error)
     return Response.json(
       { error: "Accommodation search is temporarily unavailable" },
@@ -82,8 +117,9 @@ export async function GET(request: Request) {
   // A manager may test a hidden property by city or name without publishing
   // the fictional fixture to anonymous discovery. Membership is read with the
   // caller's session and checked again after the join; no service role is used.
-  const ownerPreviews: Array<(typeof data)[number] & { ownerPreview: true }> =
-    [];
+  const ownerPreviews: Array<
+    NonNullable<typeof data>[number] & { ownerPreview: true }
+  > = [];
   if (hasSession && q && page === 1) {
     const ownerDb = await createSupabaseServerClient();
     const { data: auth } = await ownerDb.auth.getUser();

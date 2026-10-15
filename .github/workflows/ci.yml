@@ -1,18 +1,22 @@
 name: AkiDuermo CI
 on:
   push:
-    branches: [main, "migration/**"]
+    branches: [main, "migration/**", "mission/organisation-location-cutover"]
   pull_request:
-    branches: [main]
+    branches: [main, "migration/five-product-duermo"]
 permissions:
   contents: read
 concurrency:
   group: akiduermo-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  verify:
+  verify_mode:
+    strategy:
+      matrix:
+        independent_accommodation: ["false", "true"]
     runs-on: ubuntu-latest
     env:
+      AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED: ${{ matrix.independent_accommodation }}
       NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:3996
       NEXT_PUBLIC_SUPABASE_ANON_KEY: synthetic-local-fixture-key
       NEXT_PUBLIC_DATA_PROVIDER: fixtures
@@ -33,12 +37,22 @@ jobs:
           restore-keys: akiduermo-next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
       - run: node tests/fixtures/stay-backend.mjs > /tmp/stay-fixture.log 2>&1 &
       - run: npm run build:cloudflare
-      - run: npx wrangler deploy --dry-run --outdir .wrangler/dry-run
+      - run: npm run dry-run:cloudflare
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: akiduermo-browser-evidence
+          name: akiduermo-browser-evidence-${{ matrix.independent_accommodation }}
           path: test-results/
           if-no-files-found: ignore
+
+  verify:
+    needs: verify_mode
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require both accommodation modes
+        env:
+          MODE_RESULT: ${{ needs.verify_mode.result }}
+        run: test "$MODE_RESULT" = "success"

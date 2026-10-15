@@ -32,6 +32,7 @@ export async function loadMapSnapshot(
 }
 
 export const mapVenueDetailSchema = z.object({
+  independentProperty: z.boolean().optional(),
   id: z.string().uuid(),
   slug: z.string(),
   name: z.string(),

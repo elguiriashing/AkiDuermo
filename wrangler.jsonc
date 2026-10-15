@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "akiduermo",
+  "build": { "command": "node scripts/deployment-guard.mjs" },
   "main": "custom-worker.ts",
   "compatibility_date": "2026-07-22",
   "compatibility_flags": ["nodejs_compat"],
@@ -12,6 +13,8 @@
     { "tag": "map-snapshot-v1", "new_sqlite_classes": ["MapSnapshot"] },
   ],
   "vars": {
+    "AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED": "false",
+    "NEXT_PUBLIC_AKISUITE_ROLE_SWAP": "false",
     "NEXT_PUBLIC_PRODUCT_NAME": "AkiDuermo",
     "NEXT_PUBLIC_SITE_URL": "https://akiduermo.com",
     "NEXT_PUBLIC_BUSINESS_URL": "https://akibusiness.com",

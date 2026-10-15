@@ -1,3 +1,49 @@
+## 2026-10-15 | Gated independent accommodation consumer compatibility
+
+Server-only `AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED=true` selects the
+coordinated canonical property contract; default false preserves pre-migration
+queries. New mode uses one union catalogue/pagination, property slug and compact
+viewport RPCs, retaining legacy venue IDs/media and existing booking signatures.
+Independent selected media uses the private accommodation-media bucket and
+property-scoped paths; history/saved reads use canonical property_id. Detail uses
+caller-scoped auth for explicitly authorized hidden legacy previews. Failed or
+invalid canonical reads fail closed instead of falling back to partial legacy
+inventory. Independent map pins never emit legacy venue analytics identities.
+
+Dependencies: both additive central accommodation migrations, moderation/public
+profile/media policies and preserved booking/outbox semantics. No migration,
+publication, email, customer reservation or provider mutation is performed here.
+Fixture SQL/API/browser acceptance is not production acceptance. CI covers both
+read modes; independent and legacy fixture request/cancel journeys cover EN/ES
+and mobile/desktop. Enable only after coordinated app/schema acceptance; retain
+legacy cancellation/history support during rollback.
+
+## 2026-10-15 | Coordinated management and operations handoffs
+
+AkiDuermo supports the reviewed role swap only when
+`NEXT_PUBLIC_AKISUITE_ROLE_SWAP` is exactly `true` at build and runtime. Default
+management remains AkiBusiness and operations AkiHQ until coordinated release.
+When enabled, account property management and app-switcher/auth labels target
+AkiHQ management and AkiBusiness operations. Known legacy canonical overrides
+remap; explicit isolated preview origins remain supported. Config rejects URL
+credentials/query/fragments and non-origin paths. Duermo PWA/layout metadata
+retain this app's identity on every host. No auth callback, session, locale,
+booking query/state, permission, storage, email or billing entitlement changes.
+EN/ES rendered handoffs cover both modes; existing credential stripping and local
+callback regressions remain mandatory. Rollback restores the prior build/flag
+with coordinated domain roles; this flag alone does not change domain ownership.
+
+## 2026-10-15 | Contain draft-branch production deployment
+
+Default Wrangler and npm deployment now fail closed because `akiduermo` already
+serves production. Dedicated `akiduermo-preview` releases retain exact-source CI
+and real public configuration gates and check custom domains, account zone routes
+and schedules. CI dry-run uses a generated isolated config with immutable dry-run
+arguments. No routes, locales, roles, booking API, storage, identity or application
+queries change. Regression tests exercise denied default/production arguments,
+provider failure and occupied preview targets. Remote build trigger removal and
+new preview callback approval require provider access; see EXTRACTION.md.
+
 # Change Impact Register
 
 ## 2026-10-14 | AkiConduzco mobility foundation (implementation candidate)
@@ -1409,3 +1455,18 @@ Validation: focused auth/settings cases passed 20/20; complete `npm run check` p
 One read-only dummy probe confirmed `/membership?next=%2Fen%2Fauth%2Fcallback%3Fcode%3Dqa-dummy&safe=one` forwarded the nested callback code in the AkiPasa Location. Required: outgoing cross-origin membership/fallback redirects remove credential-bearing keys/values after bounded decoding, preserve ordinary safe filters and harmless fragments, and never alter legitimate same-origin PKCE callbacks. Scope is the outgoing redirect sanitizer plus focused boundary regressions; no auth-provider setting, session, booking, billing, scheduler or database mutation. The same reviewed helper is copied into this repository, with no cross-checkout import. Final exact-source checks, deployed dummy redirect validation and authenticated acceptance remain required.
 
 Validation: full `npm run check` passed lint, TypeScript, 239 application tests and 30 release/vendor guards. Focused middleware, auth and shared-helper coverage passed 87/87; the frozen shared helper also passed independent bounded review and additional dummy probes. Exact-source hosted CI, rebuilt deployment and the deployed dummy redirect remain release gates. Same-origin callback regression retains the local PKCE code and return destination.
+
+Deployment-guard follow-up: local Cloudflare preview uses the isolated generated
+config and explicit Wrangler `--local` rather than the blocked default config.
+This preserves local Worker emulation without permitting a remote deploy.
+
+Independent-property visual follow-up: actual mobile fixture screenshot showed
+legacy imported-listing provenance on a newly independent property. Detail now
+carries an explicit independent identity marker and EN/ES copy describes a
+property-managed listing without claiming verification. Legacy wording remains
+unchanged; rendered and browser regression assertions cover the distinction.
+
+Stacked review CI: the mission branch and PR targeting the existing extraction
+branch run both accommodation modes and retain aggregate `verify`. This adds no
+deploy trigger. The watched extraction branch itself remains untouched until
+Cloudflare production-build configuration is safely contained.

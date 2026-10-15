@@ -1,4 +1,4 @@
-import { beforeEach, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { staySearchTerms } from "../src/lib/stay-filters";
 
 const { db, availability } = vi.hoisted(() => ({
@@ -30,7 +30,9 @@ const stay = (id: string) => ({
   cities: { name_es: "Fuengirola" },
 });
 
+afterEach(() => vi.unstubAllEnvs());
 beforeEach(() => {
+  vi.stubEnv("AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED", "false");
   vi.clearAllMocks();
   const query: Record<string, (...args: unknown[]) => unknown> = {};
   for (const method of ["select", "eq", "textSearch", "order"])

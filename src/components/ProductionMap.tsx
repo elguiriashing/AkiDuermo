@@ -522,6 +522,7 @@ export function ProductionMap({
             map.easeTo({ center: coordinates, zoom });
           });
           const openPointPopup = async (point: MapPoint) => {
+            let independentStay = false;
             popupRequest?.abort();
             const controller = new AbortController();
             popupRequest = controller;
@@ -555,6 +556,7 @@ export function ProductionMap({
                   if (details.size >= 200) details.clear();
                   details.set(point.id, detail);
                 }
+                independentStay = detail.independentProperty === true;
                 if (disposed || controller.signal.aborted) return;
                 popup.setDOMContent(
                   popupContent(
@@ -584,14 +586,17 @@ export function ProductionMap({
                   locale === "es"
                     ? "No se pudo cargar este negocio. Vuelve a tocar el marcador para reintentar."
                     : "Could not load this business. Tap its pin to retry.";
+                return;
               }
             }
-            trackBehaviour({
-              eventType: "map_pin_clicked",
-              surface: "map",
-              entityType: point.kind === "venue" ? "venue" : "event",
-              entityId: point.id,
-            });
+            // Independent properties are not venue identities in the legacy event contract.
+            if (!independentStay)
+              trackBehaviour({
+                eventType: "map_pin_clicked",
+                surface: "map",
+                entityType: point.kind === "venue" ? "venue" : "event",
+                entityId: point.id,
+              });
           };
 
           const openPointFromFeature = async (

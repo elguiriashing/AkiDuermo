@@ -1,3 +1,4 @@
+import { independentAccommodationEnabled } from "@/lib/independent-accommodation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { z } from "zod";
 
@@ -26,21 +27,31 @@ export async function GET() {
         headers: { "Cache-Control": "private, no-store" },
       },
     );
-  const [{ data: saved }, { data: pref }] = await Promise.all([
+  const [
+    { data: saved, error: savedError },
+    { data: pref, error: preferenceError },
+  ] = await Promise.all([
     supabase
       .from("suite_saved_stays")
-      .select("venue_id")
+      .select(independentAccommodationEnabled() ? "property_id" : "venue_id")
       .eq("profile_id", auth.user.id),
     supabase.rpc("suite_email_reminder_preferences", {
       p_event: null,
       p_stay: null,
     }),
   ]);
+  if (savedError || preferenceError)
+    return Response.json(
+      { error: "unavailable" },
+      { status: 503, headers: { "Cache-Control": "private, no-store" } },
+    );
   return Response.json(
     {
       authenticated: true,
       reminders: pref?.stay_reminders === true,
-      savedIds: (saved || []).map((s) => s.venue_id),
+      savedIds: (saved || []).map((s) =>
+        "property_id" in s ? s.property_id : s.venue_id,
+      ),
     },
     { headers: { "Cache-Control": "private, no-store" } },
   );

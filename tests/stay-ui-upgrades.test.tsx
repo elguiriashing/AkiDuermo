@@ -413,3 +413,21 @@ describe("accommodation inbox", () => {
     );
   });
 });
+
+for (const locale of ["en", "es"] as const)
+  it(`describes independent property provenance without claiming import or verification in ${locale}`, () => {
+    render(
+      <StayProperty
+        stay={{ ...stay, independentProperty: true }}
+        initialLocale={locale}
+      />,
+    );
+    expect(
+      screen.getByText(
+        locale === "es"
+          ? "Ficha gestionada por el alojamiento"
+          : "Property-managed listing",
+      ),
+    ).toBeVisible();
+    expect(screen.queryByText(/Imported listing|Ficha importada/)).toBeNull();
+  });

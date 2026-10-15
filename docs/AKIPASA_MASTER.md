@@ -1,3 +1,49 @@
+## 2026-10-15 | Gated independent accommodation consumer compatibility
+
+Server-only `AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED=true` selects the
+coordinated canonical property contract; default false preserves pre-migration
+queries. New mode uses one union catalogue/pagination, property slug and compact
+viewport RPCs, retaining legacy venue IDs/media and existing booking signatures.
+Independent selected media uses the private accommodation-media bucket and
+property-scoped paths; history/saved reads use canonical property_id. Detail uses
+caller-scoped auth for explicitly authorized hidden legacy previews. Failed or
+invalid canonical reads fail closed instead of falling back to partial legacy
+inventory. Independent map pins never emit legacy venue analytics identities.
+
+Dependencies: both additive central accommodation migrations, moderation/public
+profile/media policies and preserved booking/outbox semantics. No migration,
+publication, email, customer reservation or provider mutation is performed here.
+Fixture SQL/API/browser acceptance is not production acceptance. CI covers both
+read modes; independent and legacy fixture request/cancel journeys cover EN/ES
+and mobile/desktop. Enable only after coordinated app/schema acceptance; retain
+legacy cancellation/history support during rollback.
+
+## 2026-10-15 | Coordinated management and operations handoffs
+
+AkiDuermo supports the reviewed role swap only when
+`NEXT_PUBLIC_AKISUITE_ROLE_SWAP` is exactly `true` at build and runtime. Default
+management remains AkiBusiness and operations AkiHQ until coordinated release.
+When enabled, account property management and app-switcher/auth labels target
+AkiHQ management and AkiBusiness operations. Known legacy canonical overrides
+remap; explicit isolated preview origins remain supported. Config rejects URL
+credentials/query/fragments and non-origin paths. Duermo PWA/layout metadata
+retain this app's identity on every host. No auth callback, session, locale,
+booking query/state, permission, storage, email or billing entitlement changes.
+EN/ES rendered handoffs cover both modes; existing credential stripping and local
+callback regressions remain mandatory. Rollback restores the prior build/flag
+with coordinated domain roles; this flag alone does not change domain ownership.
+
+## 2026-10-15 | Contain draft-branch production deployment
+
+Default Wrangler and npm deployment now fail closed because `akiduermo` already
+serves production. Dedicated `akiduermo-preview` releases retain exact-source CI
+and real public configuration gates and check custom domains, account zone routes
+and schedules. CI dry-run uses a generated isolated config with immutable dry-run
+arguments. No routes, locales, roles, booking API, storage, identity or application
+queries change. Regression tests exercise denied default/production arguments,
+provider failure and occupied preview targets. Remote build trigger removal and
+new preview callback approval require provider access; see EXTRACTION.md.
+
 # AKIPASA MASTER SYSTEM CONTRACT
 
 ## 2026-10-15 | Outgoing nested-credential redirect boundary

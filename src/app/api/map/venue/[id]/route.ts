@@ -1,3 +1,7 @@
+import {
+  independentAccommodationEnabled,
+  publicAccommodationSchema,
+} from "@/lib/independent-accommodation";
 import { z } from "zod";
 import { normalizeAddressLabel } from "@/lib/maps";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
@@ -12,12 +16,35 @@ export async function GET(
     .safeParse((await context.params).id);
   if (!parsed.success)
     return Response.json({ error: "Invalid venue" }, { status: 400 });
-  const { data, error } = await createSupabasePublicClient()
-    .from("venues")
-    .select("id,slug,name,address,accessibility,discovery_vertical")
-    .eq("id", parsed.data)
-    .eq("status", "published")
-    .maybeSingle();
+  const db = createSupabasePublicClient();
+  const independent = independentAccommodationEnabled();
+  const result = independent
+    ? await db.rpc("accommodation_property_public", { p_property: parsed.data })
+    : await db
+        .from("venues")
+        .select("id,slug,name,address,accessibility,discovery_vertical")
+        .eq("id", parsed.data)
+        .eq("status", "published")
+        .maybeSingle();
+  const { error } = result;
+  const projection =
+    independent && result.data
+      ? publicAccommodationSchema.safeParse(result.data)
+      : null;
+  if (projection && !projection.success)
+    return Response.json(
+      { error: "Stay temporarily unavailable" },
+      { status: 503, headers: { "Cache-Control": "no-store" } },
+    );
+  const data = independent
+    ? projection?.success
+      ? {
+          ...projection.data,
+          discovery_vertical: "accommodation",
+          accessibility: null,
+        }
+      : null
+    : result.data;
   if (error)
     return Response.json(
       { error: "Venue temporarily unavailable" },
@@ -37,6 +64,7 @@ export async function GET(
         ? normalizeAddressLabel(data.address)
         : data.address,
       discoveryVertical: data.discovery_vertical,
+      independentProperty: independent && data.legacy_venue_id === null,
       claimStatus:
         data.accessibility?.claim_status === "unclaimed"
           ? "unclaimed"

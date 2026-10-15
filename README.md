@@ -4,7 +4,7 @@ Independent accommodation application extracted from `elguiriashing/akipasa` pub
 
 Node 22+ and npm are required. Run `npm ci`, copy `.env.example` to ignored `.env.local`, bind the **existing** Supabase URL and public key, then run `npm run dev -- --port 3102`. `NEXT_PUBLIC_DATA_PROVIDER=fixtures` supports anonymous offline development without real inventory; it does not prove live availability or booking acceptance.
 
-`npm run check` runs lint, TypeScript and focused booking/discovery/auth/privacy regressions. `npm run build` builds Next; commit tracked changes before `npm run build:cloudflare` (the release-source guard requires clean Git). `npx wrangler deploy --dry-run --outdir .wrangler/dry-run` validates deployment packaging without publication. CI never publishes automatically.
+`npm run check` runs lint, TypeScript and focused booking/discovery/auth/privacy regressions. `npm run build` builds Next; commit tracked changes before `npm run build:cloudflare` (the release-source guard requires clean Git). `npm run dry-run:cloudflare` validates deployment packaging without publication. CI never publishes automatically.
 
 Root, `/stays/[slug]`, `/saved`, `/map`, `/account`, `/bookings`, `/settings`, localized auth callback/recovery and terms run independently. Membership aliases navigate to AkiPasa's authoritative catalogue/account billing with `from=akiduermo`. Property management navigates to https://akibusiness.com and remains protected by that application's existing tenant authorization. No checkout, webhook or scheduler is duplicated here.
 
