@@ -106,3 +106,8 @@ are remapped only in the enabled mode. This is navigation/branding, never an
 entitlement grant. Enable only with the coordinated verified domain releases,
 auth callbacks and owner acceptance. This repository continues to identify as
 AkiDuermo and keeps its own booking/account/callback routes.
+
+Local `npm run preview:cloudflare` uses the same generated isolated configuration
+and explicit `wrangler dev --local` after packaging/dry-run, so it does not invoke
+the default production-blocking build hook or upload a Worker. Production token
+permissions and remote trigger control remain separate from local preview.

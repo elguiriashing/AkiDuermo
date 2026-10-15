@@ -1435,3 +1435,7 @@ Validation: focused auth/settings cases passed 20/20; complete `npm run check` p
 One read-only dummy probe confirmed `/membership?next=%2Fen%2Fauth%2Fcallback%3Fcode%3Dqa-dummy&safe=one` forwarded the nested callback code in the AkiPasa Location. Required: outgoing cross-origin membership/fallback redirects remove credential-bearing keys/values after bounded decoding, preserve ordinary safe filters and harmless fragments, and never alter legitimate same-origin PKCE callbacks. Scope is the outgoing redirect sanitizer plus focused boundary regressions; no auth-provider setting, session, booking, billing, scheduler or database mutation. The same reviewed helper is copied into this repository, with no cross-checkout import. Final exact-source checks, deployed dummy redirect validation and authenticated acceptance remain required.
 
 Validation: full `npm run check` passed lint, TypeScript, 239 application tests and 30 release/vendor guards. Focused middleware, auth and shared-helper coverage passed 87/87; the frozen shared helper also passed independent bounded review and additional dummy probes. Exact-source hosted CI, rebuilt deployment and the deployed dummy redirect remain release gates. Same-origin callback regression retains the local PKCE code and return destination.
+
+Deployment-guard follow-up: local Cloudflare preview uses the isolated generated
+config and explicit Wrangler `--local` rather than the blocked default config.
+This preserves local Worker emulation without permitting a remote deploy.
