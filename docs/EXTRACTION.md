@@ -18,6 +18,12 @@ recovery failures do not revoke sessions. Supabase access JWTs retain their
 existing expiry behavior; neither logout scope immediately invalidates issued
 access JWTs. See the [primary sign-out contract](https://supabase.com/docs/guides/auth/signout).
 
+Outgoing membership and fallback redirects to AkiPasa apply the reviewed bounded
+query sanitizer to encoded keys and nested credential-bearing values. Safe filter
+values and duplicates remain. Only outgoing cross-origin redirects use the helper;
+same-origin PKCE callbacks keep their code and validated local task intact.
+Explicit harmless redirect fragments continue preventing fragment inheritance.
+
 ## Release sequence and rollback
 
 The default Wrangler config intentionally has no routes/custom domains: deploy to a separate `akiduermo` preview Worker first, keeping existing production domains on their current Worker. Bind existing public Supabase URL/key at build and runtime; values are not copied into source. The separate MapSnapshot Durable Object is a derived cache, not an application database clone. Verify provider project reference `vhpbvcfkcteswlsdjrfl` against the actual URL before deployment.

@@ -1,5 +1,14 @@
 # AKIPASA MASTER SYSTEM CONTRACT
 
+## 2026-10-15 | Outgoing nested-credential redirect boundary
+
+Cross-origin AkiPasa membership/fallback redirects remove credential-bearing
+encoded keys and nested values through a bounded reviewed query sanitizer.
+Ordinary filter values and duplicates remain; explicit harmless fragments prevent
+source-fragment inheritance. The helper runs only for outgoing cross-origin
+redirects. Same-origin PKCE callback codes and local return tasks are preserved.
+No provider, identity, booking, payment or scheduler changes are included.
+
 ## 2026-10-15 | Independent product logout isolation
 
 Ordinary AkiDuermo account/auth logout uses explicit local Supabase scope, keeping

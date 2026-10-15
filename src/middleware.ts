@@ -3,25 +3,9 @@ import { refreshSession } from "@/lib/supabase/middleware";
 import { isStayRequestOrigin } from "@/lib/public-request-origin";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { stayHostRoute, stayHostMethodAllowed } from "@/lib/akiduermo-routing";
-const credentialQueryKeys = new Set([
-  "code",
-  "token",
-  "token_hash",
-  "access_token",
-  "refresh_token",
-  "provider_token",
-  "provider_refresh_token",
-  "id_token",
-  "client_secret",
-  "password",
-  "state",
-  "error_description",
-]);
+import { stripCrossProductCredentials } from "@/lib/cross-product-query";
 function crossOriginRedirect(target: URL) {
-  for (const key of Array.from(target.searchParams.keys())) {
-    if (credentialQueryKeys.has(key.toLowerCase()))
-      target.searchParams.delete(key);
-  }
+  stripCrossProductCredentials(target);
   // An explicit harmless fragment prevents browser inheritance of a source fragment,
   // which is never available to the server for inspection.
   target.hash = "redirected";

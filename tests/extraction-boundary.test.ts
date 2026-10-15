@@ -146,6 +146,38 @@ describe("independent AkiDuermo boundaries", () => {
     },
   );
   it.each(["/unknown", "/membership", "/es/account/subscription"])(
+    "removes nested or encoded credentials from outgoing redirects at %s",
+    async (path) => {
+      const params = new URLSearchParams({
+        q: "hotel España",
+        safe: "one",
+        next: "/en/auth/callback?code=qa-dummy",
+        relay: encodeURIComponent(
+          encodeURIComponent("/callback?access_token=qa-dummy"),
+        ),
+        payload: '{"\\u0063ode":"qa-dummy"}',
+        malformed: "%E0%A4",
+      });
+      params.append("%63ode", "qa-dummy");
+      params.append("safe", "two");
+      const response = await middleware(
+        new NextRequest(`https://akiduermo.com${path}?${params}`, {
+          headers: { host: "akiduermo.com" },
+        }),
+      );
+      const target = new URL(response.headers.get("location")!);
+      expect(response.status).toBe(307);
+      expect(target.origin).toBe("https://akipasa.com");
+      expect(target.href).not.toContain("qa-dummy");
+      expect(target.searchParams.get("q")).toBe("hotel España");
+      expect(target.searchParams.getAll("safe")).toEqual(["one", "two"]);
+      for (const key of ["next", "relay", "payload", "malformed", "%63ode"])
+        expect(target.searchParams.has(key)).toBe(false);
+      expect(target.hash).toBe("#redirected");
+      expect(mocks.refresh).not.toHaveBeenCalled();
+    },
+  );
+  it.each(["/unknown", "/membership", "/es/account/subscription"])(
     "rejects non-read cross-origin requests at %s",
     async (path) => {
       for (const method of ["POST", "PUT", "DELETE"]) {
