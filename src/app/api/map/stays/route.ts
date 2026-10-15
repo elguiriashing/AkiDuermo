@@ -1,3 +1,4 @@
+import { independentAccommodationEnabled } from "@/lib/independent-accommodation";
 import { z } from "zod";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
 import { stayQuerySchema } from "@/lib/akiduermo";
@@ -17,7 +18,9 @@ export async function GET(request: Request) {
     return Response.json({ error: "Invalid stay viewport" }, { status: 400 });
   const b = parsed.data;
   const { data, error } = await createSupabasePublicClient().rpc(
-    "public_stay_viewport",
+    independentAccommodationEnabled()
+      ? "accommodation_public_viewport"
+      : "public_stay_viewport",
     {
       p_west: b.west,
       p_east: b.east,

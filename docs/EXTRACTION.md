@@ -111,3 +111,27 @@ Local `npm run preview:cloudflare` uses the same generated isolated configuratio
 and explicit `wrangler dev --local` after packaging/dry-run, so it does not invoke
 the default production-blocking build hook or upload a Worker. Production token
 permissions and remote trigger control remain separate from local preview.
+
+## Independent accommodation read contract (disabled by default)
+
+Central migrations `20261016010000_independent_accommodation_properties` and
+`20261016020000_independent_accommodation_public_contract` must be applied and
+verified before enabling server-only `AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED`.
+Only exact `true` enables the union catalogue/detail/map/saved contract. The
+manual isolated preview exposes this explicit input; production default remains
+false and direct production deployment remains blocked.
+
+Legacy property IDs equal retained venue IDs; independent properties never need a
+venue. Existing availability `p_venue` and saved `p_venue` arguments intentionally
+carry canonical property UUIDs after migration. Quote/request/cancel signatures
+and customer-history tables remain compatible. Public projections contain no
+owner/contact fields. Legacy header media remains in event-media with its
+existing placements; independent public placements use accommodation-media.
+Slug lookup with the caller's session permits only SQL-authorized hidden legacy
+previews. Public search remains anonymous and uses one ordered union pagination.
+
+Real publication, occupancy/concurrency, auth, signed Storage, confirmations,
+saved-state backfills and owner/other-owner acceptance remain release gates.
+Reverting this flag disables independent discovery but does not remove canonical
+bookings or undo the additive schema; preserve independent cancellation/history
+and use the central forward-recovery runbook rather than dropping data.

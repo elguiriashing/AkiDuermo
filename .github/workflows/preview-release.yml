@@ -6,6 +6,11 @@ on:
         description: Exact reviewed 40-character commit with successful product CI
         required: true
         type: string
+      independent_accommodation:
+        description: Exercise the coordinated independent property schema in this isolated preview
+        required: true
+        default: false
+        type: boolean
       role_swap:
         description: Use coordinated AkiHQ management and AkiBusiness operations handoffs in this isolated preview
         required: true
@@ -35,6 +40,7 @@ jobs:
       PREVIEW_ORIGIN: https://akiduermo-preview.alexashing1.workers.dev
       CLOUDFLARE_ACCOUNT_ID: 501bc9434d8ae555a6ac984a26dd2725
       RELEASE_PATH: /api/bookings/release
+      AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED: ${{ inputs.independent_accommodation && 'true' || 'false' }}
       NEXT_PUBLIC_AKISUITE_ROLE_SWAP: ${{ inputs.role_swap && 'true' || 'false' }}
       NEXT_PUBLIC_PRODUCT_NAME: AkiDuermo
       NEXT_PUBLIC_SITE_URL: https://akiduermo.com
@@ -120,6 +126,7 @@ jobs:
           config.main = path.resolve(config.main);
           config.assets.directory = path.resolve(config.assets.directory);
           config.vars = { ...config.vars,
+            AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED: process.env.AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED,
             NEXT_PUBLIC_AKISUITE_ROLE_SWAP: process.env.NEXT_PUBLIC_AKISUITE_ROLE_SWAP,
             NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
             NEXT_PUBLIC_SUPABASE_ANON_KEY: key,

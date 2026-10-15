@@ -1,3 +1,23 @@
+## 2026-10-15 | Gated independent accommodation consumer compatibility
+
+Server-only `AKISUITE_INDEPENDENT_ACCOMMODATION_ENABLED=true` selects the
+coordinated canonical property contract; default false preserves pre-migration
+queries. New mode uses one union catalogue/pagination, property slug and compact
+viewport RPCs, retaining legacy venue IDs/media and existing booking signatures.
+Independent selected media uses the private accommodation-media bucket and
+property-scoped paths; history/saved reads use canonical property_id. Detail uses
+caller-scoped auth for explicitly authorized hidden legacy previews. Failed or
+invalid canonical reads fail closed instead of falling back to partial legacy
+inventory. Independent map pins never emit legacy venue analytics identities.
+
+Dependencies: both additive central accommodation migrations, moderation/public
+profile/media policies and preserved booking/outbox semantics. No migration,
+publication, email, customer reservation or provider mutation is performed here.
+Fixture SQL/API/browser acceptance is not production acceptance. CI covers both
+read modes; independent and legacy fixture request/cancel journeys cover EN/ES
+and mobile/desktop. Enable only after coordinated app/schema acceptance; retain
+legacy cancellation/history support during rollback.
+
 ## 2026-10-15 | Coordinated management and operations handoffs
 
 AkiDuermo supports the reviewed role swap only when
