@@ -1,5 +1,14 @@
 # AKIPASA MASTER SYSTEM CONTRACT
 
+## 2026-10-15 | Independent product logout isolation
+
+Ordinary AkiDuermo account/auth logout uses explicit local Supabase scope, keeping
+other product refresh sessions intact. Recovery after a successful shared-password
+change intentionally uses explicit global revocation; failed or unauthenticated
+recovery does not sign out other sessions. Mocked regression coverage verifies
+the scope and success ordering; migration never changes the owner's password.
+Existing host-local redirects, auth cookies, identity and RLS remain unchanged.
+
 ## 2026-10-15 | Independent AkiDuermo preview navigation
 
 This repository is the independent AkiDuermo extraction. Internal catalogue,

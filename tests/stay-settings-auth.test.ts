@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   host: "akiduermo.com",
   auth: {
+    getUser: vi.fn(),
     updateUser: vi.fn(),
     resetPasswordForEmail: vi.fn(),
     signOut: vi.fn(),
@@ -30,9 +31,12 @@ import {
   resetStayPassword,
 } from "../src/app/settings/actions";
 import { signOut } from "../src/app/[locale]/auth/actions";
+import { signOutStay } from "../src/app/account/actions";
+import { updateRecoveredPassword } from "../src/app/[locale]/auth/recover/actions";
 import { taskFromAuthCallback } from "../src/lib/auth-security";
 beforeEach(() => {
   vi.clearAllMocks();
+  mocks.auth.getUser.mockResolvedValue({ data: { user: { id: "fixture" } } });
   mocks.auth.updateUser.mockResolvedValue({ error: null });
   mocks.auth.resetPasswordForEmail.mockResolvedValue({ error: null });
   mocks.auth.signOut.mockResolvedValue({ error: null });
@@ -89,6 +93,62 @@ it.each(["en", "es"])(
     const form = new FormData();
     form.set("locale", locale);
     await expect(signOut(form)).rejects.toThrow(`redirect:/?lang=${locale}`);
-    expect(mocks.auth.signOut).toHaveBeenCalledOnce();
+    expect(mocks.auth.signOut).toHaveBeenCalledExactlyOnceWith({
+      scope: "local",
+    });
   },
 );
+
+it("signs out only the current stay account session", async () => {
+  await expect(signOutStay()).rejects.toThrow("redirect:/");
+  expect(mocks.auth.signOut).toHaveBeenCalledExactlyOnceWith({
+    scope: "local",
+  });
+});
+
+function recoveryForm(locale: "en" | "es") {
+  const form = new FormData();
+  form.set("locale", locale);
+  form.set("next", "/bookings");
+  form.set("password", "SyntheticFixture1234");
+  form.set("confirmPassword", "SyntheticFixture1234");
+  return form;
+}
+
+it.each(["en", "es"] as const)(
+  "revokes all shared sessions only after a successful password recovery in %s",
+  async (locale) => {
+    mocks.host = "akiduermo.com";
+    await expect(updateRecoveredPassword(recoveryForm(locale))).rejects.toThrow(
+      `redirect:/${locale}/auth?reset=1&next=%2Fbookings`,
+    );
+    expect(mocks.auth.updateUser).toHaveBeenCalledOnce();
+    expect(mocks.auth.signOut).toHaveBeenCalledExactlyOnceWith({
+      scope: "global",
+    });
+    expect(mocks.auth.updateUser.mock.invocationCallOrder[0]).toBeLessThan(
+      mocks.auth.signOut.mock.invocationCallOrder[0],
+    );
+  },
+);
+
+it("does not revoke shared sessions when the password save fails", async () => {
+  mocks.host = "akiduermo.com";
+  mocks.auth.updateUser.mockResolvedValue({
+    error: { message: "fixture failure" },
+  });
+  await expect(updateRecoveredPassword(recoveryForm("en"))).rejects.toThrow(
+    "redirect:/en/auth/recover?next=%2Fbookings&error=save",
+  );
+  expect(mocks.auth.signOut).not.toHaveBeenCalled();
+});
+
+it("does not update credentials or revoke sessions without authentication", async () => {
+  mocks.host = "akiduermo.com";
+  mocks.auth.getUser.mockResolvedValue({ data: { user: null } });
+  await expect(updateRecoveredPassword(recoveryForm("es"))).rejects.toThrow(
+    "redirect:/es/auth?error=recovery&next=%2Fbookings",
+  );
+  expect(mocks.auth.updateUser).not.toHaveBeenCalled();
+  expect(mocks.auth.signOut).not.toHaveBeenCalled();
+});

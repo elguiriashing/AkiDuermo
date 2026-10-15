@@ -10,6 +10,14 @@ Property management remains in AkiBusiness's authorized unified workspace; only 
 
 The same Supabase project preserves user IDs, roles and account identities. Each root domain receives a separate host-only browser session. No cookies are shared between unrelated roots. A user signs in to each domain using the same identity; seamless session transfer requires a separately verified broker. Canonical, legacy, localhost and explicitly allowlisted HTTPS previews use the stay return-path sanitizer. Unknown hosts fall back to canonical; incoming Origin does not establish trust. Configure `AKISUITE_ALLOWED_PREVIEW_ORIGINS` with exact preview origins and register corresponding EN/ES callback/recovery paths in Supabase. Do not use wildcard allowlists. Cookies retain the upstream secure/httpOnly/SameSite behavior with no Domain override.
 
+Ordinary account and authentication logout explicitly use Supabase `scope: local`
+to preserve the user's independent sessions on other products. Only recovery
+after a successful shared-password update intentionally uses `scope: global` as
+a security response. Never change the owner's real password to test migration;
+recovery failures do not revoke sessions. Supabase access JWTs retain their
+existing expiry behavior; neither logout scope immediately invalidates issued
+access JWTs. See the [primary sign-out contract](https://supabase.com/docs/guides/auth/signout).
+
 ## Release sequence and rollback
 
 The default Wrangler config intentionally has no routes/custom domains: deploy to a separate `akiduermo` preview Worker first, keeping existing production domains on their current Worker. Bind existing public Supabase URL/key at build and runtime; values are not copied into source. The separate MapSnapshot Durable Object is a derived cache, not an application database clone. Verify provider project reference `vhpbvcfkcteswlsdjrfl` against the actual URL before deployment.

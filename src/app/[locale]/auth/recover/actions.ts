@@ -50,6 +50,8 @@ export async function updateRecoveredPassword(formData: FormData) {
     password: parsed.data.password,
   });
   if (error) redirect(`${recoveryUrl}&error=save`);
-  await supabase.auth.signOut();
+  // Changing the shared password intentionally revokes every refresh session.
+  // Ordinary product logout uses local scope instead.
+  await supabase.auth.signOut({ scope: "global" });
   redirect(`/${locale}/auth?${new URLSearchParams({ reset: "1", next })}`);
 }
