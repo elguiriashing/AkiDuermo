@@ -95,3 +95,14 @@ intentionally overriding Wrangler.
 Rollback of application traffic restores the previously recorded Worker version
 and domain mappings. Keep the unsafe draft-branch trigger disabled during rollback;
 reverting source protection is not a provider rollback. No data or schema change.
+
+## Coordinated AkiHQ/AkiBusiness role switch
+
+Build/runtime `NEXT_PUBLIC_AKISUITE_ROLE_SWAP=true` selects AkiHQ as the free
+management destination (`config.businessUrl`, historical config key) and
+AkiBusiness as operations (`config.crmUrl`). Default false retains current live
+roles. Explicit preview origin overrides are preserved; old canonical defaults
+are remapped only in the enabled mode. This is navigation/branding, never an
+entitlement grant. Enable only with the coordinated verified domain releases,
+auth callbacks and owner acceptance. This repository continues to identify as
+AkiDuermo and keeps its own booking/account/callback routes.

@@ -6,6 +6,11 @@ on:
         description: Exact reviewed 40-character commit with successful product CI
         required: true
         type: string
+      role_swap:
+        description: Use coordinated AkiHQ management and AkiBusiness operations handoffs in this isolated preview
+        required: true
+        default: false
+        type: boolean
       deploy_preview:
         description: Deploy the built application to its isolated workers.dev origin
         required: true
@@ -30,6 +35,7 @@ jobs:
       PREVIEW_ORIGIN: https://akiduermo-preview.alexashing1.workers.dev
       CLOUDFLARE_ACCOUNT_ID: 501bc9434d8ae555a6ac984a26dd2725
       RELEASE_PATH: /api/bookings/release
+      NEXT_PUBLIC_AKISUITE_ROLE_SWAP: ${{ inputs.role_swap && 'true' || 'false' }}
       NEXT_PUBLIC_PRODUCT_NAME: AkiDuermo
       NEXT_PUBLIC_SITE_URL: https://akiduermo.com
       NEXT_PUBLIC_BUSINESS_URL: https://akibusiness.com
@@ -114,6 +120,7 @@ jobs:
           config.main = path.resolve(config.main);
           config.assets.directory = path.resolve(config.assets.directory);
           config.vars = { ...config.vars,
+            NEXT_PUBLIC_AKISUITE_ROLE_SWAP: process.env.NEXT_PUBLIC_AKISUITE_ROLE_SWAP,
             NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
             NEXT_PUBLIC_SUPABASE_ANON_KEY: key,
             NEXT_PUBLIC_GOOGLE_AUTH_ENABLED: process.env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED,

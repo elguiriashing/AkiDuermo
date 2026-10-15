@@ -1,3 +1,4 @@
+import { productRoles } from "./product-roles";
 import { spainLocations } from "./locations";
 
 export const config = {
@@ -6,9 +7,8 @@ export const config = {
   handle: "akipasa",
   domain: "akiduermo.com",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://akiduermo.com",
-  crmUrl: process.env.NEXT_PUBLIC_CRM_URL || "https://akihq.app",
-  businessUrl:
-    process.env.NEXT_PUBLIC_BUSINESS_URL || "https://akibusiness.com",
+  crmUrl: productRoles.operationsUrl,
+  businessUrl: productRoles.managementUrl,
   tagline: { es: "Sal. Explora. Disfruta.", en: "Go out. Explore. Enjoy." },
   dataProvider: process.env.NEXT_PUBLIC_DATA_PROVIDER || "fixtures",
   mapStyleUrl:

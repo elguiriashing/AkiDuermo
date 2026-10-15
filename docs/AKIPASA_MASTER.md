@@ -1,3 +1,18 @@
+## 2026-10-15 | Coordinated management and operations handoffs
+
+AkiDuermo supports the reviewed role swap only when
+`NEXT_PUBLIC_AKISUITE_ROLE_SWAP` is exactly `true` at build and runtime. Default
+management remains AkiBusiness and operations AkiHQ until coordinated release.
+When enabled, account property management and app-switcher/auth labels target
+AkiHQ management and AkiBusiness operations. Known legacy canonical overrides
+remap; explicit isolated preview origins remain supported. Config rejects URL
+credentials/query/fragments and non-origin paths. Duermo PWA/layout metadata
+retain this app's identity on every host. No auth callback, session, locale,
+booking query/state, permission, storage, email or billing entitlement changes.
+EN/ES rendered handoffs cover both modes; existing credential stripping and local
+callback regressions remain mandatory. Rollback restores the prior build/flag
+with coordinated domain roles; this flag alone does not change domain ownership.
+
 ## 2026-10-15 | Contain draft-branch production deployment
 
 Default Wrangler and npm deployment now fail closed because `akiduermo` already

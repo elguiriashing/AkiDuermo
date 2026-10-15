@@ -14,10 +14,7 @@ import { isLocale } from "@/lib/config";
 import { serializeJsonLd } from "@/lib/seo";
 
 export async function generateViewport(): Promise<Viewport> {
-  const host = (await headers()).get("host")?.split(":")[0]?.toLowerCase();
-  return {
-    themeColor: host === "akiconduzco.akipasa.com" ? "#ed3345" : "#14213D",
-  };
+  return { themeColor: "#35c6a6" };
 }
 
 export const metadata: Metadata = {
@@ -41,26 +38,12 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const requestHeaders = await headers();
-  const product: string = "akiduermo";
-  const isAkiDuermo = product === "akiduermo";
-  const isAkiBusiness = product === "akibusiness";
-  const isAkiConduzco = product === "akiconduzco";
   const requestLocale = requestHeaders.get("x-akipasa-locale");
   const locale =
     requestLocale && isLocale(requestLocale) ? requestLocale : "es";
   return (
     <html lang={locale}>
-      <body
-        data-product={
-          isAkiDuermo
-            ? "akiduermo"
-            : isAkiBusiness
-              ? "akibusiness"
-              : isAkiConduzco
-                ? "akiconduzco"
-                : undefined
-        }
-      >
+      <body data-product="akiduermo">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -68,20 +51,8 @@ export default async function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               "@id": "https://akiduermo.com/#website",
-              name: isAkiConduzco
-                ? "AkiConduzco"
-                : isAkiDuermo
-                  ? "AkiDuermo"
-                  : isAkiBusiness
-                    ? "AkiBusiness"
-                    : "AkiPasa",
-              url: isAkiConduzco
-                ? "https://akicoches.com"
-                : isAkiDuermo
-                  ? "https://akiduermo.com"
-                  : isAkiBusiness
-                    ? "https://akibusiness.com"
-                    : "https://akiduermo.com",
+              name: "AkiDuermo",
+              url: "https://akiduermo.com",
               inLanguage: ["es", "en"],
             }),
           }}

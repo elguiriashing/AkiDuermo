@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { productRoles } from "../lib/product-roles";
 import { config } from "../lib/config";
 import { Icon } from "./Icons";
 import { LanguageLink } from "./LanguageLink";
@@ -29,15 +30,15 @@ export function PortalHeaderTools({
     },
     {
       product: "business",
-      name: "AkiBusiness",
-      href: `https://akibusiness.com/${locale}/business`,
+      name: productRoles.managementName,
+      href: `${config.businessUrl}/${locale}/business`,
     },
     {
       product: "duermo",
       name: "AkiDuermo",
       href: `https://akiduermo.com/?lang=${locale}`,
     },
-    { product: "hq", name: "AkiHQ", href: config.crmUrl },
+    { product: "hq", name: productRoles.operationsName, href: config.crmUrl },
   ] as const;
 
   useEffect(() => {
@@ -94,7 +95,15 @@ export function PortalHeaderTools({
             .filter((app) => app.product !== product)
             .map((app) => (
               <a key={app.product} href={app.href} aria-label={app.name}>
-                <PortalLogo product={app.product} />
+                <PortalLogo
+                  product={
+                    productRoles.swapped && app.product === "business"
+                      ? "hq"
+                      : productRoles.swapped && app.product === "hq"
+                        ? "business"
+                        : app.product
+                  }
+                />
               </a>
             ))}
           {children && <div className="portal-product-actions">{children}</div>}

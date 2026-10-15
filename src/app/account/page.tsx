@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { config } from "@/lib/config";
+import { productRoles } from "@/lib/product-roles";
 import { headers } from "next/headers";
 import { requireUser } from "@/lib/auth";
 import { stayLocale } from "@/lib/akiduermo-i18n";
@@ -52,11 +54,11 @@ export default async function StayAccountPage() {
       <section className={styles.panel}>
         <a
           className="button secondary"
-          href={`https://akibusiness.com/${locale}/business`}
+          href={`${config.businessUrl}/${locale}/business`}
         >
           {es
-            ? "Gestionar mis alojamientos en AkiBusiness"
-            : "Manage my properties in AkiBusiness"}
+            ? `Gestionar mis alojamientos en ${productRoles.managementName}`
+            : `Manage my properties in ${productRoles.managementName}`}
         </a>
         <h2>{es ? "Tu cuenta AkiPasa" : "Your AkiPasa account"}</h2>
         <p>{user.email}</p>
