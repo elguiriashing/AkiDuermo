@@ -1,5 +1,15 @@
 # Architecture
 
+## Independent AkiDuermo extraction (2026-10-15)
+
+The destination repository now packages its own Next/OpenNext `akiduermo` Worker
+and derived map cache while sharing the confirmed Supabase backend. Internal
+navigation is relative to the accepted application origin; canonical metadata is
+explicitly `https://akiduermo.com`. Shared membership billing, webhook and
+scheduled-operation ownership stays in AkiPasa, and property management remains
+in AkiBusiness. Historical monolith sections below are provenance; `EXTRACTION.md`
+is the current extraction/deployment boundary and records outstanding acceptance.
+
 ## AkiConduzco rental marketplace and operator desk (2026-10-14)
 
 AkiConduzco is a dedicated Cloudflare custom-domain application at

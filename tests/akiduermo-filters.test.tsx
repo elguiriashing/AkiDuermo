@@ -77,6 +77,13 @@ it("shows saved stays on their own route with local filters and dedicated naviga
     screen.getByRole("heading", { name: "Test hotel" }),
   ).toBeInTheDocument();
   expect(
+    screen.getByRole("link", { name: "Test hotel" }),
+  ).toHaveAttribute("href", expect.stringMatching(/^\/stays\/hotel\?lang=en&/));
+  expect(screen.getByRole("link", { name: "View Test hotel" })).toHaveAttribute(
+    "href",
+    expect.stringMatching(/^\/stays\/hotel\?lang=en&/),
+  );
+  expect(
     screen.queryByRole("heading", { name: "Test apartment" }),
   ).not.toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Map" })).toHaveAttribute(

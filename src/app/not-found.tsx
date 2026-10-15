@@ -8,7 +8,7 @@ export default function NotFound() {
       <h1>Alojamiento no disponible · Stay unavailable</h1>
       <p>Este alojamiento no está disponible en AkiDuermo.</p>
       <p>This property is not available on AkiDuermo.</p>
-      <Link className="button" href="https://akiduermo.com/">
+      <Link className="button" href="/">
         Explorar alojamientos · Explore stays
       </Link>
     </main>

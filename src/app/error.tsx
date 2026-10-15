@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 export default function StayError({ reset }: { reset: () => void }) {
   return (
     <main
@@ -10,7 +11,7 @@ export default function StayError({ reset }: { reset: () => void }) {
       <button className="button" onClick={reset}>
         Reintentar · Retry
       </button>
-      <a href="https://akiduermo.com/">AkiDuermo</a>
+      <Link href="/">AkiDuermo</Link>
     </main>
   );
 }

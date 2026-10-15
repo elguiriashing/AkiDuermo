@@ -22,6 +22,34 @@ Record previous Worker version, routes and DNS before any cutover. Rollback rest
 
 See the extraction PR and local handoff for exact commands/results. Provider, authenticated production, payment and real room-concurrency acceptance are separate gates; never infer these from fixtures or green builds.
 
+## Approved preview navigation and repeatable packaging
+
+Internal property links use relative `stayPath` destinations, including catalogue,
+device-saved stays and map popups. Property back links and error/404 recovery also
+remain on the current origin. `stayHref` remains the absolute canonical helper for
+metadata. This permits an approved isolated preview to be accepted before its
+canonical domain exists, without changing business-management or billing handoffs.
+
+`.github/workflows/preview-release.yml` accepts an exact 40-character source SHA
+with successful product CI. It validates the fixed repository/account/Worker,
+real shared public Supabase configuration, absent domain routes and schedules,
+and unchanged closed billing flags. Public settings are supplied at both build
+and runtime, including the Google-auth visibility flag. Source-stamped OpenNext
+and dry-run artifacts are retained. Optional deployment requires a scoped token
+and verifies `/api/bookings/release` over HTTPS at the exact preview origin.
+It refuses an existing Worker with custom production domains or schedules; use
+the separately reviewed production release path after authenticated acceptance.
+The clean-source packaging wrapper recreates only generated `.open-next` output
+before every build, preventing duplicate generated environment exports on repeat
+builds while retaining `.next/cache`.
+
+The actual preview origin is `https://akiduermo.alexashing1.workers.dev`.
+Supabase must approve both exact `/en/auth/callback` and `/es/auth/callback`
+destinations; provider verification found these preview callbacks unapproved
+while the canonical AkiDuermo callbacks were accepted. Preserve all existing
+allowlist entries and the working custom Supabase Auth alias. Same shared user
+identity still requires a separate host-local login and is not cross-domain SSO.
+
 ## Canonical route implementation
 
 The extracted routes live at their real product paths, rather than rewriting to the monolith's `/akiduermo` directory. Local runtime testing found that retaining the old rewrite/canonicalization pair caused requests to loop. Root-route promotion removes that cycle while keeping the same components, actions, RPCs, validation and RLS boundaries. Historical `/akiduermo/...` paths redirect once to their canonical counterparts. EN/ES roots redirect locally with validated `lang` and preserve query parameters. Local signout stays on this product. Account email/reset callbacks use the initiating trusted origin and return to Settings, including approved previews.

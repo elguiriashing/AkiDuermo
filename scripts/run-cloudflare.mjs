@@ -19,7 +19,10 @@ const cli = path.join(
   "index.js",
 );
 const commit = sourceCommit();
-rmSync(path.join(process.cwd(), ".open-next/assets/release-source.json"), {
+// OpenNext appends generated environment exports on a reused output directory.
+// Recreate only build output; retain Next's cache for repeatable fast rebuilds.
+rmSync(path.join(process.cwd(), ".open-next"), {
+  recursive: true,
   force: true,
 });
 const result = spawnSync(process.execPath, [cli, action], {

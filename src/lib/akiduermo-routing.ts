@@ -23,7 +23,11 @@ export function safeStayDestination(requested?: string) {
   return "/account";
 }
 export function stayHref(slug: string, locale: StayLocale) {
-  return `${stayOrigin}/stays/${encodeURIComponent(slug)}?lang=${locale}`;
+  return `${stayOrigin}${stayPath(slug, locale)}`;
+}
+/** Internal navigation must retain the current canonical or approved preview host. */
+export function stayPath(slug: string, locale: StayLocale) {
+  return `/stays/${encodeURIComponent(slug)}?lang=${locale}`;
 }
 export function stayHostRoute(pathname: string) {
   if (/^\/(?:en|es)\/duermo\/memberships\/?$/.test(pathname))

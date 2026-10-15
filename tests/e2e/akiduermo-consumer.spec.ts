@@ -152,6 +152,12 @@ for (const locale of ["en", "es"] as const) {
               page.getByRole("link", { name: "Test stay", exact: true }),
             ).toBeVisible();
             await expect(
+              page.getByRole("link", { name: "Test stay", exact: true }),
+            ).toHaveAttribute(
+              "href",
+              new RegExp(`^/stays/test-stay\\?lang=${locale}&`),
+            );
+            await expect(
               page.getByText(
                 locale === "es"
                   ? /Disponibilidad comprobada/

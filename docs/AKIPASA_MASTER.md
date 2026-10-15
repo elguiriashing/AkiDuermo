@@ -1,5 +1,22 @@
 # AKIPASA MASTER SYSTEM CONTRACT
 
+## 2026-10-15 | Independent AkiDuermo preview navigation
+
+This repository is the independent AkiDuermo extraction. Internal catalogue,
+device-saved cards, map popups, property back navigation and unavailable/error
+recovery stay on the current approved origin through relative paths. Canonical
+property metadata continues to use `https://akiduermo.com`; intentional account
+billing and business-management handoffs keep their established product origins.
+EN/ES and trip query parameters remain intact. No ownership, RLS, inventory,
+booking state, price, billing readiness, scheduler or webhook changes.
+
+The manually selected preview-release workflow validates the exact successful-CI
+source SHA and existing public Supabase project, exports public build/runtime
+configuration and creates source-stamped OpenNext artifacts. Its optional deploy
+targets only the fixed isolated `akiduermo` Worker with no production domains or
+schedules. It does not attach DNS or establish authenticated acceptance. See
+`EXTRACTION.md` and the impact register for verified evidence and remaining gates.
+
 ## 2026-10-14 | AkiConduzco mobility product (live release)
 
 AkiConduzco is a car-rental discovery and booking-request product on

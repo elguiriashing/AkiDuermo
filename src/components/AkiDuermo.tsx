@@ -6,7 +6,7 @@ import Link from "next/link";
 import { stayTypeNames, staySchema, type Stay } from "../lib/akiduermo";
 import { stayText, type StayLocale } from "../lib/akiduermo-i18n";
 import { filterSavedStays } from "../lib/stay-filters";
-import { stayHref } from "../lib/akiduermo-routing";
+import { stayPath } from "../lib/akiduermo-routing";
 import { Icon } from "./Icons";
 import { StayHeader } from "./StayHeader";
 import { StayNavigation } from "./StayNavigation";
@@ -568,7 +568,7 @@ export function AkiDuermo({
                       </span>
                       <h3>
                         <Link
-                          href={`${stayHref(stay.slug, locale)}&${new URLSearchParams({ checkIn, checkOut, guests })}`}
+                          href={`${stayPath(stay.slug, locale)}&${new URLSearchParams({ checkIn, checkOut, guests })}`}
                         >
                           {stay.name}
                         </Link>
@@ -587,7 +587,7 @@ export function AkiDuermo({
                         </span>
                         <Link
                           className={styles.viewStay}
-                          href={`${stayHref(stay.slug, locale)}&${new URLSearchParams({ checkIn, checkOut, guests })}`}
+                          href={`${stayPath(stay.slug, locale)}&${new URLSearchParams({ checkIn, checkOut, guests })}`}
                           aria-label={`${t("View")} ${stay.name}`}
                         >
                           <Icon name="arrow-right" size={20} />

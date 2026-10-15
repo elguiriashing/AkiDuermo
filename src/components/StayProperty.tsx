@@ -10,7 +10,6 @@ import Link from "next/link";
 import type { StayDetail } from "@/lib/stay-detail";
 import { staySchema, stayTypeNames } from "@/lib/akiduermo";
 import { stayText, type StayLocale } from "@/lib/akiduermo-i18n";
-import { stayOrigin } from "@/lib/akiduermo-routing";
 import { googleMapsDirectionsUrl } from "@/lib/maps";
 import { Icon } from "./Icons";
 import { StayHeader } from "./StayHeader";
@@ -97,7 +96,7 @@ export function StayProperty({
       new CustomEvent("akipasa:locale-change", { detail: next }),
     );
   }
-  const home = `${stayOrigin}/?lang=${locale}`;
+  const home = `/?lang=${locale}`;
   const type = stayText(
     locale,
     stayTypeNames[stay.accommodationType] || "Accommodation",

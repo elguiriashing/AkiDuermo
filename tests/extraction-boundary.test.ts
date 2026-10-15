@@ -5,7 +5,11 @@ import {
   isStayRequestOrigin,
 } from "../src/lib/public-request-origin";
 import { safeAuthDestinationForOrigin } from "../src/lib/auth-security";
-import { stayHref, stayHostRoute } from "../src/lib/akiduermo-routing";
+import {
+  stayHref,
+  stayHostRoute,
+  stayPath,
+} from "../src/lib/akiduermo-routing";
 const mocks = vi.hoisted(() => ({ refresh: vi.fn() }));
 vi.mock("@/lib/supabase/middleware", () => ({ refreshSession: mocks.refresh }));
 import { middleware } from "../src/middleware";
@@ -63,6 +67,19 @@ describe("independent AkiDuermo boundaries", () => {
     expect(stayHostRoute("/api/health").kind).toBe("public");
     expect(stayHostRoute("/api/admin/users").kind).toBe("reject");
   });
+  it.each(["en", "es"] as const)(
+    "keeps internal property navigation on the current approved preview in %s",
+    (locale) => {
+      const origin = "https://akiduermo.alexashing1.workers.dev";
+      const target = new URL(stayPath("hotel uno", locale), origin);
+      expect(target.origin).toBe(origin);
+      expect(target.pathname).toBe("/stays/hotel%20uno");
+      expect(target.searchParams.get("lang")).toBe(locale);
+      expect(new URL(stayHref("hotel uno", locale)).origin).toBe(
+        "https://akiduermo.com",
+      );
+    },
+  );
   it("does not forward mutation bodies to shared membership or foreign hosts", async () => {
     const post = new NextRequest("https://akiduermo.com/membership", {
       method: "POST",

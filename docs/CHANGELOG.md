@@ -1076,6 +1076,11 @@ Completed the AkiDuermo room-night request candidate: explicit booking modes, re
 
 - Measure claim-picker browser geometry in one rendered state after the exact completed search response; retain strict overlap/natural-click acceptance and add held-loading bounds coverage.
 
+## 2026-10-15 — Independent AkiDuermo preview continuity
+
+- Keep catalogue, saved stays, map property links and recovery navigation on the current application origin while preserving canonical metadata.
+- Add a manually selected, exact-source preview build/deploy workflow with real public build/runtime configuration and fixed product identity. Authenticated production acceptance remains a separate release gate.
+
 ## 2026-10-14 — Customer AI boundaries
 
 - Separate customer and operator model history; restart historical customer context safely while retaining stored records.

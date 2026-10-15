@@ -196,6 +196,11 @@ describe("search-to-stay booking handoff", () => {
       vi.stubGlobal("fetch", fetchMock);
       render(<StayProperty stay={stay} initialLocale={locale} />);
       expect(
+        screen.getByRole("link", {
+          name: locale === "es" ? "Explorar alojamientos" : "Explore stays",
+        }),
+      ).toHaveAttribute("href", `/?lang=${locale}`);
+      expect(
         screen.getByLabelText(locale === "es" ? "Entrada" : "Check in"),
       ).toHaveValue("2027-03-20");
       expect(

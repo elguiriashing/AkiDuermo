@@ -14,7 +14,7 @@ import {
   markerSource,
   type DiscoveryVertical,
 } from "@/lib/accommodation";
-import { stayHref } from "@/lib/akiduermo-routing";
+import { stayPath } from "@/lib/akiduermo-routing";
 import { applyMapTheme, readMapTheme } from "@/lib/map-theme";
 import {
   createMapGeolocateControl,
@@ -564,7 +564,7 @@ export function ProductionMap({
                       venue: detail.address ?? "",
                       href:
                         venueDestination === "akiduermo"
-                          ? stayHref(detail.slug, locale)
+                          ? stayPath(detail.slug, locale)
                           : `/${locale}/venues/${detail.slug}`,
                       source:
                         detail.discoveryVertical === "accommodation"
