@@ -1,0 +1,44 @@
+import Image from "next/image";
+import styles from "./PortalLogo.module.css";
+
+export function PortalLogo({
+  product,
+}: {
+  product: "pasa" | "business" | "duermo" | "hq" | "coches";
+}) {
+  const suffix =
+    product === "business"
+      ? "Business"
+      : product === "coches"
+        ? "Coches"
+      : product === "pasa"
+        ? "Pasa"
+        : product === "duermo"
+          ? "Duermo"
+          : "HQ";
+  return (
+    <span className={`${styles.logo} ${styles[product]}`} aria-hidden="true">
+      <Image
+        src={
+          product === "pasa"
+            ? "/pwa/akipasa-512.png"
+            : product === "coches"
+              ? "/brand/conduzco-icon.svg"
+            : product === "hq"
+              ? "/brand/hq-mark.svg"
+              : product === "business"
+                ? "/brand/business-mark.svg"
+                : `/brand/${product}-icon.png`
+        }
+        alt=""
+        width={40}
+        height={40}
+        priority
+      />
+      <span className={styles.wordmark}>
+        Aki<span>{suffix}</span>
+        <i>.</i>
+      </span>
+    </span>
+  );
+}

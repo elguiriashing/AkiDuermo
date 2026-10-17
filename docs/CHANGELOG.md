@@ -1,0 +1,1103 @@
+# Changelog
+
+## 2026-10-14 — Membership blocked-action guidance
+
+- Replace misleading disabled purchase labels with the actual access, overlap,
+  workspace, eligibility or catalogue reason in EN/ES.
+- Link each recoverable state to account access, billing, retry, workspace setup or
+  the required AkiHQ Pro plan without weakening any purchase gate.
+
+## 2026-10-14 — Passport status localization
+
+- Translate every stored reward-claim and Passport-enrollment state in EN/ES,
+  with a safe localized fallback for unexpected values.
+- Correct remaining Spanish accents while retaining Madrid civil-date deadlines.
+
+## 2026-10-14 — Privacy withdrawal recovery
+
+- Reflect a personalization withdrawal as locally Off before its account sync.
+- Explain a failed account sync and provide an explicit retry that preserves the
+  user's other local privacy choices.
+
+## 2026-10-14 — Account collection management
+
+- Bound saved-event and followed-venue reads to deterministic 24-item pages with
+  localized name search and authoritative totals.
+- Add direct pending-aware unsave/unfollow controls, visible outcomes and account
+  count refresh without requiring a visit to each detail page.
+
+## 2026-10-14 — Actionable authentication feedback
+
+- Replace the generic auth failure notice with localized, account-private guidance
+  for invalid email, password policy, terms, credentials and expired links.
+- Associate affected fields with the alert, retain only the email in tab-local
+  storage, and disable/rename submit buttons while each request is pending.
+
+## 2026-10-14 — Password recovery task continuity
+
+- Carry an allowlisted public or AkiDuermo destination through reset request,
+  callback, password update, sign-out and the next sign-in.
+- Preserve that task across expired/reused callbacks and reset validation or
+  provider failures without placing passwords or tokens in query parameters.
+
+## 2026-10-14 — Creator review draft recovery
+
+- Keep the rating and review text in tab-local storage before submission.
+- Restore and open the review form after validation, service or authentication
+  returns, then clear the saved draft after a normal or successful return.
+
+## 2026-10-14 — Passport, toolbox and membership performance recovery
+
+- Stop idle Passport foil animation frames and resume them only for visible,
+  relevant input or surface changes.
+- Load the owner toolbox on activation with localized pending/retry behavior and
+  preserve its mounted state after first use.
+- Route ready public membership choices through the authenticated account workspace
+  hub while retaining all existing billing and availability gates.
+
+## 2026-10-14 — Discovery filter recovery
+
+- Explain invalid price and date ranges in place and stop invalid automatic
+  navigation.
+- Show removable active filters with a deliberate clear-all action and preserve
+  keyboard focus after URL updates.
+- Replace the maximum-radius no-results loop with a useful area/filter reset.
+
+## 2026-10-14 — Mobile More dialog accessibility
+
+- Contain Tab and Shift+Tab inside the mobile More dialog.
+- Make background shell regions inert while open and restore opener focus, scroll
+  and prior inert state on every close path.
+
+## 2026-10-14 — Event occurrence continuity
+
+- Carry the card's selected recurrence through detail, auth, booking, calendar,
+  saved/preference returns, sharing and stay planning.
+- Mark ended occurrences and remove their expired booking/trip/calendar actions.
+- Center stay searches on a custom event site and describe the live request flow
+  without implying automatic confirmation or online payment.
+
+## 2026-10-14 — Discover and Map continuity
+
+- Preserve the shared allowlisted discovery filters when switching list and Map,
+  while clearing pagination and drawer-only state.
+- Carry all active filters through the no-results Map action.
+- Source initial Map event pins from the same filtered recommendations as its list.
+
+## 2026-10-14 — Community contribution recovery
+
+- Restore failed event-suggestion and report drafts within the current browser tab,
+  including validated address coordinates.
+- Add bounded, punctuation-safe report-target search and exact linked-target loads.
+- Distinguish unavailable feature, category, target and contribution-history reads
+  from paused or empty states, withholding only dependent controls.
+
+## 2026-10-14 — Accommodation and Passport read recovery
+
+- Keep healthy accommodation-manager tabs usable while an independently failed
+  settings, inventory, calendar or reservation read shows a localized retry.
+- Render unknown accommodation counts and booking mode truthfully.
+- Separate Passport catalogue, XP, stamps, progress, enrollment and claims errors;
+  withhold dependent actions and preserve confirmed zero values.
+
+## 2026-10-14 — Operational read recovery
+
+- Clear stale Admin account searches, ignore late responses and provide retry.
+- Keep moderation queues usable while treating an unavailable mode as unknown.
+- Hide failed personalisation and venue-analytics reads instead of showing zeros
+  or empty activity; preserve confirmed zero values and independent venue panels.
+- Separate Passport campaign history from its published-venue creation dependency.
+- Distinguish creator catalogue outages from empty/missing results and show review
+  outcomes while returning sign-in to the selected profile.
+- Refresh Account collection labels and slugs from currently readable catalogue
+  rows while preserving stored fallbacks.
+
+## 2026-10-14 — Workflow continuity follow-up
+
+- Preserve exact/hidden event prices and current-language collection links.
+- Restore failed Support/AI question drafts and expose new Support replies safely.
+- Localize workspace labels; reduce repeated Staff headings and prevent clipping.
+- Separate stay reservation rows and retain full phone auth portal wordmarks.
+- Distinguish unavailable Admin/AI reads from empty lists, keep zero budgets exact,
+  label loaded usage scopes and conversation audiences, and show save outcomes.
+
+## 2026-10-13 - Catalogue starter publication
+
+- Keep new catalogue starter items hidden until editors explicitly enable public visibility, preserving immediate draft saves.
+
+## 2026-10-14 — Approved GUI/workflow release candidate
+
+- Preserve safe auth/contribution return paths and visible submission feedback.
+- Align discovery/map civil dates and show truthful venue claim badges.
+- Improve support dialog keyboard access and short-window composer scrolling.
+- Retain stay trip defaults, real booking-history states and localized statuses.
+- Show Staff/Admin read failures, improve event search/editor continuity, and
+  protect city coordinates from silent Madrid fallback on unrelated saves.
+- Prepare a source-backed upgrade inventory across the portals, AkiHQ, Android
+  and automation. Remaining items are proposals/plans, not completed features.
+
+The user has now approved implementation and live release; release evidence is
+recorded separately from historical preparation evidence.
+Verification boundaries are recorded in `CHANGE_IMPACT_REGISTER.md` and the
+review artifacts; current-head CI and authenticated release acceptance remain
+separate requirements.
+
+## 2026-10-12 — Account workspace and Spanish accents
+
+- Replace repeated Account banners with compact page headings and fully visible wider-screen navigation; remove the duplicate Progress tab and route old links to Passport.
+- Refresh Overview, Saved, Following, My bookings, Activity, Premium, Profile, Settings, Privacy and Membership with responsive cards and focused edit controls. Preserve original server actions and confirmation paths.
+- Correct three verified historical Spanish system labels without changing their IDs or feature values; guard future interface source against broken UTF-8 sequences.
+- Restore visible Passport motion feedback and 44px phone, map legend and attribution controls during the wider public browser audit. Keep map credits and status text clear of Privacy and Support controls.
+- Release and validation evidence lives in `CHANGE_IMPACT_REGISTER.md`; implementation status alone is not a live-deployment claim.
+
+## 2026-10-12 - Aki Spotlight venue and event details
+
+- Give public venues a photography/identity split, real menu-section previews,
+  compact upcoming events and accessible information/perks navigation.
+- Give events a poster/date composition, clear timing and reservation action,
+  social controls and a linked host card.
+- Recompose both layouts for landscape and portrait tablets, phone and short
+  split-screen, preserving EN/ES, light/dark and existing booking/data rules.
+- Add named icon sharing and disposable real-route browser acceptance.
+
+Verification and deployment evidence: `docs/SPOTLIGHT_DETAIL_REDESIGN.md`.
+
+## 2026-10-12 - AkiPals companion playground
+
+- Rework the private preview around a responsive Hideout, Wardrobe, Stories
+  and Arcade, with genuine light/dark themes, collection filters and clearer
+  touch/keyboard interactions.
+- Give all ten original families distinct expressions, garment details and
+  collectable signature looks while preserving all existing design IDs.
+- Add repeatable care, permanent bond ranks and banked daily/weekly goal
+  bonuses without inactivity penalties or save resets.
+- Add Memory Mix and Trail Finder with local play, server-validated move
+  transcripts, once-per-game daily rewards and unlimited free practice.
+- Retain private preview access, existing saves, earned-only keepsakes and
+  transactional command replay. Add actual API/SQL tests, responsive browser
+  acceptance and a release-specific live deployment check.
+- Fix the story-card expression that could omit its content and Start button.
+
+Verification and deployment evidence: `docs/AKIPALS_RELEASE_20261012.md`.
+
+## 2026-10-10 - Staff claim review context (candidate)
+
+Show applicant identity/contact, venue address/contact, received and account dates, full evidence and reference IDs in the pending ownership queue. Add staff-only paginated identity lookup, explicit load errors and preserve the claims page after a decision. Requires the new read-only RPC migration before release.
+
+## 2026-10-10 - AkiDuermo consumer app routes (candidate)
+
+- Add same-host customer sign-in, account, bookings and settings with a shared AkiPasa identity; keep the reservation return path on AkiDuermo.
+- Give discovery, saved stays and map separate destinations. The accommodation map occupies a full-screen viewport with one-finger gestures, and navigation works across mobile and desktop.
+- Keep saved stays device-local, booking access owner-scoped, and payment/availability claims conditional on participating properties.
+
+## 2026-10-10 - Compact AkiDuermo property workspace
+
+Reworked the AkiBusiness accommodation manager into a responsive one-panel WebApp with operational summary cards, compact navigation, collapsible inventory editors and visual booking-mode controls. Existing room, unit, rate, block, reservation and settings actions are preserved, while setup guidance now reports actual inventory readiness instead of implying that overlap protection remains unverified.
+
+This is an engineering milestone log, not a semantic-version release log.
+Entries are newest first and must not contain credentials or personal data.
+
+## 2026-10-09 - Booking service editing and inbox polish
+
+- Add edit controls for existing AkiBusiness bookable services, including
+  name, category, duration, capacity and active state.
+- Apply booking inbox search, status and sort through the app router so filters
+  stay persistent without a full document reload.
+- Render booking requests as a responsive card grid on wider tablet/desktop
+  layouts while preserving the existing paging and action controls.
+
+## 2026-10-09 - Tablet booking inbox and scrolling
+
+- Add 20-row server paging, guest/contact/reference search, status filters,
+  received-date sorting and independent pending totals in AkiBusiness.
+- Keep filters and page after booking actions; show read failures explicitly.
+- Preserve formatted phone numbers and guest-name punctuation with Zod input validation and escaped query literals.
+- Remove the clipped nested Services scroll area, compact status badges and
+  preserve all existing booking, service, resource and calendar controls.
+- Expand EN/ES light/dark tablet acceptance to nine viewport shapes with
+  populated inbox search, paging and filter interactions.
+- Keep sticky venue tools below the measured product header, including when
+  its controls wrap in tablet split-screen.
+
+## 2026-09-14 - Compact venue management dashboard
+
+- Replace the long venue management page with an overview and focused Profile,
+  Events, Rewards, Check-in, Bookings, and Team sections in English and Spanish.
+- Use compact forms, shared icons, responsive tool cards, inline checkboxes,
+  smaller QR previews, and expandable event controls and venue access settings.
+- Retain every existing server form and permission check. Keep unsaved input
+  when switching tabs, support keyboard navigation and browser history, and
+  reopen the relevant section after saves, errors, and existing event links.
+
+## 2026-09-14 - Business workspace action styling
+
+- Give Open AkiHQ and Manage venue consistent pill buttons with shared icons,
+  visible labels, theme colours, and full-width mobile touch targets.
+- Scope the fix to these venue actions so generic compact-row styles cannot
+  squash them or hide their labels; retain the existing destinations and forms.
+
+## 2026-09-14 - Compact business membership tools
+
+- Replace the repeated Basic/Pro tool columns with a venue selector, a compact
+  plan switch, three relevant included tools, and one application link.
+- Keep the complete tool list and upcoming extras in collapsed disclosures.
+  Localize tool names and extra prices in English and Spanish, and remove
+  internal implementation notes from the purchasing flow.
+- Use scoped styles, existing theme colours, visible input borders, and
+  comfortable touch targets; preserve plan entitlements, prices, and the
+  selected venue/plan in the application URL.
+- Add regression coverage for plan inclusion, every venue category, both
+  languages, mobile/desktop layout, and light/dark themes.
+- Declare the existing AkiHQ service binding for clean checkout builds, which
+  previously relied on an ignored, locally generated type file.
+
+## 2026-08-13 - Personalisation and recommendation foundation
+
+- Add versioned, batched behavioural ingestion with idempotency, RLS, privacy validation, consent and reset controls.
+- Add persistent short/long-term preference features with confidence, decay and diminishing repeated signals.
+- Add a shared contextual weighted ranker, diversity/exploration controls, relevance-gated sponsored boost, reasons and request/item logs.
+- Wire homepage impressions, skips, dwell, opens, quick exits, filters, saves/follows, Going, Not interested, CTA signals and verified check-ins.
+- Add versioned internal recommendation API and future partner/experiment boundaries.
+- Add an aggregate-only administrator Personalisation dashboard for recommendation health, outcomes and active ranker configuration.
+- Make crowded desktop workspace navigation reachable with a visible horizontal scrollbar, wheel scrolling, touch scrolling, pointer dragging and automatic active-item reveal.
+
+## 2026-08-10
+
+### Summary
+
+Implemented real Premium and Business fulfillment. Signed Stripe subscription
+events now reconcile profile membership, activate or revoke Business access,
+and reject stale out-of-order updates. Premium members receive member-only
+venue offers, 20 XP instead of 10 per accepted check-in, protected event and
+saved-plan calendar exports, and a focused Premium account page.
+
+Business pages and mutations now require an active Business entitlement, and
+businesses can publish offers specifically for Premium members. Membership and
+billing pages describe the concrete benefits and display the profile's
+authoritative access state.
+
+### Verification
+
+- Formatting, ESLint, strict TypeScript, and all 51 unit/component tests pass.
+- Local database safety checks pass.
+- Tests cover Stripe signature validation, event-order protection, paid
+  profile projections, calendar escaping, and billing-data exports.
+- Browser acceptance compiled the 85-page production build and passed 17
+  tests, including membership and responsive UI; one credential-gated test was
+  skipped. Eight pre-existing public-discovery checks still target expired
+  catalogue content and removed navigation selectors.
+- Production migration and live checkout/webhook/cancellation acceptance
+  remain pending deployment approval.
+
+## 2026-08-01
+
+### Summary
+
+Added the first Android Play Store client under `Android/`. The native Android
+host loads the production AkiPasa application so every role and workflow uses
+the same Cloudflare/Supabase backend, database, storage, authorization, and
+billing behavior. The device layer adds restricted HTTPS navigation, external
+Google/Stripe handoff, App Links, location consent, document picking,
+authenticated downloads, back/rotation handling, and a native offline retry
+state.
+
+The project targets Android 16/API 36 with package `com.akipasa`, contains
+no credentials or signing material, and documents the Play App Signing,
+Digital Asset Links, internal-track acceptance, Data safety, and release
+process. This is intentionally a native package with a web-delivered product
+UI; it is not represented as a screen-by-screen native rewrite.
+
+### Verification
+
+- A clean Gradle run passed Android unit tests and lint, assembled an 888,744
+  byte debug APK, and produced the corrected 37,672 byte `com.akipasa`
+  release AAB. The AAB was signed with the ignored local upload key and its
+  signature verified; signing material was not added to Git or logs.
+- The full root `npm.cmd run check` passes, including formatting, lint, strict
+  types, 48 application tests, database safety, 37 automation tests, Wrangler
+  dry-run, and the 83-page production Next build.
+- Google Play accepted version 1 (1.0.0), target API 36, enabled Play App
+  Signing, and published release `AkiPasa1.0` to the active internal-testing
+  track. The app-signing fingerprint is staged in
+  `public/.well-known/assetlinks.json`; web deployment, device acceptance,
+  listing completion, and the mandatory closed-test production gate remain.
+- The Play listing, reviewer access, content rating, 18+ target audience,
+  privacy, Data safety, health, ads, category, Spain distribution, and tester
+  configuration were completed. The advertising-ID declaration records that
+  the app does not use an advertising ID, matching the manifest and dependency
+  graph. Fourteen changes, including closed-test version 1 (1.0.0), were sent
+  to Google review.
+- The closed Alpha channel is active with version 1 (1.0.0) in review. The
+  configured developer account also accepted the immediately available
+  internal-test invitation. Google Play accepted installation to the
+  configured Motorola Moto G24 and now offers installation on additional
+  devices; physical app acceptance remains pending.
+
+## 2026-07-29
+
+### Summary
+
+Shortened the path from discovery to paid membership and rebuilt navigation
+mobile-first. The homepage and public header now link directly to a public,
+bilingual membership offer; Account Overview links directly to billing; and
+the authenticated billing screen presents two plan cards with monthly and
+annual choices instead of four repeated cards.
+
+Replaced the mobile horizontal header strip with a compact menu and changed
+workspace navigation from a full-screen modal to an in-flow panel. Community
+and Passports now use the same responsive workspace navigation instead of
+duplicated console tab bars. Zero-value navigation badges are hidden until
+they carry useful information.
+
+### Verification
+
+- Lint and strict TypeScript pass.
+- Production Next build generates 83 pages.
+- Mobile browser acceptance covers the public header, membership conversion
+  path, in-flow Passport menu, and removal of the old console tab bar.
+- Desktop browser acceptance confirms the regular primary navigation and
+  sticky workspace sidebar remain visible while burger controls remain hidden.
+- Connected Linux build `9291811e-e042-4dc8-b0f2-c72049532224` deployed the
+  release successfully. Both locales, both public membership routes, and 40
+  controlled production requests returned successfully.
+
+## 2026-07-28 23:45 +02:00
+
+### Summary
+
+Recovered the interrupted billing release, reran the complete repository
+check, and attempted the verified Windows-built OpenNext artifact. Live smoke
+tests immediately found HTTP 500 responses, so production was rolled back to
+`1f6e4d66-de50-4580-863c-411627c4c875`. A 0%-traffic version-override trace
+identified Next.js `workUnitAsyncStorage` invariant failures on App Router HTML
+requests. Production remained on the last-good version throughout diagnosis.
+
+Removed the custom cache wrapper from the deployment path and restored the
+generated OpenNext entry point. Windows-built candidates are not promotable;
+the connected Cloudflare Linux build must produce the next candidate, which
+must pass a 0%-traffic version-override smoke test before promotion.
+
+## 2026-07-28 12:35 +02:00
+
+### Summary
+
+Implemented recurring Premium and Business billing, applied production
+migrations `0028` through `0030`, and verified the deployment candidate.
+
+### Files affected
+
+- `database/migrations/0029_stripe_billing.sql`
+- `database/migrations/0030_atomic_stripe_webhook_claim.sql`
+- `src/lib/stripe.ts`
+- `src/lib/supabase/service.ts`
+- `src/app/api/stripe/webhook/route.ts`
+- Account subscription, business application, and staff catalogue routes
+- `wrangler.jsonc`, tests, styles, and canonical documentation
+
+### Reasoning
+
+Paid access must be fulfilled from a signed Stripe event rather than a browser
+redirect. Durable subscription/grant rows keep billing separate from platform
+roles while supporting audited one-month, three-month, and indefinite staff
+access.
+
+### Verification
+
+- Production Supabase migrations `0028` through `0030` returned success.
+- Lint, strict TypeScript, 53 tests, database safety, and the production Next
+  build pass.
+- Stripe products use the approved EUR 5/48 Premium and EUR 20/190 Business
+  recurring prices.
+
+### Outstanding follow-up work
+
+- Create the restricted Stripe API key and webhook endpoint after explicit
+  action-time confirmation.
+- Install three encrypted Worker secrets, dry-run/deploy, and complete live
+  checkout/webhook acceptance.
+
+## 2026-07-28 11:42 +02:00
+
+### Summary
+
+Fixed the account profile mutation contract, added direct privileged
+workspaces, built audited staff catalogue management, and added durable
+business onboarding locally.
+
+### Files affected
+
+- `database/migrations/0028_profile_operations_and_business_onboarding.sql`
+- Account profile action, overview, and navigation
+- `src/components/AccountWorkspacePortals.tsx`
+- Staff catalogue list, actions, and venue record routes
+- Business application route and action
+- Database acceptance, unit tests, styles, and canonical documentation
+
+### Reasoning
+
+Profile writes included a column users were not granted, privileged navigation
+was hidden behind Settings, staff inventory was read-only and published-only,
+and ordinary users had no visible onboarding despite being able to bypass it
+through a legacy venue RPC. The correction uses narrow role-gated RPCs and a
+durable application state machine.
+
+### Verification
+
+- Formatting, lint, strict TypeScript, all 51 application tests, local database
+  safety, and all 37 automation tests passed.
+- The production Next build passed and includes the new application and staff
+  venue record routes.
+- Local mobile browser acceptance passed 18 tests; one credential-gated
+  authenticated test was skipped.
+- The aggregate `npm run check` reached only the known Automation Wrangler
+  sandbox restriction after all code tests passed.
+- Migration and rollback-only database acceptance remain pending.
+
+### Outstanding follow-up work
+
+- Review and apply migration `0028`, then run rollback-only database
+  acceptance before deploying dependent code.
+- Decide Stripe pricing/billing/refund policy and configure Checkout plus
+  signed idempotent webhooks; payment is intentionally not presented as live.
+
+## 2026-07-28 11:05 +02:00
+
+### Summary
+
+Deployed paid-plan defensive invocation ceilings to the public Worker.
+
+### Files affected
+
+- `wrangler.jsonc`
+- Cloudflare production version and canonical documentation
+
+### Verification
+
+- Production version `1f6e4d66-de50-4580-863c-411627c4c875` is live.
+- CPU is capped at 1,000 ms and subrequests at 100 per invocation.
+- Upload remains 7,128.55 KiB (1,390.16 KiB gzip); startup is 24 ms.
+
+## 2026-07-28 11:15 +02:00
+
+### Summary
+
+Configured defensive execution ceilings for the upgraded Workers Paid public
+application.
+
+### Files affected
+
+- `wrangler.jsonc`
+- Canonical documentation
+
+### Reasoning
+
+Paid capacity removes the 10 ms free-plan constraint, but accepting the full
+30-second and 10,000-subrequest defaults would increase the impact of runaway
+code or abusive requests. The selected limits preserve substantial SSR
+headroom while bounding per-request resource consumption.
+
+### Verification
+
+- Wrangler's installed configuration schema accepts `limits.cpu_ms` and
+  `limits.subrequests`.
+
+### Outstanding follow-up work
+
+- Run project checks and Wrangler dry-run.
+- Deploy the limits and complete live route/load verification.
+
+## 2026-07-28 10:55 +02:00
+
+### Summary
+
+Built, dry-ran, and deployed the optimized public Worker, then completed
+controlled production acceptance without a resource-limit recurrence.
+
+### Files affected
+
+- Cloudflare production deployment
+- Fresh `.open-next` release artifact
+- Canonical documentation
+
+### Reasoning
+
+The previous redesigned release exceeded the free request CPU allowance.
+Removing anonymous Auth work, repeated anonymous landing SSR, and browser-only
+libraries from server paths reduced the deployment footprint and request cost
+while preserving the progressive-disclosure product release.
+
+### Verification
+
+- Formatting, lint, strict TypeScript, 48 application tests, database safety,
+  37 automation tests, the Next/OpenNext builds, and Wrangler dry-run passed.
+- Upload decreased from 8,738.70 KiB (1,708.80 KiB gzip) to 7,128.55 KiB
+  (1,390.16 KiB gzip); Worker startup is 35 ms.
+- Production version `0ebdae82-4a7f-42de-b5cb-409ac84cc184` is live on apex
+  and `www`.
+- English and Spanish discovery rendered correctly with current catalogue
+  results.
+- A controlled 40-request query-route probe returned 40 `200` responses and
+  zero 1102/5xx errors.
+- Authenticated browser traffic returned no landing-cache header, as required.
+
+### Outstanding follow-up work
+
+- Confirm anonymous `/en` and `/es` cache `miss` then `hit` headers using a
+  clean production session.
+- Continue monitoring production Worker errors and CPU usage.
+- Complete credential-gated administrator and 360 px production acceptance.
+
+## 2026-07-28 01:38 +02:00
+
+### Summary
+
+Attributed the rolled-back Worker 1102 to request CPU/free-tier limits and
+implemented a resource-focused correction without changing production.
+
+### Files affected
+
+- `src/cloudflare-worker.ts`
+- `src/cloudflare-cache.ts`
+- `src/lib/supabase/auth-cookie.ts`
+- `src/lib/supabase/public.ts`
+- `src/lib/supabase/middleware.ts`
+- `src/lib/auth.ts`
+- `src/lib/repository.ts`
+- Public event, venue, passport, map, and venue QR paths
+- `next.config.ts`, `wrangler.jsonc`, tests, and canonical documentation
+
+### Reasoning
+
+Wrangler recorded a 29 ms startup for the rejected 8,738.70 KiB release, so
+startup was healthy. Anonymous traffic nevertheless performed Supabase Auth
+validation and repeated SSR, while MapLibre and server QR generation inflated
+the server bundle. The correction skips those costs and adds a private-data-safe
+landing cache.
+
+### Verification
+
+- Lint and strict TypeScript passed.
+- All 48 application tests passed.
+- The production Next build passed.
+- Local mobile browser acceptance passed 18 tests; one authenticated test was
+  skipped because disposable QA credentials are not configured.
+- MapLibre's prior approximately 1.07 MB server chunk and QR code server module
+  are absent from rebuilt Next server chunks.
+- Production remains on stable version
+  `beb39dc8-442b-489f-a261-7c1570157a0b`.
+
+### Outstanding follow-up work
+
+- OpenNext build is blocked in the managed Windows sandbox by a denied
+  parent-directory esbuild scan.
+- Build outside that restriction, run Wrangler dry-run, deploy, and verify
+  cache isolation and zero 1102/5xx failures under cold and sustained load.
+
+## 2026-07-27 23:55 +02:00
+
+### Summary
+
+Rolled the public Worker back after the progressive-disclosure release
+generated Cloudflare error 1102 under production traffic.
+
+### Files affected
+
+- Cloudflare production deployment
+- Canonical documentation
+
+### Reasoning
+
+Service restoration takes priority over retaining a release that exceeds CPU
+or memory limits. The additive Supabase migration remains compatible with the
+previous Worker.
+
+### Verification
+
+- Version `beb39dc8-442b-489f-a261-7c1570157a0b` restored to 100% traffic.
+- Twenty consecutive root, home, authentication, and robots checks returned
+  expected statuses without a 5xx response.
+
+### Outstanding follow-up work
+
+- Inspect invocation outcomes and CPU/memory metrics for the rejected version.
+- Profile and optimize before considering Workers Paid or redeployment.
+
+## 2026-07-27 22:22 +02:00
+
+### Summary
+
+Rebuilt account, staff, and administrator information architecture around
+route-based progressive disclosure and added a secure administrator user CRM.
+
+### Files affected
+
+- `src/components/WorkspaceShell.tsx`
+- `src/app/[locale]/account/**`
+- `src/app/[locale]/staff/**`
+- `src/app/[locale]/moderation/**`
+- `src/app/[locale]/admin/**`
+- `src/app/api/admin/users/route.ts`
+- `src/lib/admin-users.ts`
+- `database/migrations/0027_admin_user_crm.sql`
+- Unit, database acceptance, browser tests, styles, and canonical documentation
+
+### Reasoning
+
+The previous consoles exposed unrelated controls and datasets together. Stable
+sub-pages reduce initial cognitive load and query scope. Auth email lookup and
+role mutation remain database-authorized and audited rather than relying on
+hidden controls or a browser service credential.
+
+### Verification
+
+- Root formatting, lint, strict types, 42 application tests, database safety,
+  37 automation tests, automation Wrangler dry-run, and production builds
+  passed.
+- Local browser acceptance passed 18 tests with one credential-gated test
+  skipped.
+- Migration `0027` applied successfully; production rollback-only database
+  acceptance returned one `ok = true` row.
+- Cloudflare Worker version `cdf8050d-9d24-4f4a-b15d-3229c0d382f2` deployed to
+  both custom domains.
+- Focused production health sampling returned 40 expected responses with zero
+  5xx failures.
+
+### Outstanding follow-up work
+
+- Run authenticated browser acceptance when disposable QA credentials are
+  available.
+- Investigate intermittent 503/aborted requests observed during sustained
+  production crawling if they recur outside the test load.
+- Review stale deterministic QA fixtures left by an older acceptance run.
+- Design a real conversation backend before adding threaded support inboxes.
+
+## 2026-07-27 14:08 +02:00
+
+### Summary
+
+Deployed Telegram slash commands and fixed dashboard login compatibility for
+browsers that omit the `Origin` header on same-origin form submissions.
+
+### Files affected
+
+- `automation/src/dashboard/auth.ts`
+- `automation/tests/routes.test.ts`
+- Automation deployment and canonical documentation
+
+### Reasoning
+
+The permanent dashboard credential was confirmed valid, but the browser
+received `403` before password verification. The CSRF guard now falls back to
+same-origin referrer or fetch metadata only when a usable `Origin` is absent.
+An explicit cross-site `Origin` continues to take precedence and is rejected.
+
+### Verification
+
+- Strict TypeScript and all 37 automation tests passed.
+- Cross-site login rejection has dedicated regression coverage.
+- Live compatibility login returned `303`, followed by authenticated dashboard
+  status `200`.
+- Worker version `2bd03271-7a18-427e-8ccf-da8ad290b4b7` is deployed.
+- Telegram reports the secured webhook and all six group commands registered,
+  with zero pending updates and no delivery error at verification time.
+
+### Outstanding follow-up work
+
+- Send and verify `/help` and `/status` after explicit permission for those
+  external user messages.
+
+## 2026-07-27 13:39 +02:00
+
+### Summary
+
+Added a secured Telegram group command transport and reconciled documentation
+with the now-live automation infrastructure and first Telegram delivery.
+
+### Files affected
+
+- `automation/src/telegram-webhook.ts`
+- `automation/src/index.ts`
+- `automation/src/bindings.ts`
+- `automation/src/security/replay.ts`
+- `automation/src/services/telegram.ts`
+- `automation/tests/telegram-webhook.test.ts`
+- `automation/README.md`
+- Canonical project documentation
+
+### Reasoning
+
+Group operators need discoverable `/` commands without duplicating the voice
+and dashboard business logic. The webhook therefore verifies Telegram's
+independent secret-token header, permits only the configured group, reserves
+each update ID in D1/KV, and executes the shared generated command modules.
+
+### Verification
+
+- Strict TypeScript passed.
+- All 35 automation tests passed.
+- Wrangler dry bundle passed at 249.13 KiB upload and 52.51 KiB gzip.
+- Tests cover invalid secrets, wrong chats, bot-addressed commands, D1/KV
+  deduplication, auditing, help replies, and routed status execution.
+
+### Outstanding follow-up work
+
+- Obtain explicit approval to reuse the authenticated Wrangler configuration
+  stored outside the repository.
+- Install `TELEGRAM_WEBHOOK_SECRET`, deploy, register Telegram's webhook and
+  command menu, and verify `/help` plus `/status` live.
+
+## 2026-07-27 13:08 +02:00
+
+### Summary
+
+Validated external readiness for Telegram delivery and Cloudflare provisioning
+without exposing or persisting credentials.
+
+### Files affected
+
+- `automation/src/commands/telegram-test.ts`
+- `automation/tests/voice-route.test.ts`
+- Automation and Tasker documentation
+- Canonical project documentation
+
+### Reasoning
+
+End-to-end deployment must be driven from authoritative external state rather
+than assumptions. Read-only checks prove the bot credential is valid, the bot
+is a member of the destination group, the Cloudflare account is authenticated,
+and the automation Worker/D1/KV resources do not yet exist.
+
+A dedicated `test the bot` command now removes the financial-data dependency
+from first acceptance. Its signed-route integration test covers HMAC
+authentication, replay reservation, audit writes, generated routing, Telegram
+payload delivery, and response handling.
+
+### Outstanding follow-up work
+
+- Obtain explicit approval for one potentially billable EU D1 database, one KV
+  namespace, Worker deployment/secrets/migrations, and one labelled Telegram
+  connection-test message.
+- Continue through signed command acceptance after approval.
+
+## 2026-07-27 12:59 +02:00
+
+### Summary
+
+Added the graphical automation Command Centre and hardened the Android
+Hey Google/Tasker bridge.
+
+### Files affected
+
+- `automation/src/command-router.ts`
+- `automation/src/commands/**`
+- `automation/src/dashboard/html.ts`
+- `automation/src/index.ts`
+- `automation/src/operator-command.ts`
+- `automation/scripts/render-command-hub.ts`
+- `automation/scripts/send-voice-request.mjs`
+- `automation/clients/tasker/**`
+- `automation/tests/**`
+- Canonical project documentation
+
+### Reasoning
+
+Operators need a scalable visual command catalogue and audited manual fallback,
+while the public presentation needs a bounded, HTTPS-only Android signing path
+that forwards the spoken phrase without embedding secrets in Tasker.
+
+The operator path reserves a generated operation ID through D1/KV before
+execution, preventing duplicate external sends. Static desktop and mobile
+renders were inspected with no horizontal overflow.
+
+### Verification
+
+- Root formatting, lint, TypeScript, database safety, and production build
+  passed.
+- 35 public-application tests and 21 automation tests passed.
+- Wrangler dry bundle passed at 242.14 KiB upload and 50.76 KiB gzip.
+- Credential-pattern scan found no Telegram-token-shaped values in source.
+
+### Outstanding follow-up work
+
+- Add dashboard login rate limiting and Worker route integration tests.
+- Provision remote resources and run Android-to-Telegram acceptance after
+  credential rotation and explicit deployment approval.
+
+## 2026-07-27 12:26 +02:00
+
+### Summary
+
+Established the six canonical documentation artifacts and reconciled them with
+the current public application and voice automation implementation.
+
+### Files affected
+
+- `docs/AI_HANDOFF.md`
+- `docs/PROJECT_STATUS.md`
+- `docs/ARCHITECTURE.md`
+- `docs/DECISIONS.md`
+- `docs/TODO.md`
+- `docs/CHANGELOG.md`
+- `docs/STATUS.md`
+- `README.md`
+
+### Reasoning
+
+Another engineer or AI must be able to become productive from `/docs` without
+reverse-engineering source, relying on chat history, or risking credential
+exposure.
+
+### Outstanding follow-up work
+
+- Keep all six files synchronized after each meaningful milestone and session.
+- Update deployment evidence after automation production acceptance.
+
+## 2026-07-27 12:18 +02:00
+
+### Summary
+
+Completed and verified the isolated AkiPasa voice automation foundation.
+
+### Files affected
+
+- `automation/**`
+- `.github/workflows/automation.yml`
+- Root check/configuration files
+- Architecture and implementation-status documentation
+
+### Reasoning
+
+Provide a reusable authenticated automation engine rather than a hardcoded
+voice-to-Telegram walkthrough.
+
+### Outstanding follow-up work
+
+- Rotate external credentials.
+- Provision remote D1/KV and deploy under explicit approval.
+- Load real metrics and run Android-to-Telegram acceptance.
+
+## 2026-07-27 09:00 +02:00
+
+### Summary
+
+Completed the focused console redesign and expanded staff/business operations,
+including moderation visibility and ownership of the launch catalogue.
+
+### Files affected
+
+- `src/app/[locale]/**`
+- `src/components/**`
+- `src/lib/**`
+- `src/app/globals.css`
+- `database/migrations/0024_staff_operations_moderation.sql`
+- `database/migrations/0025_owned_catalogue_deletion.sql`
+- `database/migrations/0026_promote_launch_catalogue.sql`
+- Unit and browser tests
+
+### Reasoning
+
+Reduce scrolling and text density while providing scalable staff, moderation,
+customer-support, catalogue, and owner-management workflows.
+
+### Outstanding follow-up work
+
+- Replace launch catalogue entries with verified businesses.
+- Continue production usability monitoring with real operators.
+
+## 2026-07-28 14:20 +02:00
+
+### Summary
+
+Recorded the approved production billing/deployment attempt and its exact
+environmental blockers. The permitted OpenNext build reproduced esbuild's
+parent-directory access failure; the external build was denied by execution
+policy, and authenticated Chrome tab claims timed out before any Stripe,
+Supabase, or Cloudflare secret changes could be completed.
+
+### Files affected
+
+- `docs/AI_HANDOFF.md`
+- `docs/PROJECT_STATUS.md`
+- `docs/TODO.md`
+- `docs/CHANGELOG.md`
+
+### Reasoning
+
+The release must not use a stale `.open-next` artifact, and future work needs
+to distinguish an environment/tooling block from an application or database
+failure.
+
+### Outstanding follow-up work
+
+- Resume the already-approved restricted Stripe key, webhook, and encrypted
+  Worker secret setup from a working authenticated session.
+- Build a fresh OpenNext artifact outside the managed parent-directory
+  restriction, then dry-run, deploy, and perform live payment acceptance.
+
+## 2026-07-28 14:29 +02:00
+
+### Summary
+
+Completed production billing credential provisioning: created a least-privilege
+Stripe key, registered the AkiPasa webhook for the four implemented events, and
+installed all three runtime credentials as encrypted Cloudflare Worker secrets.
+
+### Files affected
+
+- `docs/AI_HANDOFF.md`
+- `docs/PROJECT_STATUS.md`
+- `docs/TODO.md`
+- `docs/CHANGELOG.md`
+- Stripe production API-key and webhook configuration
+- Cloudflare Worker encrypted secret configuration
+
+### Reasoning
+
+Hosted Checkout, Customer Portal, and signed webhook fulfillment cannot operate
+without production credentials, and credentials must never be committed or
+documented.
+
+### Outstanding follow-up work
+
+- Produce a fresh OpenNext artifact through the connected Cloudflare Linux
+  build, deploy it while preserving secrets, and run live payment acceptance.
+
+## 2026-07-28 14:45 +02:00
+
+### Summary
+
+Configured the connected Cloudflare Linux build to generate the OpenNext
+artifact and deploy while preserving dashboard-managed secrets. Reverified
+formatting, lint, strict types, 53 application tests, database safety, 37
+automation tests, and the regular Next production build. Publishing stopped at
+the managed environment's read-only `.git` boundary.
+
+### Files affected
+
+- `.gitignore`
+- `docs/AI_HANDOFF.md`
+- `docs/ARCHITECTURE.md`
+- `docs/DECISIONS.md`
+- `docs/PROJECT_STATUS.md`
+- `docs/CHANGELOG.md`
+- Cloudflare connected-build configuration
+
+### Reasoning
+
+The stale local OpenNext artifact cannot be deployed. Cloudflare's Linux build
+avoids the Windows parent-directory restriction and `--keep-vars` preserves the
+three encrypted runtime secrets.
+
+### Outstanding follow-up work
+
+- Stage, commit, and push the reviewed source to `master`.
+- Inspect the connected build, verify the fresh artifact, and complete
+  production smoke/payment acceptance.
+
+## 2026-07-28 15:28 +02:00
+
+### Summary
+
+Built the current release from a clean isolated Windows snapshot, fixed the
+clean-build dependency on an ignored generated `ExecutionContext` declaration,
+and completed a fresh OpenNext build and Wrangler dry-run. The bundle generated
+81 pages and 153 assets and measured 7,090.69 KiB upload / 1,329.72 KiB gzip.
+The managed policy denied the approved production upload, so live acceptance
+has not started.
+
+The validated candidate remains at
+`%TEMP%\akipasa-release-20260728-1`. Its server handler SHA-256 is
+`B28D964B840DF1C3603C7E1353141A0E84E232092B6AEA67FCF632CF65880ECB`; the
+repository `.open-next` handler differs and is not the release candidate.
+
+### Files affected
+
+- `src/cloudflare-worker.ts`
+- `docs/AI_HANDOFF.md`
+- `docs/PROJECT_STATUS.md`
+- `docs/ARCHITECTURE.md`
+- `docs/DECISIONS.md`
+- `docs/TODO.md`
+- `docs/CHANGELOG.md`
+
+### Reasoning
+
+A release must build from source without relying on ignored generated type
+files, and only a fresh validated OpenNext artifact is safe to promote.
+
+### Outstanding follow-up work
+
+- Deploy the validated artifact with `--keep-vars`, or publish the reviewed
+  source through the configured connected build.
+- Run live profile, catalogue, onboarding, billing webhook, and 360 px
+  acceptance.
+
+## 2026-10-09 23:45 +02:00
+
+### Summary
+
+Completed the AkiDuermo room-night request candidate: explicit booking modes, real aggregate availability and quotes, atomic physical-room assignment, customer requests/cancellation/history, AkiBusiness reservation transitions, durable bilingual confirmations, export coverage and disposable PostgreSQL acceptance/rollback automation. No payment capture or automatic property confirmation was added.
+
+### Outstanding follow-up work
+
+- Require the PostgreSQL CI job, full check/browser suites and Cloudflare package to pass on the exact PR head.
+- Apply the additive migration before the Worker release, then verify signed-in customer and property-owner flows on both live hosts before enabling a property.
+
+## 2026-10-10 — Portal home unity candidate
+
+- AkiBusiness: branded compact header, home quick actions, searchable and paginated venue/stay picker with filters and safe secondary deletion. Analytics reads run only inside Analytics.
+- AkiDuermo: supplied green logo, shared header controls, green accents and compact home search layout. Business/Duermo installation icons use supplied masters; AkiPasa remains unchanged.
+
+## 2026-10-10 — shared Aki Apps header controls
+
+- Match Business and Duermo language/theme/app dropdown controls, including localized Duermo auth pages.
+- Brand the AkiPasa app link consistently, hide the current app, and retain logout/settings within the menu.
+- Add header order, destination, theme, keyboard and menu-bounds regression coverage.
+
+- Candidate: claimant-localized approval/welcome and denial/resubmission emails
+  from alex@akipasa.com, with atomic private outbox and duplicate-safe delivery.
+
+## 2026-10-10
+
+- Fix AkiBusiness access for added venue/accommodation team members, including consumer editors and members of unverified properties, while retaining tenant role and Pro entitlement checks.
+
+## 2026-10-13 — Backlog recovery release verification
+
+- Release smoke now verifies the exact packaged source SHA across public portal hosts instead of accepting only an old feature marker.
+- Cloudflare packaging rejects uncommitted/untracked source and source changes during packaging.
+- Tablet CI runs recovered claim and media picker acceptance harnesses.
+
+## 2026-10-13 — Health privacy first-visit repair (candidate)
+
+- Add localized Close and Escape to the shared privacy panel, with focus restoration and no implied consent decision. Unsaved choices stay drafts; existing consent and motion state are unchanged by dismissal.
+- Exercise actual anonymous initial-panel state before normal AkiDuermo discovery/map interactions. Current-head browser and production acceptance remain pending.
+
+## 2026-10-14
+
+- Measure claim-picker browser geometry in one rendered state after the exact completed search response; retain strict overlap/natural-click acceptance and add held-loading bounds coverage.
+
+## 2026-10-15 — Independent AkiDuermo preview continuity
+
+- Keep catalogue, saved stays, map property links and recovery navigation on the current application origin while preserving canonical metadata.
+- Add a manually selected, exact-source preview build/deploy workflow with real public build/runtime configuration and fixed product identity. Authenticated production acceptance remains a separate release gate.
+
+## 2026-10-14 — Customer AI boundaries
+
+- Separate customer and operator model history; restart historical customer context safely while retaining stored records.
+- Enforce the request's effective advertised tool set during execution, preserving existing validation, approval, budgets and audit.
+- Add actual gateway/client/provider fixtures and persisted-state regression coverage. Release gates and limitations are recorded in the master contract and impact register.
+
+## 2026-10-14 — Venue media signing
+
+- Batch public venue image signing once per nonempty loader, preserving media order, cover behavior and localized labels.
+- Cover reversed/partial batch responses, denied paths, duplicates, failure and empty-media cases with installed-SDK fixtures. Request-count evidence is recorded separately from latency and Storage-download errors.
+
+## 2026-10-14 — Runtime security dependencies
+
+- Pin focused Next, PostCSS and Sharp fixes; preserve current MapLibre v5 map/worker contracts with the exact upstream attribute snapshot backport.
+- Fail installation/build checks for unknown, partially patched or alternate-entry MapLibre artifacts; retain the version-based npm alert and separate provider trust limitation in the audit.
+
+## 2026-10-14 — AkiBusiness events catalogue follow-up
+
+- Keep the current filter labelled “Current and upcoming” / “Actuales y próximos” to match its included running and undated draft events.
+- Add a bilingual label regression to the event workspace contract test.

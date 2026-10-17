@@ -1,0 +1,92 @@
+import { describe, expect, it } from "vitest";
+import { hasSupabaseAuthCookie } from "../src/lib/supabase/auth-cookie";
+import { publicRequestOrigin } from "../src/lib/public-request-origin";
+import {
+  passwordSchema,
+  safeAuthDestination,
+  safeAuthDestinationForOrigin,
+  safeExternalUrlSchema,
+  taskFromAuthCallback,
+} from "../src/lib/auth-security";
+
+describe("authentication security", () => {
+  it("requires a strong baseline password", () => {
+    expect(passwordSchema.safeParse("Short1A").success).toBe(false);
+    expect(passwordSchema.safeParse("alllowercase123").success).toBe(false);
+    expect(passwordSchema.safeParse("SecureAccount42").success).toBe(true);
+  });
+
+  it("prevents external and cross-locale redirect targets", () => {
+    expect(safeAuthDestination("es", "https://evil.example")).toBe(
+      "/es/account",
+    );
+    expect(safeAuthDestination("es", "/en/account")).toBe("/es/account");
+    expect(safeAuthDestination("es", "/es/community")).toBe("/es/community");
+  });
+
+  it("accepts only HTTPS external action links", () => {
+    expect(
+      safeExternalUrlSchema.safeParse("https://tickets.example/event").success,
+    ).toBe(true);
+    expect(safeExternalUrlSchema.safeParse("").success).toBe(true);
+    expect(
+      safeExternalUrlSchema.safeParse("http://tickets.example/event").success,
+    ).toBe(false);
+    expect(safeExternalUrlSchema.safeParse("javascript:alert(1)").success).toBe(
+      false,
+    );
+    expect(
+      safeExternalUrlSchema.safeParse("data:text/html,unsafe").success,
+    ).toBe(false);
+  });
+
+  it("detects only Supabase authentication cookies", () => {
+    expect(
+      hasSupabaseAuthCookie([
+        { name: "theme" },
+        { name: "sb-project-auth-token.0" },
+      ]),
+    ).toBe(true);
+    expect(hasSupabaseAuthCookie([{ name: "theme" }])).toBe(false);
+    expect(hasSupabaseAuthCookie([{ name: "sb-project-unrelated" }])).toBe(
+      false,
+    );
+  });
+
+  it("keeps AkiDuermo OAuth and email callbacks on the stay origin", () => {
+    expect(
+      publicRequestOrigin(new Headers({ host: "akiduermo.com" })),
+    ).toBe("https://akiduermo.com");
+    expect(publicRequestOrigin(new Headers({ host: "attacker.example" }))).toBe(
+      "https://akiduermo.com",
+    );
+  });
+
+  it("keeps a public task through the nested recovery callback", () => {
+    const recovery =
+      "/en/auth/recover?next=%2Fen%2Faccount%2Fsubscription%3Ffrom%3Dakipasa";
+    expect(
+      safeAuthDestinationForOrigin("en", recovery, "https://akipasa.com"),
+    ).toBe(recovery);
+    expect(taskFromAuthCallback("en", recovery, "https://akipasa.com")).toBe(
+      "/en/account/subscription?from=akipasa",
+    );
+  });
+
+  it("keeps an AkiDuermo task and rejects an external nested destination", () => {
+    expect(
+      taskFromAuthCallback(
+        "es",
+        "/es/auth/recover?next=%2Fbookings%3Fstatus%3Dpending",
+        "https://akiduermo.com",
+      ),
+    ).toBe("/bookings?status=pending");
+    expect(
+      taskFromAuthCallback(
+        "en",
+        "/en/auth/recover?next=https%3A%2F%2Fevil.example%2Fsteal",
+        "https://akipasa.com",
+      ),
+    ).toBe("/en/account");
+  });
+});
