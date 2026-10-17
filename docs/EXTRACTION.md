@@ -1,5 +1,17 @@
 # AkiDuermo extraction contract
 
+## 2026-10-17 | Candidate account UI refinement
+
+The release/hold source gets a separate unmerged UI candidate for a genuine
+account dashboard on /account. Existing saved stays are device-local;
+reservation summary reads use the user's Supabase session and explicitly
+filter by profile_id, preserving RLS. Host-only sign out and the AkiBusiness
+property-management handoff remain unchanged. No changes to global billing,
+schedules, data or auth. The Cloudflare EXPECTED_SOURCE_SHA pin deliberately
+requires an authorized source update after CI and preview acceptance;
+its mismatch with the merged navigation commit is not a build compilation fault.
+
+
 Source: AkiPasa master `080ea0ffb2dd6612436acd04c25b4daf8ff71129`. Source files were copied using `git archive`, with no Git history, environment secrets, dependencies or generated assets. The original checkout is untouched. Shared modules are a reviewed source snapshot; future shared fixes require synchronized versioned updates and independent app checks. No cross-repository imports exist.
 
 ## Preserved boundaries
