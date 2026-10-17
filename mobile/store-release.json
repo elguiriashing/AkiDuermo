@@ -25,7 +25,7 @@
     "supportUrl": "",
     "marketingUrl": "https://akiduermo.com"
   },
-  "sourceObservation": "Standalone repository README describes extraction groundwork; runnable native/web source unverified",
+  "sourceObservation": "Cloudflare confirms production akiduermo.com is served by Worker akiduermo. This repo's default main README is historical extraction groundwork; active extraction and account dashboard are in PRs #1, #2, and #6. Confirm exact production source commit and reconcile independent app before mobile build.",
   "gates": {
     "sourceAndLiveProductMappingVerified": false,
     "nativeAndroidBuildVerified": false,
