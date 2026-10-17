@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "status": "PREPARATION_ONLY_NOT_SUBMITTABLE",
+  "product": "AkiDuermo",
+  "webOrigin": "https://akiduermo.com",
+  "startPath": "/",
+  "proposedIdentifiers": {
+    "androidApplicationId": "com.akipasa.duermo",
+    "iosBundleId": "com.akipasa.duermo",
+    "warning": "PROPOSALS ONLY. Confirm identifiers before first store app creation/signing."
+  },
+  "platformRequirements": {
+    "googlePlayTargetApiMinimum": 36,
+    "iosBuildWithXcodeMajorMinimum": 26
+  },
+  "listingDraft": {
+    "primaryLocale": "es-ES",
+    "secondaryLocale": "en-GB",
+    "categoryCandidate": "Travel",
+    "shortDescriptionEs": "Encuentra alojamientos para tu próxima escapada.",
+    "shortDescriptionEn": "Find places to stay for your next getaway.",
+    "fullDescriptionEs": "Descubre alojamientos y planifica tus escapadas con AkiDuermo. Explora propiedades y zonas de España, consulta detalles y disponibilidad publicada y envía solicitudes de reserva cuando el alojamiento lo permita. La reserva no queda confirmada hasta que el establecimiento la acepte.",
+    "fullDescriptionEn": "Discover places to stay and plan trips with AkiDuermo. Explore accommodation across Spain, review property details and published availability, and send booking requests where supported. A request is not a confirmed reservation until the property accepts it.",
+    "privacyPolicyUrl": "",
+    "supportUrl": "",
+    "marketingUrl": "https://akiduermo.com"
+  },
+  "sourceObservation": "Cloudflare confirms production akiduermo.com is served by Worker akiduermo. This repo's default main README is historical extraction groundwork; active extraction and account dashboard are in PRs #1, #2, and #6. Confirm exact production source commit and reconcile independent app before mobile build.",
+  "gates": {
+    "sourceAndLiveProductMappingVerified": false,
+    "nativeAndroidBuildVerified": false,
+    "nativeIosBuildVerified": false,
+    "realDeviceAuthAndDeepLinksPassed": false,
+    "nativeAppExperienceReviewed": false,
+    "appAccountDeletionPassed": false,
+    "privacyDataSafetyDeclared": false,
+    "storeBillingCompliant": false,
+    "appIconsAndScreenshotsReviewed": false,
+    "reviewerDemoCredentialsPrepared": false,
+    "signingAndStoreAccountsConfigured": false,
+    "ageRatingAndContentDeclarationsComplete": false
+  },
+  "delivery": {
+    "android": "Android App Bundle (.aab) signed for Play App Signing, not generated",
+    "ios": "Signed .ipa archive and TestFlight build, not generated",
+    "intendedTracks": [
+      "Play internal testing",
+      "TestFlight internal testing"
+    ]
+  },
+  "notes": [
+    "Do not insert app signing keys, provisioning profiles, personal details, reviewer passwords or store API keys in Git.",
+    "Do not publish android/.well-known/assetlinks.json or apple-app-site-association with guessed fingerprints/team IDs.",
+    "Respect AkiSuite cross-domain OAuth callback and application deep linking; each product must survive login, logout and password recovery.",
+    "No automatic purchase-flow enabling: review mobile digital subscription rules and local availability before release."
+  ]
+}
