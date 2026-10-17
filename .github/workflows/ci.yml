@@ -3,7 +3,7 @@ on:
   push:
     branches: [main, "migration/**"]
   pull_request:
-    branches: [main, "migration/**"]
+    branches: [main, "migration/**", "release/hold-duermo-role-cutover"]
 permissions:
   contents: read
 concurrency:
