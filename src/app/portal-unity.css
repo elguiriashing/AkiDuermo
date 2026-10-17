@@ -228,3 +228,15 @@ html[data-theme="dark"] body[data-product="akibusiness"] {
 }
 .portal-product-popover a[aria-current="page"] { border-color: var(--app-accent) !important; }
 .portal-product-popover .portal-current-app { color: var(--muted); font-size: 10px; font-weight: 750; margin-left: auto; }
+
+/* Two consistent actions beneath all five AkiSuite products. */
+.portal-product-actions { display: grid; gap: 8px; }
+.portal-product-actions > a, .portal-product-actions form button {
+  display: flex; align-items: center; width: 100%; min-height: 44px;
+  padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 11px; background: var(--surface-alt); color: var(--ink);
+  font: inherit; font-weight: 750; text-decoration: none; cursor: pointer;
+}
+.portal-product-actions > a:hover, .portal-product-actions form button:hover {
+  background: var(--primary-soft);
+}
