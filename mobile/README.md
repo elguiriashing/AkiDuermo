@@ -4,7 +4,7 @@
 
 ## Confirmed source and product-specific review
 
-Consumer accommodations, booking availability, units, rates, booking confirmation and account/reservations. Standalone repository README says migration groundwork only: first verify a deployable application source and canonical worker. Verify independent property management / shared Supabase auth without forcing an AkiPasa venue.
+Consumer accommodation search, availability, property booking requests and personal account. Cloudflare confirms an active akiduermo.com Worker; however this repository's default main README is historical extraction groundwork and working extraction remains on separate PR branches (#1, #2, #6). Confirm deployed production source/commit and reconcile the extracted application before native builds. Preserve shared Supabase auth and independent-property bookings without requiring a public AkiPasa venue.
 
 ## Native packaging and release sequence
 
