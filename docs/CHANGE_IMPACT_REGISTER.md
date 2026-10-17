@@ -1,5 +1,20 @@
 # Change Impact Register
 
+## 2026-10-17 | Independent AkiDuermo suite switcher
+
+- Scope: extracted AkiDuermo header popover and approved brand assets.
+- Before: four links, including outdated cross-product destinations and stale HQ
+  artwork; AkiCoches omitted.
+- After: five canonical links, EN/ES destination preservation, accessible current
+  product indicator, real AkiCoches red and HQ gold/black and AB violet icons.
+- Boundaries: stay search, availability, bookings, property/team authorization,
+  authentication and databases are unchanged; no cross-domain cookie sharing.
+- Release gates: source formatting/type/build, standalone Cloudflare bundle,
+  mobile and keyboard checks, plus the *actual* akiduermo.com Worker release
+  source must be verified. This extraction branch is not itself live evidence.
+- Rollback: revert UI and brand-asset commits only.
+
+
 ## 2026-10-14 | AkiConduzco mobility foundation (implementation candidate)
 
 - **Request / before:** AkiPasa has no car-rental discovery or fleet tools. Its
