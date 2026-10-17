@@ -1,0 +1,36 @@
+name: Regenerate AkiDuermo release security lockfile
+on:
+  push:
+    branches: [security/duermo-production-next-patch-20261017]
+permissions:
+  contents: write
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Assert patched framework versions
+        run: |
+          node - <<'NODE'
+          const lock = require('./package-lock.json');
+          const deps = {'next':'15.5.28','eslint-config-next':'15.5.28','react':'19.1.10','react-dom':'19.1.10'};
+          for (const [name,version] of Object.entries(deps)) {
+            const v = lock.packages['node_modules/'+name]?.version;
+            if(v !== version) throw new Error(name+' mismatch '+v);
+          }
+          NODE
+      - name: Commit regenerated lockfile
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'security: refresh AkiDuermo production release lockfile'
+            git push origin HEAD:security/duermo-production-next-patch-20261017
+          fi
+      - run: npm ci --no-audit --no-fund
