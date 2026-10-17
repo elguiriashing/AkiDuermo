@@ -1,5 +1,23 @@
 # Change Impact Register
 
+## 2026-10-17 | Independent stay account dashboard (candidate)
+
+- Before: three generic shortcut cards and a large sign-out panel on /account.
+- After: mint-themed compact hero, genuine user-filtered booking counts,
+  next three stays, shortcuts, saved device favourites, security and explicit
+  AkiBusiness management handoff; mobile, light/dark and EN/ES variants.
+- Dependencies: /account, /bookings, /saved, /settings, host-local sign-out,
+  shared Supabase accommodation_reservations and RLS, cross-domain AkiPasa
+  profile link. All four reads constrain profile_id to user.id.
+- Risk: additional read-only reservation queries, possible customer session
+  refresh, account layout. No schema migration, tenant permissions or payment
+  state changes. Error shows a warning, never made-up zero counts.
+- Release: standalone npm check, build, browser acceptance, authenticated
+  tenant/locale/theme/viewport smoke and Cloudflare source-pin update only after
+  review. No production release performed by this PR.
+- Rollback: revert /account page, its module CSS and contract test.
+
+
 ## 2026-10-17 | Independent AkiDuermo suite switcher
 
 - Scope: extracted AkiDuermo header popover and approved brand assets.

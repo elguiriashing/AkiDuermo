@@ -1,5 +1,18 @@
 # AKIPASA MASTER SYSTEM CONTRACT
 
+## 2026-10-17 | Standalone AkiDuermo account dashboard candidate
+
+The independently deployed `/account` page (not the legacy public monorepo
+route) now shows scoped accommodation reservation counts and three eligible
+upcoming/current stays using the signed-in user's session and existing RLS.
+The interface keeps the AkiBusiness property-management link, host-local sign
+out, device-only favourites, EN/ES and appearance themes. No change to booking
+mutations, prices, privacy controls, shared user identity, scheduling or billing.
+This release is isolated on a candidate PR targeting the held release branch;
+production deployment remains explicitly gated by source pinning and preview
+acceptance.
+
+
 ## 2026-10-15 | Outgoing nested-credential redirect boundary
 
 Cross-origin AkiPasa membership/fallback redirects remove credential-bearing
