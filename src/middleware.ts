@@ -34,19 +34,26 @@ export async function middleware(request: NextRequest) {
     target.searchParams.set("lang", path.split("/")[1]);
     return NextResponse.redirect(target, 308);
   }
-  const membership = path.match(
-    /^\/(?:(en|es)\/)?(membership|memberships|account\/(?:membership|memberships|subscription))\/?$/,
-  );
-  if (membership) {
+  // Membership cards live on their product; cross-product billing remains central.
+  const productMembership = path.match(/^\/(?:(en|es)\/)?memberships?\/?$/);
+  if (productMembership) {
     if (!["GET", "HEAD"].includes(request.method))
       return new NextResponse(null, { status: 404 });
-    const target = new URL(
-      `/${membership[1] || locale}/${membership[2].startsWith("account/") ? "account/subscription" : "membership"}`,
-      "https://akipasa.com",
-    );
-    target.search = request.nextUrl.search;
-    target.searchParams.set("from", "akiduermo");
-    return crossOriginRedirect(target);
+    if (path !== "/membership") {
+      const destination = request.nextUrl.clone();
+      destination.pathname = "/membership";
+      if (productMembership[1]) destination.searchParams.set("lang", productMembership[1]);
+      return NextResponse.redirect(destination, 308);
+    }
+  }
+  const billingMembership = path.match(/^\/(?:(en|es)\/)?account\/(?:membership|memberships|subscription)\/?$/);
+  if (billingMembership) {
+    if (!["GET", "HEAD"].includes(request.method))
+      return new NextResponse(null, { status: 404 });
+    const destination = new URL(`/${billingMembership[1] || locale}/account/subscription`, "https://akipasa.com");
+    destination.search = request.nextUrl.search;
+    destination.searchParams.set("from", "akiduermo");
+    return crossOriginRedirect(destination);
   }
   if (!stayHostMethodAllowed(path, request.method))
     return new NextResponse(null, { status: 404 });
