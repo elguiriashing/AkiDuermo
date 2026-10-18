@@ -98,7 +98,7 @@ describe("independent AkiDuermo boundaries", () => {
     ).toBe(421);
     expect(mocks.refresh).not.toHaveBeenCalled();
   });
-  it.each(["/unknown", "/membership", "/en/account/subscription"])(
+  it.each(["/unknown", "/en/account/subscription"])(
     "never transfers credentials across origins from %s",
     async (path) => {
       const keys = [
@@ -145,7 +145,7 @@ describe("independent AkiDuermo boundaries", () => {
       expect(mocks.refresh).not.toHaveBeenCalled();
     },
   );
-  it.each(["/unknown", "/membership", "/es/account/subscription"])(
+  it.each(["/unknown", "/es/account/subscription"])(
     "removes nested or encoded credentials from outgoing redirects at %s",
     async (path) => {
       const params = new URLSearchParams({
@@ -177,7 +177,7 @@ describe("independent AkiDuermo boundaries", () => {
       expect(mocks.refresh).not.toHaveBeenCalled();
     },
   );
-  it.each(["/unknown", "/membership", "/es/account/subscription"])(
+  it.each(["/unknown", "/es/account/subscription"])(
     "rejects non-read cross-origin requests at %s",
     async (path) => {
       for (const method of ["POST", "PUT", "DELETE"]) {
@@ -193,6 +193,19 @@ describe("independent AkiDuermo boundaries", () => {
       }
     },
   );
+
+  it("keeps membership on the accommodation origin, without cross-origin credentials", async () => {
+    mocks.refresh.mockResolvedValue(NextResponse.next());
+    const localized = await middleware(new NextRequest("https://akiduermo.com/en/membership", { headers: { host: "akiduermo.com" } }));
+    expect(localized.status).toBe(307);
+    const location = new URL(localized.headers.get("location")!);
+    expect(location.origin).toBe("https://akiduermo.com");
+    expect(location.pathname).toBe("/membership");
+    expect(location.searchParams.get("lang")).toBe("en");
+    const native = await middleware(new NextRequest("https://akiduermo.com/membership?lang=es", { headers: { host: "akiduermo.com" } }));
+    expect(native.headers.has("location")).toBe(false);
+    expect(stayHostRoute("/membership").kind).toBe("public");
+  });
   it("leaves auth callbacks local with their code and safe return task intact", async () => {
     mocks.refresh.mockResolvedValueOnce(NextResponse.next());
     const request = new NextRequest(
