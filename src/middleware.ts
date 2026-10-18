@@ -43,6 +43,7 @@ export async function middleware(request: NextRequest) {
       const destination = request.nextUrl.clone();
       destination.pathname = "/membership";
       if (productMembership[1]) destination.searchParams.set("lang", productMembership[1]);
+      stripCrossProductCredentials(destination);
       return NextResponse.redirect(destination, 308);
     }
   }
