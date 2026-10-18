@@ -98,7 +98,30 @@ describe("independent AkiDuermo boundaries", () => {
     ).toBe(421);
     expect(mocks.refresh).not.toHaveBeenCalled();
   });
-  it.each(["/unknown", "/membership", "/en/account/subscription"])(
+  it("keeps membership on-site and scrubs credentials on localized redirects", async () => {
+    expect(stayHostRoute("/membership").kind).toBe("public");
+    mocks.refresh.mockResolvedValueOnce(NextResponse.next());
+    const local = await middleware(new NextRequest("https://akiduermo.com/membership?lang=en", {
+      headers: { host: "akiduermo.com" },
+    }));
+    expect(local.status).toBe(200);
+    expect(local.headers.has("location")).toBe(false);
+
+    const prefixed = await middleware(new NextRequest(
+      "https://akiduermo.com/en/membership?q=hotel&access_token=private&safe=ok",
+      { headers: { host: "akiduermo.com" } },
+    ));
+    expect(prefixed.status).toBe(308);
+    const target = new URL(prefixed.headers.get("location")!);
+    expect(target.origin).toBe("https://akiduermo.com");
+    expect(target.pathname).toBe("/membership");
+    expect(target.searchParams.get("lang")).toBe("en");
+    expect(target.searchParams.get("q")).toBe("hotel");
+    expect(target.searchParams.get("safe")).toBe("ok");
+    expect(target.searchParams.has("access_token")).toBe(false);
+  });
+
+  it.each(["/unknown", "/en/account/subscription"])(
     "never transfers credentials across origins from %s",
     async (path) => {
       const keys = [
@@ -145,7 +168,7 @@ describe("independent AkiDuermo boundaries", () => {
       expect(mocks.refresh).not.toHaveBeenCalled();
     },
   );
-  it.each(["/unknown", "/membership", "/es/account/subscription"])(
+  it.each(["/unknown", "/es/account/subscription"])(
     "removes nested or encoded credentials from outgoing redirects at %s",
     async (path) => {
       const params = new URLSearchParams({
