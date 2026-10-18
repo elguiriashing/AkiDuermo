@@ -42,16 +42,22 @@ export async function middleware(request: NextRequest) {
     if (path !== "/membership") {
       const destination = request.nextUrl.clone();
       destination.pathname = "/membership";
-      if (productMembership[1]) destination.searchParams.set("lang", productMembership[1]);
+      if (productMembership[1])
+        destination.searchParams.set("lang", productMembership[1]);
       stripCrossProductCredentials(destination);
       return NextResponse.redirect(destination, 308);
     }
   }
-  const billingMembership = path.match(/^\/(?:(en|es)\/)?account\/(?:membership|memberships|subscription)\/?$/);
+  const billingMembership = path.match(
+    /^\/(?:(en|es)\/)?account\/(?:membership|memberships|subscription)\/?$/,
+  );
   if (billingMembership) {
     if (!["GET", "HEAD"].includes(request.method))
       return new NextResponse(null, { status: 404 });
-    const destination = new URL(`/${billingMembership[1] || locale}/account/subscription`, "https://akipasa.com");
+    const destination = new URL(
+      `/${billingMembership[1] || locale}/account/subscription`,
+      "https://akipasa.com",
+    );
     destination.search = request.nextUrl.search;
     destination.searchParams.set("from", "akiduermo");
     return crossOriginRedirect(destination);

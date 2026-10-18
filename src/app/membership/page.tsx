@@ -7,7 +7,8 @@ import { stayLocale } from "@/lib/akiduermo-i18n";
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Memberships · AkiDuermo",
-  description: "AkiDuermo Premium, host upgrades, AkiBusiness and AkiEnterprise.",
+  description:
+    "AkiDuermo Premium, host upgrades, AkiBusiness and AkiEnterprise.",
   alternates: { canonical: "https://akiduermo.com/membership" },
 };
 
