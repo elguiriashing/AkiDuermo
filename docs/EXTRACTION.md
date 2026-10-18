@@ -1,5 +1,21 @@
 # AkiDuermo extraction contract
 
+## 2026-10-18 | Native membership storefront candidate
+
+The independent /membership route now displays AkiDuermo for Business, AkiBusiness
+Standard and Pro, and Enterprise using the accommodation theme. Personal Premium
+remains hidden ahead of adoption launch. No Stripe checkout or new entitlement
+is introduced. The account links to /membership; /en/membership and
+/es/membership resolve to the local product page with the correct locale,
+while authenticated subscription management remains with the authoritative
+AkiPasa billing service. The current production branch in Cloudflare is
+release/hold-duermo-role-cutover. This candidate does not modify billing,
+the shared Supabase database, identity, bookings, or scheduled jobs.
+Test CI, build, preview, page loading in EN/ES, navigation, and protected
+account flows before merging the candidate into that production branch.
+Rollback via reverting the commit and restoring the previous Worker version.
+
+
 ## 2026-10-17 | Candidate account UI refinement
 
 The release/hold source gets a separate unmerged UI candidate for a genuine

@@ -37,7 +37,16 @@ export async function middleware(request: NextRequest) {
   const membership = path.match(
     /^\/(?:(en|es)\/)?(membership|memberships|account\/(?:membership|memberships|subscription))\/?$/,
   );
-  if (membership) {
+  if (membership && membership[2] === "membership") {
+    if (!["GET", "HEAD"].includes(request.method))
+      return new NextResponse(null, { status: 404 });
+    const target = request.nextUrl.clone();
+    target.pathname = "/membership";
+    if (membership[1]) target.searchParams.set("lang", membership[1]);
+    if (target.toString() !== request.nextUrl.toString())
+      return NextResponse.redirect(target, 307);
+  }
+  if (membership && membership[2] !== "membership") {
     if (!["GET", "HEAD"].includes(request.method))
       return new NextResponse(null, { status: 404 });
     const target = new URL(
