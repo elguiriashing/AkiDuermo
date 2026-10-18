@@ -40,7 +40,7 @@ export function StayHeader({
           {es ? "Membresías" : "Membership"}
         </Link>
         <Link
-          href={`/settings?lang=${locale}`
+          href={`/settings?lang=${locale}`}
           aria-label={es ? "Ajustes" : "Settings"}
         >
           {es ? "Ajustes" : "Settings"}
