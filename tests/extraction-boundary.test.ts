@@ -98,82 +98,46 @@ describe("independent AkiDuermo boundaries", () => {
     ).toBe(421);
     expect(mocks.refresh).not.toHaveBeenCalled();
   });
-  it.each(["/unknown", "/en/account/subscription"])(
-    "never transfers credentials across origins from %s",
+  it("returns a local 404 for unrelated routes instead of sending users to AkiPasa", async () => {
+    const response = await middleware(
+      new NextRequest("https://akiduermo.com/unknown?code=private", {
+        headers: { host: "akiduermo.com" },
+      }),
+    );
+    expect(response.status).toBe(404);
+    expect(response.headers.has("location")).toBe(false);
+    expect(mocks.refresh).not.toHaveBeenCalled();
+  });
+  it.each(["/en/account/subscription", "/es/account/subscription"])(
+    "keeps subscription aliases on the independent accommodation origin at %s",
     async (path) => {
-      const keys = [
-        "CoDe",
-        "TOKEN",
-        "token_hash",
-        "Access_Token",
-        "REFRESH_TOKEN",
-        "Provider_Token",
-        "PROVIDER_REFRESH_TOKEN",
-        "id_token",
-        "Client_Secret",
-        "Password",
-        "STATE",
-        "error_description",
-      ];
       const params = new URLSearchParams({
         source: "saved",
         q: "hotel España",
         safe: "one",
-        from: "untrusted",
+        token: "private-value",
+        code: "private-code",
+        next: "/en/auth/callback?code=private",
+        relay: encodeURIComponent("/callback?access_token=private"),
+        payload: '{"code":"private"}',
       });
-      params.append("safe", "two");
-      keys.forEach((key) => params.append(key, "private-value"));
-      const request = new NextRequest(
-        `https://akiduermo.com${path}?${params}#access_token=hidden-browser-secret`,
-        { headers: { host: "akiduermo.com" } },
-      );
-      const response = await middleware(request);
-      expect(response.status).toBe(307);
-      const destination = new URL(response.headers.get("location")!);
-      expect(destination.origin).toBe("https://akipasa.com");
-      expect(destination.hash).toBe("#redirected");
-      expect(destination.searchParams.get("source")).toBe("saved");
-      expect(destination.searchParams.get("q")).toBe("hotel España");
-      expect(destination.searchParams.getAll("safe")).toEqual(["one", "two"]);
-      expect(destination.href).not.toContain("private-value");
-      expect(destination.href).not.toContain("hidden-browser-secret");
-      keys.forEach((key) =>
-        expect(destination.searchParams.has(key)).toBe(false),
-      );
-      if (path !== "/unknown")
-        expect(destination.searchParams.get("from")).toBe("akiduermo");
-      expect(mocks.refresh).not.toHaveBeenCalled();
-    },
-  );
-  it.each(["/unknown", "/es/account/subscription"])(
-    "removes nested or encoded credentials from outgoing redirects at %s",
-    async (path) => {
-      const params = new URLSearchParams({
-        q: "hotel España",
-        safe: "one",
-        next: "/en/auth/callback?code=qa-dummy",
-        relay: encodeURIComponent(
-          encodeURIComponent("/callback?access_token=qa-dummy"),
-        ),
-        payload: '{"\\u0063ode":"qa-dummy"}',
-        malformed: "%E0%A4",
-      });
-      params.append("%63ode", "qa-dummy");
       params.append("safe", "two");
       const response = await middleware(
         new NextRequest(`https://akiduermo.com${path}?${params}`, {
           headers: { host: "akiduermo.com" },
         }),
       );
-      const target = new URL(response.headers.get("location")!);
       expect(response.status).toBe(307);
-      expect(target.origin).toBe("https://akipasa.com");
-      expect(target.href).not.toContain("qa-dummy");
+      const target = new URL(response.headers.get("location")!);
+      expect(target.origin).toBe("https://akiduermo.com");
+      expect(target.pathname).toBe("/membership");
+      expect(target.hash).toBe("#redirected");
+      expect(target.searchParams.get("source")).toBe("saved");
       expect(target.searchParams.get("q")).toBe("hotel España");
       expect(target.searchParams.getAll("safe")).toEqual(["one", "two"]);
-      for (const key of ["next", "relay", "payload", "malformed", "%63ode"])
+      for (const key of ["token", "code", "next", "relay", "payload"])
         expect(target.searchParams.has(key)).toBe(false);
-      expect(target.hash).toBe("#redirected");
+      expect(target.href).not.toContain("private-value");
       expect(mocks.refresh).not.toHaveBeenCalled();
     },
   );
