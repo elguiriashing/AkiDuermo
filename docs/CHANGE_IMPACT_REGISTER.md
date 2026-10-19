@@ -1415,6 +1415,22 @@ AkiDuermo canonical-route runtime correction: initial localhost smoke reproduced
 
 Final AkiDuermo redirect boundary review: cross-origin AkiPasa fallback and membership redirects now remove case-insensitive authentication/password/token query keys and set explicit harmless `#redirected`, preventing browser inheritance of an unobservable source fragment. Ordinary query values and duplicates remain preserved; membership retains authoritative `from=akiduermo`. Non-read requests are rejected. Own auth callbacks keep their PKCE code and local task unchanged. Actual middleware negative regressions cover both redirect classes, mixed-case credential keys, fragments and mutation methods. No authentication-provider, cookie, booking, role, billing or production changes.
 
+
+## 2026-10-19 | Independent route browser acceptance repair
+
+- **Scope:** the standalone guest Playwright harness only; application routing,
+  auth, booking, database and billing behavior are unchanged.
+- **Before:** every intercepted subresource was re-fetched with the canonical
+  `Host` header. Next image optimization could close that rewritten keep-alive
+  request (`route.fetch: socket hang up`), aborting the page before its privacy
+  controls became visible.
+- **After:** fixture APIs remain intercepted, only document navigations receive
+  the canonical virtual host, and assets/subresources use the browser's native
+  localhost transport. Middleware is still exercised for every tested page.
+- **Release/rollback:** full check, compiled EN/ES light/dark mobile/desktop
+  browser acceptance and exact-source Cloudflare packaging remain mandatory.
+  Revert the harness change only; no data or provider rollback is required.
+
 ## 2026-10-15 | Independent preview navigation and release preparation
 
 Before: catalogue and device-saved cards, map popups, property back navigation and error/404 recovery used absolute canonical AkiDuermo links. On an approved workers.dev preview these leave the independently deployed application before canonical DNS is attached. Required: internal navigation remains on the current trusted product origin in EN/ES, while canonical metadata and cross-product destinations keep their explicit canonical origins.

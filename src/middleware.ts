@@ -4,13 +4,6 @@ import { isStayRequestOrigin } from "@/lib/public-request-origin";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { stayHostRoute, stayHostMethodAllowed } from "@/lib/akiduermo-routing";
 import { stripCrossProductCredentials } from "@/lib/cross-product-query";
-function crossOriginRedirect(target: URL) {
-  stripCrossProductCredentials(target);
-  // An explicit harmless fragment prevents browser inheritance of a source fragment,
-  // which is never available to the server for inspection.
-  target.hash = "redirected";
-  return NextResponse.redirect(target, 307);
-}
 export async function middleware(request: NextRequest) {
   const host = request.headers.get("host") || request.nextUrl.host;
   const protocol = ["localhost", "127.0.0.1"].includes(host.split(":")[0])
@@ -49,13 +42,12 @@ export async function middleware(request: NextRequest) {
   if (membership && membership[2] !== "membership") {
     if (!["GET", "HEAD"].includes(request.method))
       return new NextResponse(null, { status: 404 });
-    const target = new URL(
-      `/${membership[1] || locale}/${membership[2].startsWith("account/") ? "account/subscription" : "membership"}`,
-      "https://akipasa.com",
-    );
-    target.search = request.nextUrl.search;
-    target.searchParams.set("from", "akiduermo");
-    return crossOriginRedirect(target);
+    const target = request.nextUrl.clone();
+    target.pathname = "/membership";
+    if (membership[1]) target.searchParams.set("lang", membership[1]);
+    stripCrossProductCredentials(target);
+    target.hash = "redirected";
+    return NextResponse.redirect(target, 307);
   }
   if (!stayHostMethodAllowed(path, request.method))
     return new NextResponse(null, { status: 404 });
@@ -66,12 +58,7 @@ export async function middleware(request: NextRequest) {
   if (route.kind === "legacy" || route.kind === "canonical")
     return NextResponse.redirect(target, 308);
   if (route.kind === "reject") return new NextResponse(null, { status: 404 });
-  if (route.kind === "primary") {
-    target.hostname = "akipasa.com";
-    target.protocol = "https:";
-    target.port = "";
-    return crossOriginRedirect(new URL(target.toString()));
-  }
+  if (route.kind === "primary") return new NextResponse(null, { status: 404 });
   const session = await refreshSession(request);
   // Product routes are actual root routes in this independent app. Rewriting
   // back through the legacy internal prefix causes a canonical redirect cycle.
