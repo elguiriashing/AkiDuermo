@@ -112,6 +112,9 @@ it("isolates AkiDuermo from primary application and mutation endpoints", () => {
     });
   expect(stayHostRoute("/es/auth").kind).toBe("public");
   expect(stayHostRoute("/en/auth/callback").kind).toBe("public");
+  expect(stayHostRoute("/en/privacy").kind).toBe("public");
+  expect(stayHostRoute("/es/terms").kind).toBe("public");
+  expect(stayHostRoute("/sitemap.xml").kind).toBe("public");
   expect(stayHostRoute("/api/bookings").kind).toBe("reject");
   expect(stayHostRoute("/api/stays").kind).toBe("public");
   expect(stayHostRoute("/api/map/venues").kind).toBe("public");
