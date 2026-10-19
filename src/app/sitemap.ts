@@ -12,6 +12,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.5,
     },
+    ...(["en", "es"] as const).flatMap((locale) => [
+      {
+        url: `${origin}/${locale}/privacy`,
+        changeFrequency: "monthly" as const,
+        priority: 0.3,
+      },
+      {
+        url: `${origin}/${locale}/terms`,
+        changeFrequency: "monthly" as const,
+        priority: 0.3,
+      },
+    ]),
   ];
   try {
     const supabase = createSupabasePublicClient();

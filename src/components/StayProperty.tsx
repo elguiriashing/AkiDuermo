@@ -536,10 +536,10 @@ export function StayProperty({
           AkiDuermo ·{" "}
           {text("Part of the AkiPasa family", "Parte de la familia AkiPasa")}
           <div>
-            <a href={`https://akipasa.com/${locale}/privacy`}>
+            <a href={`/${locale}/privacy`}>
               {text("Privacy", "Privacidad")}
             </a>
-            <a href={`https://akipasa.com/${locale}/terms`}>
+            <a href={`/${locale}/terms`}>
               {text("Terms", "Condiciones")}
             </a>
           </div>

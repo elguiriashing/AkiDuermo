@@ -681,8 +681,8 @@ export function AkiDuermo({
                 "Booking requests only at participating stays. No online payments.",
               )}
             </span>
-            <a href={`https://akipasa.com/${locale}/privacy`}>{t("Privacy")}</a>
-            <a href={`https://akipasa.com/${locale}/terms`}>{t("Terms")}</a>
+            <a href={`/${locale}/privacy`}>{t("Privacy")}</a>
+            <a href={`/${locale}/terms`}>{t("Terms")}</a>
           </div>
         </footer>
       </main>
