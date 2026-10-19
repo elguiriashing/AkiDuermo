@@ -4,13 +4,6 @@ import { isStayRequestOrigin } from "@/lib/public-request-origin";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { stayHostRoute, stayHostMethodAllowed } from "@/lib/akiduermo-routing";
 import { stripCrossProductCredentials } from "@/lib/cross-product-query";
-function crossOriginRedirect(target: URL) {
-  stripCrossProductCredentials(target);
-  // An explicit harmless fragment prevents browser inheritance of a source fragment,
-  // which is never available to the server for inspection.
-  target.hash = "redirected";
-  return NextResponse.redirect(target, 307);
-}
 export async function middleware(request: NextRequest) {
   const host = request.headers.get("host") || request.nextUrl.host;
   const protocol = ["localhost", "127.0.0.1"].includes(host.split(":")[0])
