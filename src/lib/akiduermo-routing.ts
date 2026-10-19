@@ -49,6 +49,7 @@ export function stayHostRoute(pathname: string) {
     return { kind: "public" as const, path: pathname };
   if (
     /^\/(en|es)\/auth(?:\/|$)/.test(pathname) ||
+    /^\/(en|es)\/(?:privacy|terms)\/?$/.test(pathname) ||
     /^\/(en|es)\/terms\/accept\/?$/.test(pathname)
   )
     return { kind: "public" as const, path: pathname };
@@ -62,6 +63,7 @@ export function stayHostRoute(pathname: string) {
     pathname === "/sw.js" ||
     pathname === "/offline.html" ||
     pathname === "/robots.txt" ||
+    pathname === "/sitemap.xml" ||
     pathname === "/api/health" ||
     pathname === "/api/stays" ||
     pathname === "/api/stays/bookings" ||

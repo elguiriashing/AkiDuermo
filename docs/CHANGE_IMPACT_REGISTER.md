@@ -1485,3 +1485,5 @@ MapLibre is upgraded from the locally patched 5.12.0 package to upstream 6.15.0.
 ## 2026-10-19 | Keep privacy and terms journeys local
 
 The exact merged release preview exposed generic footer Privacy and Terms links that silently opened AkiPasa. AkiDuermo now owns bilingual, canonical privacy and terms pages, exposes them in its sitemap, and points both discovery and property-detail footers to the local routes. Clearly labelled AkiPasa discovery/app-switcher links and the explicit shared-account data-management handoff remain intentional. The legal summaries retain the existing professional-review warning; they do not enable payments or change account, booking or database authority.
+
+Exact-host preview follow-up: the route allowlist now admits the new bilingual legal pages and the generated sitemap. The independent middleware otherwise correctly fails closed for unknown primary-product and API paths; focused route tests prevent future metadata or legal pages from compiling successfully while remaining unreachable.
