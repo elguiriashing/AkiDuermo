@@ -14,9 +14,8 @@ import { isLocale } from "@/lib/config";
 import { serializeJsonLd } from "@/lib/seo";
 
 export async function generateViewport(): Promise<Viewport> {
-  const host = (await headers()).get("host")?.split(":")[0]?.toLowerCase();
   return {
-    themeColor: host === "akiconduzco.akipasa.com" ? "#ed3345" : "#14213D",
+    themeColor: "#143c43",
   };
 }
 

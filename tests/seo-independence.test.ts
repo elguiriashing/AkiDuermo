@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import robots from "../src/app/robots";
+import { languageUrls, siteOrigin } from "../src/lib/seo";
 
 describe("independent AkiDuermo SEO", () => {
   it("publishes its own sitemap while keeping private journeys out of crawl", () => {
@@ -18,6 +19,23 @@ describe("independent AkiDuermo SEO", () => {
     expect(source).toContain('"https://akiduermo.com"');
     expect(source).toContain('"accommodation"');
     expect(source).not.toContain("akipasa.com");
+  });
+
+  it("keeps shared metadata helpers on the independent canonical origin", () => {
+    expect(siteOrigin).toBe("https://akiduermo.com");
+    expect(languageUrls("/privacy")).toEqual({
+      es: "https://akiduermo.com/es/privacy",
+      en: "https://akiduermo.com/en/privacy",
+      "x-default": "https://akiduermo.com/es/privacy",
+    });
+  });
+
+  it("registers the PWA only on the canonical AkiDuermo production host", () => {
+    const source = readFileSync("src/components/PwaRegistration.tsx", "utf8");
+    expect(source).toContain('window.location.hostname === "akiduermo.com"');
+    expect(source).not.toContain('window.location.hostname === "akipasa.com"');
+    expect(source).not.toContain("business.akipasa.com");
+    expect(source).not.toContain("akiconduzco.akipasa.com");
   });
 
   it("keeps generic privacy and terms journeys on AkiDuermo", () => {
