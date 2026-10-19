@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "akiduermo",
+  "main": "custom-worker.ts",
+  "compatibility_date": "2026-07-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "durable_objects": {
+    "bindings": [{ "name": "MAP_SNAPSHOTS", "class_name": "MapSnapshot" }],
+  },
+  "migrations": [
+    { "tag": "map-snapshot-v1", "new_sqlite_classes": ["MapSnapshot"] },
+  ],
+  "vars": {
+    "NEXT_PUBLIC_PRODUCT_NAME": "AkiDuermo",
+    "NEXT_PUBLIC_SITE_URL": "https://akiduermo.com",
+    "NEXT_PUBLIC_BUSINESS_URL": "https://akibusiness.com",
+    "NEXT_PUBLIC_DATA_PROVIDER": "hybrid",
+    "NEXT_PUBLIC_MAP_STYLE_URL": "https://tiles.openfreemap.org/styles/liberty",
+    "NEXT_PUBLIC_GOOGLE_AUTH_ENABLED": "true",
+    "AKISUITE_CHECKOUT_ENABLED": "false",
+    "AKISUITE_TAX_READY": "false",
+    "AKISUITE_SUBSCRIPTIONS_READY": "false",
+    "AKISUITE_FEATURES_READY": "false",
+    "AKISUITE_BILLING_VERIFIED": "false",
+  },
+  "observability": { "enabled": true },
+}

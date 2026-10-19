@@ -1,0 +1,41 @@
+import { tripSchema } from "@/lib/trip-links";
+import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { AkiDuermo } from "@/components/AkiDuermo";
+import { stayLocale } from "@/lib/akiduermo-i18n";
+import { optionalUser } from "@/lib/auth";
+import { queueSuitePortalWelcome } from "@/lib/suite-welcome";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = stayLocale((await headers()).get("x-akipasa-locale"));
+  return {
+    title: {
+      absolute:
+        locale === "es"
+          ? "AkiDuermo · Un buen día merece una gran estancia"
+          : "AkiDuermo · A good day deserves a great stay",
+    },
+    description:
+      locale === "es"
+        ? "Encuentra hoteles, casas rurales, apartamentos y alojamientos en toda España. Una vista previa de AkiPasa."
+        : "Find hotels, rural escapes, apartments and places to stay across Spain. An early preview from AkiPasa.",
+    robots: { index: false, follow: false },
+    alternates: { canonical: "https://akiduermo.com" },
+  };
+}
+export default async function AkiDuermoPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | undefined>>;
+}) {
+  const locale = stayLocale((await headers()).get("x-akipasa-locale"));
+  const { user } = await optionalUser();
+  if (user) await queueSuitePortalWelcome("akiduermo", locale);
+  const trip = tripSchema.safeParse(await searchParams);
+  return (
+    <AkiDuermo
+      initialLocale={locale}
+      initialTrip={trip.success ? trip.data : undefined}
+    />
+  );
+}
