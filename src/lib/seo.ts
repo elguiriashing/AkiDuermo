@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { config, type Locale } from "./config";
 
-// Always advertise the public canonical host, including from preview deployments.
-export const siteOrigin = "https://akipasa.com";
+// Always advertise AkiDuermo's public canonical host, including from previews.
+export const siteOrigin = config.siteUrl.replace(/\/$/, "");
 export const publicPagePaths = [
   "",
   "/map",
