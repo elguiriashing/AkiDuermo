@@ -1,5 +1,27 @@
 # Change Impact Register
 
+## 2026-10-19 | Independent production cutover completion
+
+- **Routes/SEO:** local membership aliases and unknown-route 404s remove the
+  AkiPasa website fallback. Home/property metadata, robots and the paginated
+  accommodation sitemap use canonical AkiDuermo URLs; private/auth/API routes
+  remain excluded.
+- **Memberships:** server-side personal_premium_unlocked fails closed. Visible
+  business options are AkiDuermo for Business (€14.99), free AkiHQ and
+  AkiBusiness Standard/Plus/Pro (€24.99/€44.99/€64.99), with 20% yearly prices
+  and Enterprise enquiry. Checkout/readiness flags remain false.
+- **Owner handoffs:** property management points to AkiHQ; paid operating tools
+  point to AkiBusiness. Both are labelled cross-product links.
+- **Android:** retain package com.akipasa.duermo and API 36, replace generic
+  AkiPasa branding with the mint AkiDuermo pin/star, add EN/ES listing copy and
+  a Data Safety engineering inventory. Signing/App Links/store submission stay
+  externally gated.
+- **Data:** shared Supabase identity, legacy venue-backed accommodation rows,
+  booking RPCs, RLS and entitlements are unchanged. The missing independent
+  property schema is not guessed or deployed.
+- **Rollback:** restore the recorded prior Worker deployment/version; source
+  rollback requires no database or entitlement reversal.
+
 ## 2026-10-17 | Independent stay account dashboard (candidate)
 
 - Before: three generic shortcut cards and a large sign-out panel on /account.
@@ -17,7 +39,6 @@
   review. No production release performed by this PR.
 - Rollback: revert /account page, its module CSS and contract test.
 
-
 ## 2026-10-17 | Independent AkiDuermo suite switcher
 
 - Scope: extracted AkiDuermo header popover and approved brand assets.
@@ -28,10 +49,9 @@
 - Boundaries: stay search, availability, bookings, property/team authorization,
   authentication and databases are unchanged; no cross-domain cookie sharing.
 - Release gates: source formatting/type/build, standalone Cloudflare bundle,
-  mobile and keyboard checks, plus the *actual* akiduermo.com Worker release
+  mobile and keyboard checks, plus the _actual_ akiduermo.com Worker release
   source must be verified. This extraction branch is not itself live evidence.
 - Rollback: revert UI and brand-asset commits only.
-
 
 ## 2026-10-14 | AkiConduzco mobility foundation (implementation candidate)
 
@@ -1415,7 +1435,6 @@ AkiDuermo canonical-route runtime correction: initial localhost smoke reproduced
 
 Final AkiDuermo redirect boundary review: cross-origin AkiPasa fallback and membership redirects now remove case-insensitive authentication/password/token query keys and set explicit harmless `#redirected`, preventing browser inheritance of an unobservable source fragment. Ordinary query values and duplicates remain preserved; membership retains authoritative `from=akiduermo`. Non-read requests are rejected. Own auth callbacks keep their PKCE code and local task unchanged. Actual middleware negative regressions cover both redirect classes, mixed-case credential keys, fragments and mutation methods. No authentication-provider, cookie, booking, role, billing or production changes.
 
-
 ## 2026-10-19 | Independent route browser acceptance repair
 
 - **Scope:** the standalone guest Playwright harness only; application routing,
@@ -1458,3 +1477,7 @@ Validation: focused auth/settings cases passed 20/20; complete `npm run check` p
 One read-only dummy probe confirmed `/membership?next=%2Fen%2Fauth%2Fcallback%3Fcode%3Dqa-dummy&safe=one` forwarded the nested callback code in the AkiPasa Location. Required: outgoing cross-origin membership/fallback redirects remove credential-bearing keys/values after bounded decoding, preserve ordinary safe filters and harmless fragments, and never alter legitimate same-origin PKCE callbacks. Scope is the outgoing redirect sanitizer plus focused boundary regressions; no auth-provider setting, session, booking, billing, scheduler or database mutation. The same reviewed helper is copied into this repository, with no cross-checkout import. Final exact-source checks, deployed dummy redirect validation and authenticated acceptance remain required.
 
 Validation: full `npm run check` passed lint, TypeScript, 239 application tests and 30 release/vendor guards. Focused middleware, auth and shared-helper coverage passed 87/87; the frozen shared helper also passed independent bounded review and additional dummy probes. Exact-source hosted CI, rebuilt deployment and the deployed dummy redirect remain release gates. Same-origin callback regression retains the local PKCE code and return destination.
+
+## 2026-10-19 | Replace the temporary MapLibre sanitizer backport
+
+MapLibre is upgraded from the locally patched 5.12.0 package to upstream 6.15.0. The upstream security advisory marks 6.4.1 and later as fixed for GHSA-jrc7-96c5-q579, so the version-specific postinstall mutation, bundle hashes and backport tests are removed. The application map API remains covered by the normal lint, type, component, browser and Cloudflare build gates; the production dependency audit must report no high or critical findings.

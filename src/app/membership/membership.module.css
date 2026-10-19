@@ -32,7 +32,7 @@
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 17px;
   margin-top: 22px;
 }
@@ -50,6 +50,9 @@
 .card[data-hue="gold"] {
   border-top-color: #d8aa43;
 }
+.card[data-hue="hq"] {
+  border-top-color: #f1bf3f;
+}
 .card[data-hue="enterprise"] {
   border-top-color: #a27ad8;
 }
@@ -62,6 +65,32 @@
   color: var(--muted);
   line-height: 1.55;
   flex: 1;
+}
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin-top: 18px;
+}
+.price strong {
+  font-size: clamp(25px, 3vw, 38px);
+  letter-spacing: -0.045em;
+}
+.price span,
+.yearly {
+  color: var(--muted);
+}
+.yearly {
+  display: block;
+  margin-top: 3px;
+}
+.gate {
+  margin-top: 18px;
+  padding: 11px 14px;
+  border: 1px solid #35bb9266;
+  border-radius: 14px;
+  background: #35bb9212;
+  font-weight: 700;
 }
 .action {
   display: inline-flex;
@@ -97,5 +126,10 @@
   }
   .card {
     border-radius: 18px;
+  }
+}
+@media (min-width: 701px) and (max-width: 1040px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

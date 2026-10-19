@@ -5,19 +5,27 @@ import { describe, expect, it } from "vitest";
 describe("standalone AkiDuermo renter account", () => {
   const root = process.cwd();
   const page = readFileSync(join(root, "src/app/account/page.tsx"), "utf8");
-  const css = readFileSync(join(root, "src/app/account/account.module.css"), "utf8");
+  const css = readFileSync(
+    join(root, "src/app/account/account.module.css"),
+    "utf8",
+  );
 
   it("scopes all reservation summaries to the authenticated customer", () => {
     expect(page).toContain('requireUser(locale, "/account")');
-    expect((page.match(/\.eq\("profile_id", user\.id\)/g) || []).length).toBe(4);
+    expect((page.match(/\.eq\("profile_id", user\.id\)/g) || []).length).toBe(
+      4,
+    );
     expect(page).toContain('count: "exact",');
-    expect(page).toContain('stayReservationStatusLabel(stay.status, locale)');
+    expect(page).toContain("stayReservationStatusLabel(stay.status, locale)");
     expect(page).toContain("hasError");
   });
 
   it("preserves host-local logout and existing linked destinations", () => {
     expect(page).toContain("signOutStay");
+    expect(page).toContain("https://akihq.app/");
     expect(page).toContain("https://akibusiness.com/");
+    expect(page).toContain("Manage my properties in AkiHQ");
+    expect(page).toContain("Open operations in AkiBusiness");
     expect(page).toContain('"/settings?lang="');
     expect(page).toContain('"/saved?lang="');
     expect(page).toContain('"/bookings?lang="');

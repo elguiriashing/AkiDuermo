@@ -12,8 +12,19 @@ describe("AkiDuermo native membership release", () => {
     expect(middleware).toContain('membership[2] !== "membership"');
     expect(account).toContain('href="/membership"');
   });
-  it("shows local business and Enterprise plans but initiates no unverified charges", () => {
-    for (const name of ["AkiDuermo Premium for Business", "AkiBusiness Standard", "AkiBusiness Pro", "AkiEnterprise"]) expect(page).toContain(name);
+  it("shows the accurate local AkiDuermo catalogue without unverified checkout", () => {
+    for (const name of [
+      "AkiDuermo for Business",
+      "AkiHQ",
+      "AkiBusiness Standard",
+      "AkiBusiness Plus",
+      "AkiBusiness Pro",
+      "AkiEnterprise",
+    ])
+      expect(page).toContain(name);
+    for (const price of ["€14.99", "€24.99", "€44.99", "€64.99"])
+      expect(page).toContain(price);
+    expect(page).toContain("personalPremiumVisible");
     expect(page).not.toContain("startAkiSuiteCheckout");
     expect(page).toContain("<StayAppShell locale={locale}>");
   });

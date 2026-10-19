@@ -17,9 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description:
       locale === "es"
-        ? "Encuentra hoteles, casas rurales, apartamentos y alojamientos en toda España. Una vista previa de AkiPasa."
-        : "Find hotels, rural escapes, apartments and places to stay across Spain. An early preview from AkiPasa.",
-    robots: { index: false, follow: false },
+        ? "Encuentra hoteles, casas rurales, apartamentos y alojamientos en toda España."
+        : "Find hotels, rural escapes, apartments and places to stay across Spain.",
+    robots: { index: true, follow: true },
     alternates: { canonical: "https://akiduermo.com" },
   };
 }

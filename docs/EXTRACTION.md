@@ -1,5 +1,27 @@
 # AkiDuermo extraction contract
 
+## 2026-10-19 | Independent production cutover candidate
+
+The main branch is now the only deploy source. Unknown routes return a local 404
+and all membership aliases resolve to AkiDuermo's own /membership; there is no
+website fallback to AkiPasa. The catalogue keeps Personal Premium behind the
+server-read adoption flag and lists AkiDuermo for Business, free AkiHQ,
+AkiBusiness Standard/Plus/Pro and Enterprise without enabling checkout. Public
+home/property pages and the local sitemap use akiduermo.com canonicals; private
+account, booking, auth and API routes remain excluded from crawling.
+
+Property/listing management is an explicit AkiHQ handoff and paid operations are
+an explicit AkiBusiness handoff. The legacy venue-backed accommodation tables and
+booking RPCs remain authoritative because the independent-property migrations
+are not present in the shared Supabase project. No schema migration, entitlement
+change, payment activation, booking mutation or cross-domain cookie sharing is
+part of this cutover.
+
+The Android project is com.akipasa.duermo, targets API 36, uses AkiDuermo
+branding and includes EN/ES Play listing preparation. Store submission remains
+blocked on Play signing/App Links, final graphics/screenshots, Console
+declarations and signed-device acceptance.
+
 ## 2026-10-18 | Native membership storefront candidate
 
 The independent /membership route now displays AkiDuermo for Business, AkiBusiness
@@ -15,7 +37,6 @@ Test CI, build, preview, page loading in EN/ES, navigation, and protected
 account flows before merging the candidate into that production branch.
 Rollback via reverting the commit and restoring the previous Worker version.
 
-
 ## 2026-10-17 | Candidate account UI refinement
 
 The release/hold source gets a separate unmerged UI candidate for a genuine
@@ -26,7 +47,6 @@ property-management handoff remain unchanged. No changes to global billing,
 schedules, data or auth. The Cloudflare EXPECTED_SOURCE_SHA pin deliberately
 requires an authorized source update after CI and preview acceptance;
 its mismatch with the merged navigation commit is not a build compilation fault.
-
 
 Source: AkiPasa master `080ea0ffb2dd6612436acd04c25b4daf8ff71129`. Source files were copied using `git archive`, with no Git history, environment secrets, dependencies or generated assets. The original checkout is untouched. Shared modules are a reviewed source snapshot; future shared fixes require synchronized versioned updates and independent app checks. No cross-repository imports exist.
 
@@ -46,11 +66,10 @@ recovery failures do not revoke sessions. Supabase access JWTs retain their
 existing expiry behavior; neither logout scope immediately invalidates issued
 access JWTs. See the [primary sign-out contract](https://supabase.com/docs/guides/auth/signout).
 
-Outgoing membership and fallback redirects to AkiPasa apply the reviewed bounded
-query sanitizer to encoded keys and nested credential-bearing values. Safe filter
-values and duplicates remain. Only outgoing cross-origin redirects use the helper;
-same-origin PKCE callbacks keep their code and validated local task intact.
-Explicit harmless redirect fragments continue preventing fragment inheritance.
+Local membership aliases apply the reviewed bounded query sanitizer to encoded
+keys and nested credential-bearing values. Safe filter values and duplicates
+remain. Same-origin PKCE callbacks keep their code and validated local task
+intact; unknown routes do not redirect to another product.
 
 ## Release sequence and rollback
 
