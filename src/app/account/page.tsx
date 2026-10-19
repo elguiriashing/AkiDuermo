@@ -83,7 +83,9 @@ export default async function StayAccountPage() {
                 : "Your upcoming stays, favourite places and account details in one place."}
             </p>
             <div className={styles.heroActions}>
-              <Link href="/membership" className={styles.secondaryButton}>{es ? "Membresías" : "Membership"}</Link>
+              <Link href="/membership" className={styles.secondaryButton}>
+                {es ? "Membresías" : "Membership"}
+              </Link>
               <Link href={"/?lang=" + locale} className={styles.primaryButton}>
                 {es ? "Explorar alojamientos" : "Explore stays"}{" "}
                 <span aria-hidden="true">↗</span>
@@ -250,8 +252,20 @@ export default async function StayAccountPage() {
                   ? "Tus datos de acceso son compartidos con AkiPasa. Tus reservas siguen separadas por producto."
                   : "Your sign-in details are shared with AkiPasa. Your bookings stay separate by product."}
               </p>
-              <a href={"https://akibusiness.com/" + locale + "/business"}>
-                <span>{es ? "Gestionar mis alojamientos" : "Manage my properties"}</span>
+              <a href={"https://akihq.app/" + locale + "/business"}>
+                <span>
+                  {es
+                    ? "Gestionar mis alojamientos en AkiHQ"
+                    : "Manage my properties in AkiHQ"}
+                </span>
+                <span aria-hidden="true">↗</span>
+              </a>
+              <a href={"https://akibusiness.com/" + locale}>
+                <span>
+                  {es
+                    ? "Abrir operaciones en AkiBusiness"
+                    : "Open operations in AkiBusiness"}
+                </span>
                 <span aria-hidden="true">↗</span>
               </a>
               <Link href={"/settings?lang=" + locale}>

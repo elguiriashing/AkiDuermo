@@ -53,8 +53,8 @@ public final class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(getColor(R.color.akipasa_primary));
-        getWindow().setNavigationBarColor(getColor(R.color.akipasa_background));
+        getWindow().setStatusBarColor(getColor(R.color.akiduermo_primary));
+        getWindow().setNavigationBarColor(getColor(R.color.akiduermo_background));
 
         FrameLayout root = buildLayout();
         root.setOnApplyWindowInsetsListener((view, insets) -> {
@@ -82,7 +82,7 @@ public final class MainActivity extends Activity {
 
     private FrameLayout buildLayout() {
         FrameLayout root = new FrameLayout(this);
-        root.setBackgroundColor(getColor(R.color.akipasa_background));
+        root.setBackgroundColor(getColor(R.color.akiduermo_background));
 
         webView = new WebView(this);
         webView.setId(View.generateViewId());
@@ -100,7 +100,7 @@ public final class MainActivity extends Activity {
 
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
         progressBar.setMax(100);
-        progressBar.setProgressTintList(getColorStateList(R.color.akipasa_primary));
+        progressBar.setProgressTintList(getColorStateList(R.color.akiduermo_primary));
         FrameLayout.LayoutParams progressParams = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 dp(4)
@@ -115,18 +115,18 @@ public final class MainActivity extends Activity {
         panel.setOrientation(LinearLayout.VERTICAL);
         panel.setGravity(Gravity.CENTER);
         panel.setPadding(dp(32), dp(32), dp(32), dp(32));
-        panel.setBackgroundColor(getColor(R.color.akipasa_background));
+        panel.setBackgroundColor(getColor(R.color.akiduermo_background));
 
         TextView title = new TextView(this);
         title.setText(R.string.offline_title);
-        title.setTextColor(getColor(R.color.akipasa_ink));
+        title.setTextColor(getColor(R.color.akiduermo_ink));
         title.setTextSize(24);
         title.setGravity(Gravity.CENTER);
         panel.addView(title);
 
         TextView message = new TextView(this);
         message.setText(R.string.offline_message);
-        message.setTextColor(getColor(R.color.akipasa_ink));
+        message.setTextColor(getColor(R.color.akiduermo_ink));
         message.setTextSize(16);
         message.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(
@@ -164,11 +164,11 @@ public final class MainActivity extends Activity {
         settings.setMediaPlaybackRequiresUserGesture(true);
         settings.setSupportMultipleWindows(false);
         settings.setJavaScriptCanOpenWindowsAutomatically(false);
-        settings.setUserAgentString(settings.getUserAgentString() + " AkiPasaAndroid/" + BuildConfig.VERSION_NAME);
+        settings.setUserAgentString(settings.getUserAgentString() + " AkiDuermoAndroid/" + BuildConfig.VERSION_NAME);
 
         webView.setBackgroundColor(Color.TRANSPARENT);
-        webView.setWebViewClient(new AkiPasaWebViewClient());
-        webView.setWebChromeClient(new AkiPasaChromeClient());
+        webView.setWebViewClient(new AkiDuermoWebViewClient());
+        webView.setWebChromeClient(new AkiDuermoChromeClient());
         webView.setDownloadListener(this::download);
     }
 
@@ -304,7 +304,7 @@ public final class MainActivity extends Activity {
         return Math.round(value * getResources().getDisplayMetrics().density);
     }
 
-    private final class AkiPasaWebViewClient extends WebViewClient {
+    private final class AkiDuermoWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             Uri uri = request.getUrl();
@@ -334,7 +334,7 @@ public final class MainActivity extends Activity {
         }
     }
 
-    private final class AkiPasaChromeClient extends WebChromeClient {
+    private final class AkiDuermoChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int progress) {
             progressBar.setProgress(progress);

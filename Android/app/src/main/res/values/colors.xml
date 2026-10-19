@@ -1,1 +1,7 @@
-<resources><color name="akipasa_primary">#087F5B</color><color name="akipasa_background">#F4F7FA</color><color name="akipasa_ink">#102126</color></resources>
+<resources>
+    <color name="akiduermo_primary">#143F46</color>
+    <color name="akiduermo_mint">#38C8A9</color>
+    <color name="akiduermo_star">#C9FFE8</color>
+    <color name="akiduermo_background">#F4F7FA</color>
+    <color name="akiduermo_ink">#102126</color>
+</resources>

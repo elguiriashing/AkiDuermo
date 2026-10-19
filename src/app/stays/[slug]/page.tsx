@@ -14,7 +14,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: {
       absolute: `${stay?.name || (locale === "es" ? "Alojamiento no disponible" : "Stay unavailable")} · AkiDuermo`,
     },
-    robots: { index: false, follow: false },
+    robots: stay
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
     ...(stay ? { alternates: { canonical: stayHref(stay.slug, locale) } } : {}),
   };
 }

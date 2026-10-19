@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     "Descubre alojamientos en España. Discover accommodation across Spain.",
   applicationName: "AkiDuermo",
   manifest: "/manifest.webmanifest",
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     siteName: "AkiDuermo",

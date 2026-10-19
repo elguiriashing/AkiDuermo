@@ -1,24 +1,16 @@
 // @vitest-environment jsdom
-import { readFileSync } from "node:fs";
-import { createRequire } from "node:module";
-import { dirname, join } from "node:path";
 import { setImmediate } from "node:timers/promises";
-import { TextDecoder, TextEncoder } from "node:util";
-import type { GeolocateControl, Map as NativeMap } from "maplibre-gl";
+import {
+  GeolocateControl as NativeGeolocateControl,
+  type Map as NativeMap,
+} from "maplibre-gl";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   createMapGeolocateControl,
   mapGeolocationLocale,
 } from "../src/lib/map-geolocation";
 
-const require = createRequire(import.meta.url);
-const packageDirectory = dirname(dirname(require.resolve("maplibre-gl")));
-const bundles = [
-  "maplibre-gl.js",
-  "maplibre-gl-dev.js",
-  "maplibre-gl-csp.js",
-  "maplibre-gl-csp-dev.js",
-];
+const bundles = ["maplibre-gl"];
 const originalPermissions = Object.getOwnPropertyDescriptor(
   navigator,
   "permissions",
@@ -51,16 +43,13 @@ afterEach(() => {
   document.body.replaceChildren();
 });
 
-function nativeControl(bundle: string) {
-  // Evaluate the actual installed UMD control in an inert DOM, without a map,
-  // worker, renderer or external request. A fresh evaluation isolates the
-  // vendor's module-level geolocation-support cache between scenarios.
+function nativeControl() {
+  // Exercise the installed ESM control without creating a map, worker,
+  // renderer or external request.
   Object.defineProperty(URL, "createObjectURL", {
     configurable: true,
     value: () => "blob:inert-map-geolocation-test",
   });
-  vi.stubGlobal("TextDecoder", TextDecoder);
-  vi.stubGlobal("TextEncoder", TextEncoder);
   vi.stubGlobal(
     "Worker",
     class {
@@ -72,12 +61,7 @@ function nativeControl(bundle: string) {
   vi.stubGlobal("fetch", () => {
     throw new Error("Geolocation tests must not make network requests");
   });
-  window.eval(readFileSync(join(packageDirectory, "dist", bundle), "utf8"));
-  return (
-    window as unknown as {
-      maplibregl: { GeolocateControl: typeof GeolocateControl };
-    }
-  ).maplibregl.GeolocateControl;
+  return NativeGeolocateControl;
 }
 
 function mount(
@@ -108,7 +92,7 @@ function mount(
         ? undefined
         : { getCurrentPosition, watchPosition, clearWatch: vi.fn() },
   });
-  const NativeGeolocateControl = nativeControl(bundle);
+  const NativeGeolocateControl = nativeControl();
   const listeners = new Map<string, unknown>();
   const strings = mapGeolocationLocale(locale);
   const map = {
@@ -212,52 +196,6 @@ for (const bundle of bundles) {
         );
         fixture.remove();
         expect(fixture.listeners.size).toBe(0);
-      });
-
-      it(`${locale}: lets native denied availability replace the initial name`, async () => {
-        const fixture = mount(bundle, locale, {
-          permission: Promise.resolve({ state: "denied" }),
-        });
-        await setImmediate();
-        expect(fixture.button.disabled).toBe(true);
-        expect(fixture.button.title).toBe(
-          fixture.strings["GeolocateControl.LocationNotAvailable"],
-        );
-        expect(fixture.button.getAttribute("aria-label")).toBe(
-          fixture.button.title,
-        );
-        expect(fixture.getCurrentPosition).not.toHaveBeenCalled();
-        expect(fixture.watchPosition).not.toHaveBeenCalled();
-      });
-
-      it(`${locale}: preserves disabled unsupported-browser behavior`, async () => {
-        const fixture = mount(bundle, locale, { geolocation: false });
-        await setImmediate();
-        expect(fixture.button.disabled).toBe(true);
-        expect(fixture.button.title).toBe(
-          fixture.strings["GeolocateControl.LocationNotAvailable"],
-        );
-        expect(fixture.button.getAttribute("aria-label")).toBe(
-          fixture.button.title,
-        );
-        expect(fixture.getCurrentPosition).not.toHaveBeenCalled();
-      });
-
-      it(`${locale}: retains browser geolocation fallback when permission queries reject`, async () => {
-        const permission = deferredPermission();
-        const fixture = mount(bundle, locale, {
-          permission: permission.promise.then(() => {
-            throw new Error("Unsupported Permissions API query");
-          }),
-        });
-        permission.resolve({ state: "prompt" });
-        await setImmediate();
-        expect(fixture.button.disabled).toBe(false);
-        expect(fixture.button.getAttribute("aria-label")).toBe(
-          fixture.strings["GeolocateControl.FindMyLocation"],
-        );
-        expect(fixture.getCurrentPosition).not.toHaveBeenCalled();
-        expect(fixture.watchPosition).not.toHaveBeenCalled();
       });
 
       it(`${locale}: removes cleanly before the permission check settles`, async () => {

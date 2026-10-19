@@ -1,0 +1,7 @@
+AkiDuermo helps you discover accommodation across Spain and manage your stay from one place.
+
+Search by destination and dates, compare available properties and room options, save places for later, and send booking requests with server-checked pricing. Your account keeps reservation history, settings and saved stays together.
+
+Accommodation businesses can move into the clearly labelled AkiSuite business tools to manage their properties and day-to-day operations.
+
+Available in English and Spanish. Some booking requests require confirmation from the accommodation provider. AkiDuermo does not claim instant confirmation or take payment unless the relevant checkout is clearly shown as active.
