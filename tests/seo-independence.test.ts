@@ -19,4 +19,18 @@ describe("independent AkiDuermo SEO", () => {
     expect(source).toContain('"accommodation"');
     expect(source).not.toContain("akipasa.com");
   });
+
+  it("keeps generic privacy and terms journeys on AkiDuermo", () => {
+    for (const component of ["AkiDuermo.tsx", "StayProperty.tsx"]) {
+      const source = readFileSync(`src/components/${component}`, "utf8");
+      expect(source).toContain("/${locale}/privacy");
+      expect(source).toContain("/${locale}/terms");
+      expect(source).not.toContain("akipasa.com/${locale}/privacy");
+      expect(source).not.toContain("akipasa.com/${locale}/terms");
+    }
+    for (const route of ["privacy", "terms"]) {
+      const source = readFileSync(`src/app/[locale]/${route}/page.tsx`, "utf8");
+      expect(source).toContain("https://akiduermo.com/");
+    }
+  });
 });

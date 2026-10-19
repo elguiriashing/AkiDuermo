@@ -1481,3 +1481,7 @@ Validation: full `npm run check` passed lint, TypeScript, 239 application tests 
 ## 2026-10-19 | Replace the temporary MapLibre sanitizer backport
 
 MapLibre is upgraded from the locally patched 5.12.0 package to upstream 6.15.0. The upstream security advisory marks 6.4.1 and later as fixed for GHSA-jrc7-96c5-q579, so the version-specific postinstall mutation, bundle hashes and backport tests are removed. The application map API remains covered by the normal lint, type, component, browser and Cloudflare build gates; the production dependency audit must report no high or critical findings.
+
+## 2026-10-19 | Keep privacy and terms journeys local
+
+The exact merged release preview exposed generic footer Privacy and Terms links that silently opened AkiPasa. AkiDuermo now owns bilingual, canonical privacy and terms pages, exposes them in its sitemap, and points both discovery and property-detail footers to the local routes. Clearly labelled AkiPasa discovery/app-switcher links and the explicit shared-account data-management handoff remain intentional. The legal summaries retain the existing professional-review warning; they do not enable payments or change account, booking or database authority.
