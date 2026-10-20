@@ -1,4 +1,5 @@
 "use client";
+import { BusinessPathway } from "./BusinessPathway";
 import {
   nearbyEventsHref,
   tripSchema,
@@ -532,16 +533,13 @@ export function StayProperty({
             </aside>
           )}
         </div>
+        <BusinessPathway locale={locale} category="accommodation" />
         <footer className={styles.footer}>
           AkiDuermo ·{" "}
           {text("Part of the AkiPasa family", "Parte de la familia AkiPasa")}
           <div>
-            <a href={`/${locale}/privacy`}>
-              {text("Privacy", "Privacidad")}
-            </a>
-            <a href={`/${locale}/terms`}>
-              {text("Terms", "Condiciones")}
-            </a>
+            <a href={`/${locale}/privacy`}>{text("Privacy", "Privacidad")}</a>
+            <a href={`/${locale}/terms`}>{text("Terms", "Condiciones")}</a>
           </div>
         </footer>
       </main>
