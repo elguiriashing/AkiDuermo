@@ -1510,3 +1510,14 @@ MapLibre is upgraded from the locally patched 5.12.0 package to upstream 6.15.0.
 The exact merged release preview exposed generic footer Privacy and Terms links that silently opened AkiPasa. AkiDuermo now owns bilingual, canonical privacy and terms pages, exposes them in its sitemap, and points both discovery and property-detail footers to the local routes. Clearly labelled AkiPasa discovery/app-switcher links and the explicit shared-account data-management handoff remain intentional. The legal summaries retain the existing professional-review warning; they do not enable payments or change account, booking or database authority.
 
 Exact-host preview follow-up: the route allowlist now admits the new bilingual legal pages and the generated sitemap. The independent middleware otherwise correctly fails closed for unknown primary-product and API paths; focused route tests prevent future metadata or legal pages from compiling successfully while remaining unreachable.
+
+## 2026-10-20 | Shared account eligibility candidate
+
+Adds the AkiPasa-owned caller-only completion contract to local member/auth guards
+and supported customer API/optional tracking boundaries. Server-only readiness
+defaults off; existing accounts and RLS remain unchanged. Pending/negative state
+hands off to same-language canonical completion without cross-domain credentials.
+No cohort/schema/billing/role/production setting changes. See
+`SHARED_ACCOUNT_ELIGIBILITY.md` for coverage, central privacy safety, no seamless
+resume limitation, release gates and non-destructive rollback. Local guard tests
+are regression evidence, not authenticated five-domain acceptance.

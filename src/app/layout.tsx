@@ -1,3 +1,5 @@
+import { optionalUser } from "@/lib/auth";
+import { accountFeaturesAllowed } from "@/lib/account-eligibility";
 import "./globals.css";
 import "./compact-app.css";
 import "./brand.css";
@@ -39,6 +41,16 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  let trackingAllowed = true;
+  if (process.env.AKISUITE_ONBOARDING_SCHEMA_READY === "true") {
+    try {
+      const { supabase, user } = await optionalUser();
+      if (user) trackingAllowed = await accountFeaturesAllowed(supabase);
+    } catch {
+      trackingAllowed = false;
+    }
+  }
+
   const requestHeaders = await headers();
   const product: string = "akiduermo";
   const isAkiDuermo = product === "akiduermo";
@@ -88,7 +100,7 @@ export default async function RootLayout({
         <PwaRegistration />
         <ThemeManager />
         {children}
-        <ConsentAnalytics />
+        <ConsentAnalytics trackingAllowed={trackingAllowed} />
         <PersonalisationConsent locale={locale} />
       </body>
     </html>

@@ -136,3 +136,23 @@ identity still requires a separate host-local login and is not cross-domain SSO.
 The extracted routes live at their real product paths, rather than rewriting to the monolith's `/akiduermo` directory. Local runtime testing found that retaining the old rewrite/canonicalization pair caused requests to loop. Root-route promotion removes that cycle while keeping the same components, actions, RPCs, validation and RLS boundaries. Historical `/akiduermo/...` paths redirect once to their canonical counterparts. EN/ES roots redirect locally with validated `lang` and preserve query parameters. Local signout stays on this product. Account email/reset callbacks use the initiating trusted origin and return to Settings, including approved previews.
 
 CI's Supabase URL and key are explicit synthetic localhost-only fixtures. Browser booking requests/quotes/cancellation are intercepted inert responses; they exercise request payloads and rendered pending/cancelled states, never real reservations. The real API is separately tested with authenticated mocked adapters for existing RPC contracts. Full production schema concurrency/RLS and provider authentication remain unperformed release gates.
+
+## 2026-10-20 | Gated shared account eligibility
+
+The server member guard reads AkiPasa's caller-only onboarding contract after
+`AKISUITE_ONBOARDING_SCHEMA_READY` activation. Pending/negative declarations
+redirect to the canonical same-language AkiPasa completion page. Separate domains
+retain host-only sessions; that destination may request sign-in with the same
+identity. No JWT, password, PKCE code or arbitrary return URL crosses products.
+The shared database state takes effect on the next guarded request without client
+cache authority. Existing accounts remain exempt. No schema, cohort activation,
+terms version, subscription, ownership or routing setting changes here.
+
+Native customer booking/saved API routes deny restricted accounts after identity
+validation where present. The shared AkiPasa migration owns covered legacy mutation
+guards. All remaining privileged endpoints and safety flows require joint
+acceptance before enrolment activation. Completion currently returns to AkiPasa;
+the user can switch products afterwards. This explicit central handoff avoids a
+local completion redirect loop, but seamless authenticated cross-product resume
+remains a separately gated enhancement. Legal, export, deletion and sign-out
+remain reachable on AkiPasa's separate safety route.

@@ -1,3 +1,4 @@
+import { accountFeaturesAllowed } from "@/lib/account-eligibility";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
   stayMutationSchema,
@@ -17,6 +18,11 @@ export async function GET(request: Request) {
       data: { user },
     } = await db.auth.getUser();
     if (!user) return reply({ error: "sign_in" }, 401);
+    if (!(await accountFeaturesAllowed(db)))
+      return Response.json(
+        { error: "account_completion_required" },
+        { status: 403, headers: { "Cache-Control": "private, no-store" } },
+      );
     const { data, error } = await db
       .from("accommodation_reservations")
       .select(
@@ -53,6 +59,11 @@ export async function POST(request: Request) {
     data: { user },
   } = await db.auth.getUser();
   if (!user) return reply({ error: "sign_in" }, 401);
+  if (!(await accountFeaturesAllowed(db)))
+    return Response.json(
+      { error: "account_completion_required" },
+      { status: 403, headers: { "Cache-Control": "private, no-store" } },
+    );
   const p = parsed.data;
   const result =
     p.action === "quote"

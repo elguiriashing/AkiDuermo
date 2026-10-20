@@ -1,3 +1,4 @@
+import { accountFeaturesAllowed } from "@/lib/account-eligibility";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { z } from "zod";
 
@@ -25,6 +26,11 @@ export async function GET() {
       {
         headers: { "Cache-Control": "private, no-store" },
       },
+    );
+  if (!(await accountFeaturesAllowed(supabase)))
+    return Response.json(
+      { error: "account_completion_required" },
+      { status: 403, headers: { "Cache-Control": "private, no-store" } },
     );
   const [{ data: saved }, { data: pref }] = await Promise.all([
     supabase
@@ -59,6 +65,11 @@ export async function POST(request: Request) {
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user)
     return Response.json({ error: "sign_in_required" }, { status: 401 });
+  if (!(await accountFeaturesAllowed(supabase)))
+    return Response.json(
+      { error: "account_completion_required" },
+      { status: 403, headers: { "Cache-Control": "private, no-store" } },
+    );
   if (parsed.data.action === "set-reminders") {
     const { data, error } = await supabase.rpc(
       "suite_email_reminder_preferences",
