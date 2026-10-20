@@ -24,6 +24,7 @@ import { afterEach, expect, it, vi } from "vitest";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   accountFeaturesAllowed,
+  accountTrackingAllowed,
   accountCompletionUrl,
 } from "../src/lib/account-eligibility";
 afterEach(() => vi.unstubAllEnvs());
@@ -93,4 +94,22 @@ it("rejects direct member history API requests before reading tenant records", a
   expect(result.status).toBe(403);
   expect(await result.json()).toEqual({ error: "account_completion_required" });
   expect(state.from).not.toHaveBeenCalled();
+});
+
+it("does not confuse an existing underage demographic with loss of account access", async () => {
+  vi.stubEnv("AKISUITE_ONBOARDING_SCHEMA_READY", "false");
+  const db = {
+    from: () => ({
+      select: () => ({
+        eq: () => ({
+          maybeSingle: async () => ({
+            data: { birth_year: new Date().getUTCFullYear() - 12 },
+            error: null,
+          }),
+        }),
+      }),
+    }),
+  } as unknown as SupabaseClient;
+  expect(await accountFeaturesAllowed(db)).toBe(true);
+  expect(await accountTrackingAllowed(db, "self")).toBe(false);
 });
