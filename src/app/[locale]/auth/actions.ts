@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { config, isLocale } from "@/lib/config";
@@ -180,24 +180,12 @@ export async function signInWithPassword(formData: FormData) {
 
 export async function signInWithGoogle(formData: FormData) {
   const locale = formData.get("locale") === "en" ? "en" : "es";
-  if (formData.get("acceptTerms") !== "accepted")
-    redirect(
-      await authReturnUrl(locale, "signin", formData, { error: "terms" }),
-    );
   const origin = requestOrigin(await headers());
   const next = authDestination(
     locale,
     String(formData.get("next") || ""),
     origin,
   );
-  const cookieStore = await cookies();
-  cookieStore.set("akipasa_terms_ack", config.currentTermsVersion, {
-    httpOnly: true,
-    maxAge: 600,
-    path: "/",
-    sameSite: "lax",
-    secure: origin.startsWith("https://"),
-  });
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
