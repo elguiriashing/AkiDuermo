@@ -50,6 +50,28 @@ export async function GET(
         }
         cookieStore.delete("akipasa_terms_ack");
       }
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user)
+        return NextResponse.redirect(
+          new URL(
+            `/${safeLocale}/auth?${new URLSearchParams({ error: "callback", next })}`,
+            publicOrigin,
+          ),
+        );
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("terms_version")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (profile?.terms_version !== config.currentTermsVersion)
+        return NextResponse.redirect(
+          new URL(
+            `/${safeLocale}/terms/accept?${new URLSearchParams({ next })}`,
+            publicOrigin,
+          ),
+        );
       return NextResponse.redirect(new URL(next, publicOrigin));
     }
   }

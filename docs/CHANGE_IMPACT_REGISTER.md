@@ -1,5 +1,28 @@
 # Change Impact Register
 
+## 2026-10-20 | Host-local Google authentication recovery
+
+- **Before:** Google sign-in required a pre-authentication terms checkbox. Native
+  form validation could block the submit without reaching the Worker action or
+  Supabase, making the button appear inert. Returning Google users also had to
+  repeat the acknowledgement on every host-local login.
+- **After:** Google OAuth starts directly from the EN/ES auth page. After PKCE
+  exchange, the callback verifies the shared user and `profiles.terms_version`;
+  current users return to the validated local task, while new or outdated users
+  continue through the local EN/ES terms-acceptance page first. A short-lived
+  acknowledgement cookie from an already-started legacy flow remains supported.
+- **Affected journeys:** Google OAuth, magic-link callbacks, email confirmation
+  callbacks and password-recovery callbacks share the callback route. Password
+  sign-in, signup validation, logout scope and safe recovery destinations are
+  unchanged. Account, bookings and settings remain protected by `requireUser`.
+- **Dependencies:** canonical and approved-preview callback allowlists, Supabase
+  PKCE cookies, shared `auth.users`, `profiles.terms_version`, the existing
+  `accept_current_terms` RPC, exact host-origin validation and EN/ES routes.
+  No schema, RLS, role, booking, storage, billing or cross-domain-cookie change.
+- **Evidence / rollback:** 204 unit/contract tests, lint, typecheck, OpenNext
+  build, Wrangler dry-run and Playwright pass in PR #22. Rollback restores the
+  pre-auth checkbox and callback; no database or provider rollback is required.
+
 ## 2026-10-19 | Independent production cutover completion
 
 - **Routes/SEO:** local membership aliases and unknown-route 404s remove the

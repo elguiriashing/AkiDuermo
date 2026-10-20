@@ -1,5 +1,25 @@
 # AkiDuermo extraction contract
 
+## 2026-10-20 | Host-local OAuth terms gate
+
+The independent EN/ES Google sign-in no longer depends on a required checkbox
+before OAuth. Browser validation previously stopped an unchecked form before the
+Worker server action, so neither Cloudflare nor Supabase received a request and
+the control could appear inert. Terms and privacy links remain beside the Google
+button, and acceptance is now enforced after Supabase establishes the host-local
+PKCE session. The callback validates the shared user, reads the authoritative
+`profiles.terms_version`, and sends missing or outdated acceptance to the local
+`/{locale}/terms/accept` route with the sanitized AkiDuermo task preserved.
+
+The callback is shared by Google OAuth, magic links, email confirmation and
+password recovery, so every successful exchange receives the same post-auth
+terms check. Already-started OAuth attempts carrying the former short-lived
+`akipasa_terms_ack` cookie remain compatible and delete it after processing.
+Canonical and approved preview callback allowlists, host-only Supabase cookies,
+local/global logout scopes, password policy, RLS and booking authority are
+unchanged. No cross-domain session transfer, schema migration, role change,
+storage change, payment activation or provider-setting mutation is introduced.
+
 ## 2026-10-19 | Independent production cutover candidate
 
 The main branch is now the only deploy source. Unknown routes return a local 404

@@ -295,16 +295,24 @@ export default async function AuthPage({
             <form action={signInWithGoogle} className="stack">
               <input type="hidden" name="locale" value={locale} />
               <input type="hidden" name="next" value={next} />
-              <TermsConsent
-                locale={locale}
-                suffix="google"
-                invalid={query.error === "terms"}
-              />
               <AuthSubmitButton
                 className="button google-button"
                 idle={es ? "Continuar con Google" : "Continue with Google"}
                 pending={es ? "Abriendo Google…" : "Opening Google…"}
               />
+              <small>
+                {es
+                  ? "Al continuar, aceptas las "
+                  : "By continuing, you accept the "}
+                <a href={`/${locale}/terms`}>{es ? "condiciones" : "terms"}</a>
+                {es
+                  ? " y confirmas que has leído la "
+                  : " and confirm that you have read the "}
+                <a href={`/${locale}/privacy`}>
+                  {es ? "política de privacidad" : "privacy policy"}
+                </a>
+                .
+              </small>
             </form>
             <div className="auth-divider">
               <span>{es ? "o con email" : "or with email"}</span>
