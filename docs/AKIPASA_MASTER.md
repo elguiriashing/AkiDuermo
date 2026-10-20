@@ -12,7 +12,6 @@ This release is isolated on a candidate PR targeting the held release branch;
 production deployment remains explicitly gated by source pinning and preview
 acceptance.
 
-
 ## 2026-10-15 | Outgoing nested-credential redirect boundary
 
 Cross-origin AkiPasa membership/fallback redirects remove credential-bearing
@@ -1034,3 +1033,26 @@ code. No auth token or account identity crosses domains in links. Existing
 server membership checks remain authoritative. Focused tests pass; complete
 CI/build and canonical authenticated acceptance remain release gates. See
 `docs/SUITE_NAVIGATION_V1.md`. No schema, billing or customer data changes.
+
+## 2026-10-20 | Contextual free management and operations previews
+
+The business-owner disclosure uses the canonical AkiSuite navigation contract,
+keeping free AkiHQ listing/location/team management separate from AkiBusiness
+paid operations. Venue claim initiation is shown only when the existing public
+ownership check confirms claim availability; property/rental prompts use the
+free hub without fabricating claimability or creating a venue dependency.
+Category workflow previews describe organisation steps, without invented results
+or prices. The operations link is neutral, not an upgrade promise or entitlement
+grant; actual target server permissions remain authoritative.
+
+CTA impressions/clicks and claim starts use existing GA4 only when the current
+analytics consent cookie grants it. No identifier, contact field, payment success
+or claim completion is inferred or sent. Consent revocation is rechecked on
+every signal. No new loader, cross-domain cookie, tracking pixel, billing flow,
+backend mutation, schema or production configuration is introduced. The mirrored
+BusinessPathway, suite-conversion and suite-navigation sources have shared v1
+provenance and no sibling-checkout imports.
+
+Validation: new five-case rendered/interaction/consent suite; full source gates
+and responsive/provider acceptance remain tracked in the release report. Revert
+these source commits for rollback; no data restoration is required.

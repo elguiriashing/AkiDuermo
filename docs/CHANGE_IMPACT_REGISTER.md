@@ -1511,6 +1511,17 @@ The exact merged release preview exposed generic footer Privacy and Terms links 
 
 Exact-host preview follow-up: the route allowlist now admits the new bilingual legal pages and the generated sitemap. The independent middleware otherwise correctly fails closed for unknown primary-product and API paths; focused route tests prevent future metadata or legal pages from compiling successfully while remaining unreachable.
 
+## 2026-10-20 | Shared account eligibility candidate
+
+Adds the AkiPasa-owned caller-only completion contract to local member/auth guards
+and supported customer API/optional tracking boundaries. Server-only readiness
+defaults off; existing accounts and RLS remain unchanged. Pending/negative state
+hands off to same-language canonical completion without cross-domain credentials.
+No cohort/schema/billing/role/production setting changes. See
+`SHARED_ACCOUNT_ELIGIBILITY.md` for coverage, central privacy safety, no seamless
+resume limitation, release gates and non-destructive rollback. Local guard tests
+are regression evidence, not authenticated five-domain acceptance.
+
 ## 2026-10-20 | Suite language and canonical handoffs
 
 - Before: management/operations selector destinations omitted language; operations
@@ -1524,3 +1535,26 @@ Exact-host preview follow-up: the route allowlist now admits the new bilingual l
 - Verification: fixed-origin/security matrix and actual selector EN/ES rendering;
   complete CI/build, responsive browsers and canonical authenticated journeys
   remain required. Source/deployment rollback preserves all stored data.
+
+## 2026-10-20 | Contextual free management and operations previews
+
+The business-owner disclosure uses the canonical AkiSuite navigation contract,
+keeping free AkiHQ listing/location/team management separate from AkiBusiness
+paid operations. Venue claim initiation is shown only when the existing public
+ownership check confirms claim availability; property/rental prompts use the
+free hub without fabricating claimability or creating a venue dependency.
+Category workflow previews describe organisation steps, without invented results
+or prices. The operations link is neutral, not an upgrade promise or entitlement
+grant; actual target server permissions remain authoritative.
+
+CTA impressions/clicks and claim starts use existing GA4 only when the current
+analytics consent cookie grants it. No identifier, contact field, payment success
+or claim completion is inferred or sent. Consent revocation is rechecked on
+every signal. No new loader, cross-domain cookie, tracking pixel, billing flow,
+backend mutation, schema or production configuration is introduced. The mirrored
+BusinessPathway, suite-conversion and suite-navigation sources have shared v1
+provenance and no sibling-checkout imports.
+
+Validation: new five-case rendered/interaction/consent suite; full source gates
+and responsive/provider acceptance remain tracked in the release report. Revert
+these source commits for rollback; no data restoration is required.

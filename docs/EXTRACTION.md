@@ -137,6 +137,26 @@ The extracted routes live at their real product paths, rather than rewriting to 
 
 CI's Supabase URL and key are explicit synthetic localhost-only fixtures. Browser booking requests/quotes/cancellation are intercepted inert responses; they exercise request payloads and rendered pending/cancelled states, never real reservations. The real API is separately tested with authenticated mocked adapters for existing RPC contracts. Full production schema concurrency/RLS and provider authentication remain unperformed release gates.
 
+## 2026-10-20 | Gated shared account eligibility
+
+The server member guard reads AkiPasa's caller-only onboarding contract after
+`AKISUITE_ONBOARDING_SCHEMA_READY` activation. Pending/negative declarations
+redirect to the canonical same-language AkiPasa completion page. Separate domains
+retain host-only sessions; that destination may request sign-in with the same
+identity. No JWT, password, PKCE code or arbitrary return URL crosses products.
+The shared database state takes effect on the next guarded request without client
+cache authority. Existing accounts remain exempt. No schema, cohort activation,
+terms version, subscription, ownership or routing setting changes here.
+
+Native customer booking/saved API routes deny restricted accounts after identity
+validation where present. The shared AkiPasa migration owns covered legacy mutation
+guards. All remaining privileged endpoints and safety flows require joint
+acceptance before enrolment activation. Completion currently returns to AkiPasa;
+the user can switch products afterwards. This explicit central handoff avoids a
+local completion redirect loop, but seamless authenticated cross-product resume
+remains a separately gated enhancement. Legal, export, deletion and sign-out
+remain reachable on AkiPasa's separate safety route.
+
 ## 2026-10-20 | Explicit cross-product language contract
 
 AkiSuite selectors and management/operations handoffs now retain EN/ES using
@@ -148,3 +168,26 @@ code. No auth token or account identity crosses domains in links. Existing
 server membership checks remain authoritative. Focused tests pass; complete
 CI/build and canonical authenticated acceptance remain release gates. See
 `docs/SUITE_NAVIGATION_V1.md`. No schema, billing or customer data changes.
+
+## 2026-10-20 | Contextual free management and operations previews
+
+The business-owner disclosure uses the canonical AkiSuite navigation contract,
+keeping free AkiHQ listing/location/team management separate from AkiBusiness
+paid operations. Venue claim initiation is shown only when the existing public
+ownership check confirms claim availability; property/rental prompts use the
+free hub without fabricating claimability or creating a venue dependency.
+Category workflow previews describe organisation steps, without invented results
+or prices. The operations link is neutral, not an upgrade promise or entitlement
+grant; actual target server permissions remain authoritative.
+
+CTA impressions/clicks and claim starts use existing GA4 only when the current
+analytics consent cookie grants it. No identifier, contact field, payment success
+or claim completion is inferred or sent. Consent revocation is rechecked on
+every signal. No new loader, cross-domain cookie, tracking pixel, billing flow,
+backend mutation, schema or production configuration is introduced. The mirrored
+BusinessPathway, suite-conversion and suite-navigation sources have shared v1
+provenance and no sibling-checkout imports.
+
+Validation: new five-case rendered/interaction/consent suite; full source gates
+and responsive/provider acceptance remain tracked in the release report. Revert
+these source commits for rollback; no data restoration is required.

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run && npm run test:suite-navigation",
+    "test": "vitest run && npm run test:suite-navigation && vitest run --config vitest.onboarding.config.ts",
     "check": "node --test scripts/release-source.test.mjs && npm run lint && npm run typecheck && npm test",
     "build:cloudflare": "node scripts/run-cloudflare.mjs build",
     "preview:cloudflare": "npm run build:cloudflare && opennextjs-cloudflare preview",
