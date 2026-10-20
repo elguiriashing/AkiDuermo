@@ -1510,3 +1510,26 @@ MapLibre is upgraded from the locally patched 5.12.0 package to upstream 6.15.0.
 The exact merged release preview exposed generic footer Privacy and Terms links that silently opened AkiPasa. AkiDuermo now owns bilingual, canonical privacy and terms pages, exposes them in its sitemap, and points both discovery and property-detail footers to the local routes. Clearly labelled AkiPasa discovery/app-switcher links and the explicit shared-account data-management handoff remain intentional. The legal summaries retain the existing professional-review warning; they do not enable payments or change account, booking or database authority.
 
 Exact-host preview follow-up: the route allowlist now admits the new bilingual legal pages and the generated sitemap. The independent middleware otherwise correctly fails closed for unknown primary-product and API paths; focused route tests prevent future metadata or legal pages from compiling successfully while remaining unreachable.
+
+## 2026-10-20 | Contextual free management and operations previews
+
+The business-owner disclosure uses the canonical AkiSuite navigation contract,
+keeping free AkiHQ listing/location/team management separate from AkiBusiness
+paid operations. Venue claim initiation is shown only when the existing public
+ownership check confirms claim availability; property/rental prompts use the
+free hub without fabricating claimability or creating a venue dependency.
+Category workflow previews describe organisation steps, without invented results
+or prices. The operations link is neutral, not an upgrade promise or entitlement
+grant; actual target server permissions remain authoritative.
+
+CTA impressions/clicks and claim starts use existing GA4 only when the current
+analytics consent cookie grants it. No identifier, contact field, payment success
+or claim completion is inferred or sent. Consent revocation is rechecked on
+every signal. No new loader, cross-domain cookie, tracking pixel, billing flow,
+backend mutation, schema or production configuration is introduced. The mirrored
+BusinessPathway, suite-conversion and suite-navigation sources have shared v1
+provenance and no sibling-checkout imports.
+
+Validation: new five-case rendered/interaction/consent suite; full source gates
+and responsive/provider acceptance remain tracked in the release report. Revert
+these source commits for rollback; no data restoration is required.
