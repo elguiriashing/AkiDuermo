@@ -10,13 +10,17 @@ const roots: Record<SuiteProduct, string> = {
   business: "/",
 };
 const routes: Record<SuiteProduct, RegExp> = {
-  pasa: /^\/(?:account|passport|bookings|business)(?:\/[A-Za-z0-9_-]+)*\/?$/,
+  pasa: /^\/(?:account|passports|bookings|business)(?:\/[A-Za-z0-9_-]+)*\/?$/,
   duermo: /^\/(?:account|saved|bookings|stays(?:\/[A-Za-z0-9_-]+)?)\/?$/,
   coches: /^\/(?:account|saved|bookings|rentals(?:\/[A-Za-z0-9_-]+)?)\/?$/,
   hq: /^\/business(?:\/[A-Za-z0-9_-]+)*\/?$/,
   business: /^\/$/,
 };
 const taskKeys = new Set([
+  "vehicle",
+  "start",
+  "end",
+  "page",
   "view",
   "tab",
   "venueId",

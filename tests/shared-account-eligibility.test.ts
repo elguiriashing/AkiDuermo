@@ -1,3 +1,4 @@
+import { accountTaskResume } from "../src/lib/account-task-resume";
 import { GET as memberHistory } from "../src/app/api/stays/bookings/route";
 const state = vi.hoisted(() => ({
   status: "pending",
@@ -124,3 +125,27 @@ it("retains the exact allowlisted task in the fixed central completion envelope"
   expect(next).not.toContain("evil");
   expect(next).not.toContain("secret");
 });
+
+it.each(["en", "es"] as const)(
+  "keeps canonical %s Passport resume tasks",
+  (locale) => {
+    expect(
+      accountTaskResume("pasa", locale, `/${locale}/passports/prestige`)?.url,
+    ).toBe(`https://akipasa.com/${locale}/passports/prestige`);
+  },
+);
+
+it.each(["en", "es"] as const)(
+  "retains bounded %s rental selection and pagination without credentials",
+  (locale) => {
+    expect(
+      accountTaskResume(
+        "coches",
+        locale,
+        "/rentals/branch?vehicle=car_1&start=2027-02-28&end=2027-03-02&page=2&token=secret",
+      )?.url,
+    ).toBe(
+      `https://akicoches.com/rentals/branch?lang=${locale}&vehicle=car_1&start=2027-02-28&end=2027-03-02&page=2`,
+    );
+  },
+);
