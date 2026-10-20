@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode, type CSSProperties } from "react";
+import { useSuiteReferral } from "./useSuiteReferral";
+import { suiteHref } from "../lib/suite-navigation";
 import { Icon } from "./Icons";
 import { LanguageLink } from "./LanguageLink";
 import { PortalLogo } from "./PortalLogo";
@@ -18,14 +20,40 @@ export function PortalHeaderTools({
   onLanguageChange?: () => void;
   children?: ReactNode;
 }) {
+  const referralCode = useSuiteReferral();
   const menu = useRef<HTMLDetailsElement>(null);
   const nextLocale = locale === "es" ? "en" : "es";
   const apps = [
-    { product: "pasa", name: "AkiPasa", href: `https://akipasa.com/${locale}`, accent: "#F26B1D" },
-    { product: "duermo", name: "AkiDuermo", href: `https://akiduermo.com/?lang=${locale}`, accent: "#2FC2A5" },
-    { product: "coches", name: "AkiCoches", href: `https://akicoches.com/?lang=${locale}`, accent: "#FF3047" },
-    { product: "hq", name: "AkiHQ", href: "https://akihq.app", accent: "#FFC533" },
-    { product: "business", name: "AkiBusiness", href: "https://akibusiness.com", accent: "#A778FF" },
+    {
+      product: "pasa",
+      name: "AkiPasa",
+      href: suiteHref("pasa", locale, { referralCode }),
+      accent: "#F26B1D",
+    },
+    {
+      product: "duermo",
+      name: "AkiDuermo",
+      href: suiteHref("duermo", locale, { referralCode }),
+      accent: "#2FC2A5",
+    },
+    {
+      product: "coches",
+      name: "AkiCoches",
+      href: suiteHref("coches", locale, { referralCode }),
+      accent: "#FF3047",
+    },
+    {
+      product: "hq",
+      name: "AkiHQ",
+      href: suiteHref("hq", locale, { referralCode }),
+      accent: "#FFC533",
+    },
+    {
+      product: "business",
+      name: "AkiBusiness",
+      href: suiteHref("business", locale, { referralCode }),
+      accent: "#A778FF",
+    },
   ] as const;
 
   useEffect(() => {
@@ -78,7 +106,9 @@ export function PortalHeaderTools({
           <Icon name="more" size={20} />
         </summary>
         <div className="portal-product-popover">
-          <span className="portal-apps-heading">{locale === "es" ? "Aplicaciones AkiSuite" : "AkiSuite apps"}</span>
+          <span className="portal-apps-heading">
+            {locale === "es" ? "Aplicaciones AkiSuite" : "AkiSuite apps"}
+          </span>
           {apps.map((app) => {
             const active = app.product === product;
             return (
@@ -90,10 +120,26 @@ export function PortalHeaderTools({
                 style={{ "--app-accent": app.accent } as CSSProperties}
               >
                 <PortalLogo product={app.product} />
-                {active && <span className="portal-current-app">{locale === "es" ? "Actual" : "Current"}</span>}
+                {active && (
+                  <span className="portal-current-app">
+                    {locale === "es" ? "Actual" : "Current"}
+                  </span>
+                )}
               </a>
             );
           })}
+          {referralCode && (
+            <a
+              href={suiteHref("pasa", locale, {
+                path: "/referrals",
+                referralCode,
+              })}
+            >
+              {locale === "es"
+                ? "Aplicar invitación de referido"
+                : "Apply referral invitation"}
+            </a>
+          )}
           {children && <div className="portal-product-actions">{children}</div>}
         </div>
       </details>

@@ -1,3 +1,4 @@
+import { suiteHref } from "@/lib/suite-navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { requireUser } from "@/lib/auth";
@@ -252,7 +253,7 @@ export default async function StayAccountPage() {
                   ? "Tus datos de acceso son compartidos con AkiPasa. Tus reservas siguen separadas por producto."
                   : "Your sign-in details are shared with AkiPasa. Your bookings stay separate by product."}
               </p>
-              <a href={"https://akihq.app/" + locale + "/business"}>
+              <a href={suiteHref("hq", locale)}>
                 <span>
                   {es
                     ? "Gestionar mis alojamientos en AkiHQ"
@@ -260,7 +261,7 @@ export default async function StayAccountPage() {
                 </span>
                 <span aria-hidden="true">↗</span>
               </a>
-              <a href={"https://akibusiness.com/" + locale}>
+              <a href={suiteHref("business", locale)}>
                 <span>
                   {es
                     ? "Abrir operaciones en AkiBusiness"
