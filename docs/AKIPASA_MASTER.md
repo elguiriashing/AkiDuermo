@@ -1022,3 +1022,15 @@ The connected production release smoke published and verified AkiPasa master com
 ## Independent AkiDuermo extraction candidate
 
 This repository is the independent AkiDuermo consumer app source snapshot. Canonical is akiduermo.com; tenant property management is linked to akibusiness.com. Identity uses the existing Supabase project with separate host sessions. Shared cron and billing remain in original AkiPasa. See EXTRACTION.md for candidate checks and release holds; no production cutover is implied.
+
+## 2026-10-20 | Explicit cross-product language contract
+
+AkiSuite selectors and management/operations handoffs now retain EN/ES using
+canonical product-specific route formats. AkiHQ remains free management;
+AkiBusiness remains paid operations. The synchronized suite-navigation v1
+contract rejects external/query/fragment/path-traversal destinations and can
+carry only bounded explicit workspace identity and a validated public referral
+code. No auth token or account identity crosses domains in links. Existing
+server membership checks remain authoritative. Focused tests pass; complete
+CI/build and canonical authenticated acceptance remain release gates. See
+`docs/SUITE_NAVIGATION_V1.md`. No schema, billing or customer data changes.
