@@ -136,3 +136,15 @@ identity still requires a separate host-local login and is not cross-domain SSO.
 The extracted routes live at their real product paths, rather than rewriting to the monolith's `/akiduermo` directory. Local runtime testing found that retaining the old rewrite/canonicalization pair caused requests to loop. Root-route promotion removes that cycle while keeping the same components, actions, RPCs, validation and RLS boundaries. Historical `/akiduermo/...` paths redirect once to their canonical counterparts. EN/ES roots redirect locally with validated `lang` and preserve query parameters. Local signout stays on this product. Account email/reset callbacks use the initiating trusted origin and return to Settings, including approved previews.
 
 CI's Supabase URL and key are explicit synthetic localhost-only fixtures. Browser booking requests/quotes/cancellation are intercepted inert responses; they exercise request payloads and rendered pending/cancelled states, never real reservations. The real API is separately tested with authenticated mocked adapters for existing RPC contracts. Full production schema concurrency/RLS and provider authentication remain unperformed release gates.
+
+## 2026-10-20 | Explicit cross-product language contract
+
+AkiSuite selectors and management/operations handoffs now retain EN/ES using
+canonical product-specific route formats. AkiHQ remains free management;
+AkiBusiness remains paid operations. The synchronized suite-navigation v1
+contract rejects external/query/fragment/path-traversal destinations and can
+carry only bounded explicit workspace identity and a validated public referral
+code. No auth token or account identity crosses domains in links. Existing
+server membership checks remain authoritative. Focused tests pass; complete
+CI/build and canonical authenticated acceptance remain release gates. See
+`docs/SUITE_NAVIGATION_V1.md`. No schema, billing or customer data changes.

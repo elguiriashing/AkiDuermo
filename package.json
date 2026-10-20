@@ -8,13 +8,14 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run && npm run test:suite-navigation",
     "check": "node --test scripts/release-source.test.mjs && npm run lint && npm run typecheck && npm test",
     "build:cloudflare": "node scripts/run-cloudflare.mjs build",
     "preview:cloudflare": "npm run build:cloudflare && opennextjs-cloudflare preview",
     "deploy:cloudflare": "npm run build:cloudflare && opennextjs-cloudflare deploy",
     "format:check": "prettier --check .",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:suite-navigation": "node --experimental-strip-types --test tests/suite-navigation.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.7.0",

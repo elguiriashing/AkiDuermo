@@ -1,3 +1,4 @@
+import { suiteHref } from "@/lib/suite-navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { stayLocale } from "@/lib/akiduermo-i18n";
@@ -40,7 +41,7 @@ export default async function StayMembershipPage() {
         : "Upgrade one property with stronger presentation, media and visibility tools.",
       monthly: "€14.99",
       yearly: "€143.90",
-      href: "https://akihq.app/",
+      href: suiteHref("hq", locale),
       hue: "mint",
     },
     {
@@ -51,7 +52,7 @@ export default async function StayMembershipPage() {
         : "Manage listings, properties and team access without a separate subscription.",
       monthly: es ? "Gratis" : "Free",
       yearly: null,
-      href: "https://akihq.app/",
+      href: suiteHref("hq", locale),
       hue: "hq",
     },
     {
@@ -62,7 +63,7 @@ export default async function StayMembershipPage() {
         : "Essential operating tools for one business location.",
       monthly: "€24.99",
       yearly: "€239.90",
-      href: "https://akibusiness.com/",
+      href: suiteHref("business", locale),
       hue: "gold",
     },
     {
@@ -73,7 +74,7 @@ export default async function StayMembershipPage() {
         : "More automation, control and collaboration for the team.",
       monthly: "€44.99",
       yearly: "€431.90",
-      href: "https://akibusiness.com/",
+      href: suiteHref("business", locale),
       hue: "gold",
     },
     {
@@ -84,7 +85,7 @@ export default async function StayMembershipPage() {
         : "POS, inventory and advanced operations for one location.",
       monthly: "€64.99",
       yearly: "€623.90",
-      href: "https://akibusiness.com/",
+      href: suiteHref("business", locale),
       hue: "gold",
     },
     {
