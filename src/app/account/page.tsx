@@ -1,3 +1,4 @@
+import { accountTaskFromSearch } from "@/lib/account-task-resume";
 import { suiteHref } from "@/lib/suite-navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
@@ -14,9 +15,21 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function StayAccountPage() {
+export default async function StayAccountPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+} = {}) {
   const locale = stayLocale((await headers()).get("x-akipasa-locale"));
-  const { supabase, user } = await requireUser(locale, "/account");
+  const { supabase, user } = await requireUser(
+    locale,
+    accountTaskFromSearch(
+      "duermo",
+      locale,
+      "/account",
+      (await searchParams) || {},
+    ),
+  );
   await queueSuitePortalWelcome("akiduermo", locale);
   const es = locale === "es";
   const today = new Intl.DateTimeFormat("en-CA", {

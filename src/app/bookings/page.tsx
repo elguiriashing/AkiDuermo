@@ -1,3 +1,4 @@
+import { accountTaskFromSearch } from "@/lib/account-task-resume";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { requireUser } from "@/lib/auth";
@@ -15,7 +16,7 @@ export const metadata = {
 export default async function StayBookingsPage({
   searchParams,
 }: {
-  searchParams: Promise<Record<string, string | undefined>>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const locale = stayLocale((await headers()).get("x-akipasa-locale"));
   const es = locale === "es";
@@ -24,9 +25,16 @@ export default async function StayBookingsPage({
     query.tab === "active" || query.tab === "past" ? query.tab : "upcoming";
   const page = Math.max(
     0,
-    Math.min(1000, Number.parseInt(query.page || "0", 10) || 0),
+    Math.min(
+      1000,
+      Number.parseInt(typeof query.page === "string" ? query.page : "0", 10) ||
+        0,
+    ),
   );
-  const { supabase, user } = await requireUser(locale, "/bookings");
+  const { supabase, user } = await requireUser(
+    locale,
+    accountTaskFromSearch("duermo", locale, "/bookings", query),
+  );
   await queueSuitePortalWelcome("akiduermo", locale);
   const today = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Europe/Madrid",

@@ -1,7 +1,12 @@
-import { accountTaskResume } from "../src/lib/account-task-resume";
+import {
+  accountTaskResume,
+  accountTaskFromSearch,
+  suiteAccountCompletionUrl,
+} from "../src/lib/account-task-resume";
 import { GET as memberHistory } from "../src/app/api/stays/bookings/route";
 const state = vi.hoisted(() => ({
   status: "pending",
+  locale: "en",
   from: vi.fn(),
   getUser: vi.fn(),
 }));
@@ -19,6 +24,7 @@ vi.mock("next/navigation", () => ({
 }));
 vi.mock("next/headers", () => ({
   cookies: async () => ({ getAll: () => [] }),
+  headers: async () => new Headers({ "x-akipasa-locale": state.locale }),
 }));
 import { requireUser } from "../src/lib/auth";
 import { afterEach, expect, it, vi } from "vitest";
@@ -149,3 +155,158 @@ it.each(["en", "es"] as const)(
     );
   },
 );
+
+it.each(["en", "es"] as const)(
+  "preserves validated %s referral tasks across all five fixed products",
+  (locale) => {
+    const code = "AKI12345";
+    for (const [product, path, origin] of [
+      ["pasa", "/referrals", "https://akipasa.com"],
+      ["duermo", "/bookings", "https://akiduermo.com"],
+      ["coches", "/account", "https://akicoches.com"],
+      ["hq", "/business", "https://akihq.app"],
+      ["business", "/", "https://akibusiness.com"],
+    ] as const) {
+      const task = accountTaskResume(
+        product,
+        locale,
+        `${path}?ref=${code}&next=https://evil.invalid&token=secret`,
+      )!;
+      const target = new URL(task.url);
+      expect(target.origin).toBe(origin);
+      expect(target.searchParams.get("ref")).toBe(code);
+      expect(
+        product === "pasa" || product === "hq"
+          ? target.pathname.startsWith(`/${locale}/`)
+          : target.searchParams.get(
+              product === "business" ? "locale" : "lang",
+            ) === locale,
+      ).toBe(true);
+      expect(target.searchParams.has("next")).toBe(false);
+      expect(target.searchParams.has("token")).toBe(false);
+    }
+  },
+);
+it.each([
+  "ref=AKI12345&ref=AKI12345",
+  "ref=AKI12345&ref=OTHER123",
+  "ref=aki12345",
+  "ref=SHORT",
+  "ref=" + "A".repeat(25),
+  "ref=https://evil.invalid",
+  "ref=//evil.invalid",
+])("rejects malformed or repeated public referral task %s", (query) => {
+  for (const product of [
+    "pasa",
+    "duermo",
+    "coches",
+    "hq",
+    "business",
+  ] as const) {
+    const path =
+      product === "pasa"
+        ? "/referrals"
+        : product === "hq"
+          ? "/business"
+          : product === "business"
+            ? "/"
+            : "/account";
+    const url = new URL(
+      accountTaskResume(product, "en", `${path}?${query}`)!.url,
+    );
+    expect(url.searchParams.has("ref")).toBe(false);
+    if (product === "pasa") expect(url.pathname).toBe("/en/account");
+  }
+});
+
+it.each(["en", "es"] as const)(
+  "round-trips the maximum-length %s referral code in the local completion envelope",
+  (locale) => {
+    const code = "A".repeat(24),
+      requested = `/${locale}/referrals?ref=${code}`;
+    const completion = new URL(
+      suiteAccountCompletionUrl("pasa", locale, requested),
+    );
+    const next = new URL(
+      completion.searchParams.get("next")!,
+      completion.origin,
+    );
+    expect(completion.pathname).toBe(`/${locale}/onboarding`);
+    expect(next.pathname).toBe(`/${locale}/account-resume`);
+    expect(next.searchParams.get("product")).toBe("pasa");
+    expect(
+      accountTaskResume(
+        next.searchParams.get("product"),
+        locale,
+        next.searchParams.get("path")!,
+      )?.url,
+    ).toBe(`https://akipasa.com/${locale}/referrals?ref=${code}`);
+  },
+);
+
+it.each(["en", "es"] as const)(
+  "actual accommodation account and booking loaders preserve %s referral before the server gate",
+  async (locale) => {
+    vi.stubEnv("AKISUITE_ONBOARDING_SCHEMA_READY", "true");
+    state.locale = locale;
+    state.getUser.mockResolvedValue({ data: { user: { id: "fixture" } } });
+    const account = (await import("../src/app/account/page")).default,
+      bookings = (await import("../src/app/bookings/page")).default;
+    for (const status of ["pending", "underage"]) {
+      state.status = status;
+      for (const [loader, path] of [
+        [account, "/account"],
+        [bookings, "/bookings"],
+      ] as const) {
+        let destination = "";
+        try {
+          await loader({
+            searchParams: Promise.resolve({
+              ref: "AKI12345",
+              tab: "past",
+              page: "2",
+              next: "https://evil.invalid",
+              token: "secret",
+            }),
+          });
+        } catch (error) {
+          destination = (error as Error).message.replace(/^redirect:/, "");
+        }
+        const completion = new URL(destination);
+        expect(completion.pathname).toBe(`/${locale}/onboarding`);
+        const next = new URL(
+          completion.searchParams.get("next")!,
+          completion.origin,
+        );
+        const task = new URL(
+          next.searchParams.get("path")!,
+          "https://akiduermo.com",
+        );
+        expect(task.pathname).toBe(path);
+        expect(task.searchParams.get("ref")).toBe("AKI12345");
+        expect(task.searchParams.get("tab")).toBe("past");
+        expect(task.searchParams.get("page")).toBe("2");
+        expect(task.searchParams.has("next")).toBe(false);
+        expect(destination).not.toContain("secret");
+      }
+    }
+  },
+);
+
+it("filters actual server search records without picking a repeated referral or exporting arbitrary URLs", () => {
+  expect(
+    accountTaskFromSearch("duermo", "en", "/bookings", {
+      ref: ["AKI12345", "OTHER123"],
+      tab: "past",
+      page: "2",
+      next: "https://evil.invalid",
+      token: "secret",
+    }),
+  ).toBe("/bookings?tab=past&page=2");
+  expect(
+    accountTaskFromSearch("business", "es", "/", {
+      workspace: "workspace_1",
+      ref: "AKI12345",
+    }),
+  ).toBe("/?ref=AKI12345&workspace=workspace_1");
+});
