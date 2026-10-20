@@ -1,3 +1,4 @@
+import { accountTaskResume } from "../src/lib/account-task-resume";
 import { GET as memberHistory } from "../src/app/api/stays/bookings/route";
 const state = vi.hoisted(() => ({
   status: "pending",
@@ -113,3 +114,38 @@ it("does not confuse an existing underage demographic with loss of account acces
   expect(await accountFeaturesAllowed(db)).toBe(true);
   expect(await accountTrackingAllowed(db, "self")).toBe(false);
 });
+
+it("retains the exact allowlisted task in the fixed central completion envelope", () => {
+  const completion = new URL(
+    accountCompletionUrl("en", "/account?next=https://evil.test&token=secret"),
+  );
+  const next = completion.searchParams.get("next")!;
+  expect(completion.origin).toBe("https://akipasa.com");
+  expect(next).toContain("/en/account-resume?");
+  expect(next).not.toContain("evil");
+  expect(next).not.toContain("secret");
+});
+
+it.each(["en", "es"] as const)(
+  "keeps canonical %s Passport resume tasks",
+  (locale) => {
+    expect(
+      accountTaskResume("pasa", locale, `/${locale}/passports/prestige`)?.url,
+    ).toBe(`https://akipasa.com/${locale}/passports/prestige`);
+  },
+);
+
+it.each(["en", "es"] as const)(
+  "retains bounded %s rental selection and pagination without credentials",
+  (locale) => {
+    expect(
+      accountTaskResume(
+        "coches",
+        locale,
+        "/rentals/branch?vehicle=car_1&start=2027-02-28&end=2027-03-02&page=2&token=secret",
+      )?.url,
+    ).toBe(
+      `https://akicoches.com/rentals/branch?lang=${locale}&vehicle=car_1&start=2027-02-28&end=2027-03-02&page=2`,
+    );
+  },
+);
