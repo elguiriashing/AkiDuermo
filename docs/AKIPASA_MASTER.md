@@ -1,5 +1,15 @@
 # AKIPASA MASTER SYSTEM CONTRACT
 
+## 2026-10-21 | AkiDuermo five-plan membership surface
+
+The independent AkiDuermo membership route presents free AkiHQ, AkiDuermo
+Premium and AkiBusiness Standard/Plus/Pro in one concise comparison. Public
+tool/sector selection, Enterprise and personal Premium are not part of this
+screen. Standard/Plus/Pro describe 4/8/12 operating tools with one/two/no
+monthly replacements; configuration remains inside authenticated AkiBusiness.
+Checkout remains closed and no entitlement, price activation, booking, schema,
+RLS, identity or customer record changes.
+
 ## 2026-10-17 | Standalone AkiDuermo account dashboard candidate
 
 The independently deployed `/account` page (not the legacy public monorepo
