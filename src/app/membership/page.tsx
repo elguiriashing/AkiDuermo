@@ -43,7 +43,7 @@ export default async function StayMembershipPage() {
         : ["Premium presence", "Enhanced content", "More useful insights"],
     },
     {
-      name: "AkiBusiness Básico",
+      name: "AkiBusiness Standard",
       kind: es ? "Operaciones" : "Operations",
       description: es
         ? "Herramientas esenciales para una ubicación operativa."
@@ -60,7 +60,7 @@ export default async function StayMembershipPage() {
         : ["4 of 12 tools", "1 change each monthly cycle", "Per location"],
     },
     {
-      name: "AkiBusiness Standard",
+      name: "AkiBusiness Plus",
       kind: es ? "Operaciones ampliadas" : "Expanded operations",
       description: es
         ? "Más automatización, control y colaboración para el equipo."
