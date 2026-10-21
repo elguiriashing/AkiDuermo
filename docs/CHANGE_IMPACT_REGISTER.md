@@ -1,5 +1,18 @@
 # Change Impact Register
 
+## 2026-10-21 | Compact membership ladder
+
+- Standardises the public storefront on AkiHQ Free, AkiDuermo Premium and
+  AkiBusiness Standard/Plus/Pro; removes Enterprise, personal Premium and public
+  tool/sector selection from this route.
+- Shows the approved 4/8/12 toolbox sizes and one/two/no monthly replacement
+  model. Tool configuration remains authenticated AkiBusiness functionality.
+- Uses five desktop cards and a one-card-at-a-time snap rail on tablet/mobile.
+  EN/ES, theme tokens, local membership routing and safe cross-product links stay.
+- No checkout, Stripe, entitlement, auth, property, booking, RLS, schema or data
+  change. Full checks, supported OpenNext package, browser layouts, hosted CI and
+  exact-SHA release acceptance remain required. Source rollback is data-free.
+
 ## 2026-10-20 | Host-local Google authentication recovery
 
 - **Before:** Google sign-in required a pre-authentication terms checkbox. Native

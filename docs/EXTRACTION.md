@@ -1,5 +1,20 @@
 # AkiDuermo extraction contract
 
+## 2026-10-21 | Compact five-plan membership comparison
+
+The native membership route now presents exactly free AkiHQ, AkiDuermo
+Premium and AkiBusiness Standard/Plus/Pro. It removes the public tool/sector
+configurator, Enterprise and adoption-gated personal card from this commercial
+comparison. Standard communicates 4 of 12 tools with one replacement per
+monthly cycle, Plus 8 of 12 with two, and Pro all 12. Annual customers retain
+monthly anniversary rotations; billing frequency does not change tool access.
+
+Desktop uses one five-card comparison row. Tablet and mobile use a compact
+horizontal snap rail so the hero and a complete decision card share the first
+screen. Paid actions remain non-charging handoffs while checkout/tax gates are
+closed. No Stripe, entitlement, property, booking, identity, RLS, schema,
+customer record or production mapping changes.
+
 ## 2026-10-20 | Host-local OAuth terms gate
 
 The independent EN/ES Google sign-in no longer depends on a required checkbox

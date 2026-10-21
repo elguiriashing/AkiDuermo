@@ -2,7 +2,6 @@ import { suiteHref } from "@/lib/suite-navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { stayLocale } from "@/lib/akiduermo-i18n";
-import { personalPremiumVisible } from "@/lib/akisuite-rollout";
 import { StayAppShell } from "@/components/StayAppShell";
 import styles from "./membership.module.css";
 
@@ -16,34 +15,7 @@ export const metadata = {
 export default async function StayMembershipPage() {
   const locale = stayLocale((await headers()).get("x-akipasa-locale"));
   const es = locale === "es";
-  const personalUnlocked = await personalPremiumVisible();
   const plans = [
-    ...(personalUnlocked
-      ? [
-          {
-            name: "AkiDuermo Premium",
-            kind: es ? "Para viajeros" : "For travellers",
-            description: es
-              ? "Ventajas personales para guardar, descubrir y planificar estancias."
-              : "Personal benefits for saving, discovering and planning stays.",
-            monthly: "€1.99",
-            yearly: "€19.10",
-            href: "mailto:alex@akipasa.com?subject=AkiDuermo%20Premium",
-            hue: "mint",
-          },
-        ]
-      : []),
-    {
-      name: "AkiDuermo for Business",
-      kind: es ? "Para alojamientos" : "For accommodation hosts",
-      description: es
-        ? "Mejora un alojamiento con más presencia, contenido y herramientas de visibilidad."
-        : "Upgrade one property with stronger presentation, media and visibility tools.",
-      monthly: "€14.99",
-      yearly: "€143.90",
-      href: suiteHref("hq", locale),
-      hue: "mint",
-    },
     {
       name: "AkiHQ",
       kind: es ? "Gestión gratuita" : "Free management hub",
@@ -54,6 +26,23 @@ export default async function StayMembershipPage() {
       yearly: null,
       href: suiteHref("hq", locale),
       hue: "hq",
+      benefits: es
+        ? ["Fichas y ubicaciones", "Equipo y permisos", "Siempre gratis"]
+        : ["Listings and locations", "Team and permissions", "Always free"],
+    },
+    {
+      name: "AkiDuermo Premium",
+      kind: es ? "Más visibilidad" : "More visibility",
+      description: es
+        ? "Haz que un alojamiento destaque con mejor presencia y contenido."
+        : "Help one property stand out with stronger presence and content.",
+      monthly: "€14.99",
+      yearly: "€143.90",
+      href: "mailto:alex@akipasa.com?subject=AkiDuermo%20Premium",
+      hue: "mint",
+      benefits: es
+        ? ["Presencia Premium", "Contenido ampliado", "Más información útil"]
+        : ["Premium presence", "Enhanced content", "More useful insights"],
     },
     {
       name: "AkiBusiness Standard",
@@ -65,6 +54,13 @@ export default async function StayMembershipPage() {
       yearly: "€239.90",
       href: suiteHref("business", locale),
       hue: "gold",
+      benefits: es
+        ? [
+            "4 de 12 herramientas",
+            "1 cambio por ciclo mensual",
+            "Por ubicación",
+          ]
+        : ["4 of 12 tools", "1 change each monthly cycle", "Per location"],
     },
     {
       name: "AkiBusiness Plus",
@@ -76,6 +72,18 @@ export default async function StayMembershipPage() {
       yearly: "€431.90",
       href: suiteHref("business", locale),
       hue: "gold",
+      featured: true,
+      benefits: es
+        ? [
+            "8 de 12 herramientas",
+            "2 cambios por ciclo mensual",
+            "Para equipos en crecimiento",
+          ]
+        : [
+            "8 of 12 tools",
+            "2 changes each monthly cycle",
+            "For growing teams",
+          ],
     },
     {
       name: "AkiBusiness Pro",
@@ -87,17 +95,13 @@ export default async function StayMembershipPage() {
       yearly: "€623.90",
       href: suiteHref("business", locale),
       hue: "gold",
-    },
-    {
-      name: "AkiEnterprise",
-      kind: es ? "AkiSuite completo" : "Complete AkiSuite",
-      description: es
-        ? "Un paquete de AkiSuite adaptado a toda tu organización."
-        : "A tailored AkiSuite bundle for your whole organisation.",
-      monthly: es ? "A medida" : "Custom",
-      yearly: null,
-      href: "mailto:alex@akipasa.com?subject=AkiEnterprise%20enquiry",
-      hue: "enterprise",
+      benefits: es
+        ? [
+            "Las 12 herramientas",
+            "Sin cambios necesarios",
+            "Operaciones completas",
+          ]
+        : ["All 12 tools", "No swaps needed", "Complete operations"],
     },
   ];
   return (
@@ -112,16 +116,9 @@ export default async function StayMembershipPage() {
           </h1>
           <p>
             {es
-              ? "Planes claros para viajeros, alojamientos y operaciones. Premium personal aparece automáticamente al alcanzar el objetivo de adopción."
-              : "Clear plans for travellers, properties and operations. Personal Premium appears automatically when the adoption goal is reached."}
+              ? "Cinco opciones claras. Elige visibilidad o el nivel de operaciones que necesitas."
+              : "Five clear choices. Pick visibility or the level of operations you need."}
           </p>
-          {!personalUnlocked && (
-            <p className={styles.gate} role="status">
-              {es
-                ? "Premium personal aún no está disponible; las opciones para negocios siguen visibles."
-                : "Personal Premium is not open yet; business options remain visible."}
-            </p>
-          )}
         </header>
         <section
           className={styles.grid}
@@ -131,9 +128,19 @@ export default async function StayMembershipPage() {
             <article
               className={styles.card}
               data-hue={plan.hue}
+              data-featured={
+                "featured" in plan && plan.featured ? true : undefined
+              }
               key={plan.name}
             >
-              <span className={styles.eyebrow}>{plan.kind}</span>
+              <div className={styles.cardTop}>
+                <span className={styles.eyebrow}>{plan.kind}</span>
+                {"featured" in plan && plan.featured && (
+                  <span className={styles.popular}>
+                    {es ? "Más elegido" : "Most popular"}
+                  </span>
+                )}
+              </div>
               <h2>{plan.name}</h2>
               <p>{plan.description}</p>
               <div className={styles.price}>
@@ -148,6 +155,11 @@ export default async function StayMembershipPage() {
                   {es ? "al año · 20 % menos" : "yearly · 20% off"}
                 </small>
               )}
+              <ul className={styles.benefits}>
+                {plan.benefits.map((benefit) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
+              </ul>
               <Link className={styles.action} href={plan.href}>
                 {es ? "Explorar opciones" : "Explore options"}{" "}
                 <span aria-hidden="true">↗</span>
