@@ -30,6 +30,11 @@ describe("AkiDuermo native membership release", () => {
     expect(page).not.toContain("personalPremiumVisible");
     expect(page).not.toContain("startAkiSuiteCheckout");
     expect(page).toContain("<StayAppShell locale={locale}>");
+    expect(page).toContain('"/brand/hq-mark.svg"');
+    expect(page).toContain('"/brand/business-mark.svg"');
+    const style = readFileSync("src/app/membership/membership.module.css", "utf8");
+    expect(style).toContain("grid-template-columns: repeat(5, minmax(0, 1fr))");
+    expect(style).toContain("grid-auto-flow: column");
   });
 });
 
