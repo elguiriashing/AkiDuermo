@@ -211,3 +211,7 @@ and exact-source release checks remain required; unit fixtures do not establish
 authenticated production browser acceptance.
 
 Actual accommodation Account and Bookings server loaders now pass validated request search parameters into the same bounded task helper before requireUser. The selected tab/page and single referral survive pending/underage completion in EN/ES. Production deployment remains blocked by the existing EXPECTED_SOURCE_SHA pin to edd37b5041950111cb2dc2e26ff62bc3560ae0ac until authorized Cloudflare configuration access is restored; no source-pin check is bypassed or weakened.
+
+## Supported runtime update — 21 October 2026
+
+Next/OpenNext build support migrated after Next15 crossed the adapter support window. Existing product/role, locale, auth, shared schema and source-stamp release contracts remain authoritative; see NEXT16_SUPPORTED_RUNTIME.md. No unsupported-version flag, runtime pin change or production configuration mutation is permitted by this source amendment.

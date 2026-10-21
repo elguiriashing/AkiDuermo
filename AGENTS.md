@@ -27,3 +27,7 @@ Canonical domain: `https://akiduermo.com`. Legacy host: `https://akiduermo.akipa
 - Build/test and preview before attaching new production hostnames. Do not modify legacy redirects until the new system is verified.
 - Write down skipped functionality and risks in the PR; no silent regressions.
 - Coordinate with ongoing Codex work to avoid overlapping branches or forced pushes.
+
+## Version-matched framework documentation
+
+For Next16 migration/runtime work, read installed `node_modules/next/dist/docs/01-app/02-guides/upgrading/version-16.md` and `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/middleware.md` when present; bundled docs match the exact installed dependency. Existing product and release contracts above still apply.
