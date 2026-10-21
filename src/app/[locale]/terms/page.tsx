@@ -37,8 +37,14 @@ export default async function TermsPage({
   return (
     <main className="shell">
       <section className="hero">
-        <div className="eyebrow">AkiDuermo · {es ? "Condiciones" : "Terms"}</div>
-        <h1>{es ? "Usar AkiDuermo de forma responsable" : "Using AkiDuermo responsibly"}</h1>
+        <div className="eyebrow">
+          AkiDuermo · {es ? "Condiciones" : "Terms"}
+        </div>
+        <h1>
+          {es
+            ? "Usar AkiDuermo de forma responsable"
+            : "Using AkiDuermo responsibly"}
+        </h1>
         <p className="lede">
           {es
             ? "Estas condiciones cubren la búsqueda, las cuentas y las solicitudes de reserva de AkiDuermo."
@@ -52,13 +58,17 @@ export default async function TermsPage({
             ? "Los negocios y usuarios deben publicar información verdadera, autorizada y legal. Podemos moderar, ocultar o retirar contenido engañoso, inseguro o infractor."
             : "Businesses and users must publish truthful, authorised and lawful information. We may moderate, hide or remove misleading, unsafe or infringing content."}
         </p>
-        <h2>{es ? "Disponibilidad y reservas" : "Availability and bookings"}</h2>
+        <h2>
+          {es ? "Disponibilidad y reservas" : "Availability and bookings"}
+        </h2>
         <p>
           {es
             ? "Los precios y la disponibilidad se vuelven a comprobar al solicitar. Una solicitud no queda confirmada hasta que el alojamiento la acepte. No se procesan pagos en línea en AkiDuermo. Se aplican las condiciones y la política de cancelación mostradas por el alojamiento."
             : "Prices and availability are checked again when you request a stay. A request is not confirmed until the accommodation provider accepts it. AkiDuermo does not process online payments. The provider's displayed terms and cancellation policy apply."}
         </p>
-        <h2>{es ? "Cuentas y acceso empresarial" : "Accounts and business access"}</h2>
+        <h2>
+          {es ? "Cuentas y acceso empresarial" : "Accounts and business access"}
+        </h2>
         <p>
           {es
             ? "Debes mantener segura tu cuenta compartida de AkiSuite. Podemos solicitar prueba de representación antes de permitir que una empresa gestione un alojamiento; el acceso del equipo solo debe darse a personas autorizadas."
@@ -67,9 +77,13 @@ export default async function TermsPage({
         <h2>{es ? "Contacto" : "Contact"}</h2>
         <p>support@akipasa.com</p>
         <p>
-          <Link href={`/${locale}/privacy`}>{es ? "Privacidad" : "Privacy"}</Link>
+          <Link href={`/${locale}/privacy`}>
+            {es ? "Privacidad" : "Privacy"}
+          </Link>
           {" · "}
-          <Link href="/">{es ? "Volver a AkiDuermo" : "Back to AkiDuermo"}</Link>
+          <Link href="/">
+            {es ? "Volver a AkiDuermo" : "Back to AkiDuermo"}
+          </Link>
         </p>
         <small>
           {es

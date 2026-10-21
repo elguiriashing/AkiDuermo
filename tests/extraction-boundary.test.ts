@@ -160,13 +160,21 @@ describe("independent AkiDuermo boundaries", () => {
 
   it("keeps membership on the accommodation origin, without cross-origin credentials", async () => {
     mocks.refresh.mockResolvedValue(NextResponse.next());
-    const localized = await middleware(new NextRequest("https://akiduermo.com/en/membership", { headers: { host: "akiduermo.com" } }));
+    const localized = await middleware(
+      new NextRequest("https://akiduermo.com/en/membership", {
+        headers: { host: "akiduermo.com" },
+      }),
+    );
     expect(localized.status).toBe(307);
     const location = new URL(localized.headers.get("location")!);
     expect(location.origin).toBe("https://akiduermo.com");
     expect(location.pathname).toBe("/membership");
     expect(location.searchParams.get("lang")).toBe("en");
-    const native = await middleware(new NextRequest("https://akiduermo.com/membership?lang=es", { headers: { host: "akiduermo.com" } }));
+    const native = await middleware(
+      new NextRequest("https://akiduermo.com/membership?lang=es", {
+        headers: { host: "akiduermo.com" },
+      }),
+    );
     expect(native.headers.has("location")).toBe(false);
     expect(stayHostRoute("/membership").kind).toBe("public");
   });

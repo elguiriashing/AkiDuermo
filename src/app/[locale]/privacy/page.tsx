@@ -37,8 +37,14 @@ export default async function PrivacyPage({
   return (
     <main className="shell">
       <section className="hero">
-        <div className="eyebrow">AkiDuermo · {es ? "Privacidad" : "Privacy"}</div>
-        <h1>{es ? "Tu información, bajo control" : "Your information, under control"}</h1>
+        <div className="eyebrow">
+          AkiDuermo · {es ? "Privacidad" : "Privacy"}
+        </div>
+        <h1>
+          {es
+            ? "Tu información, bajo control"
+            : "Your information, under control"}
+        </h1>
         <p className="lede">
           {es
             ? "Este resumen explica los datos que usa AkiDuermo para descubrir alojamientos, guardar estancias y gestionar solicitudes de reserva."
@@ -75,7 +81,9 @@ export default async function PrivacyPage({
           {" · "}
           <Link href={`/${locale}/terms`}>{es ? "Condiciones" : "Terms"}</Link>
           {" · "}
-          <Link href="/">{es ? "Volver a AkiDuermo" : "Back to AkiDuermo"}</Link>
+          <Link href="/">
+            {es ? "Volver a AkiDuermo" : "Back to AkiDuermo"}
+          </Link>
         </p>
         <small>
           {es

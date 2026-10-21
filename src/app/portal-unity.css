@@ -217,26 +217,61 @@ html[data-theme="dark"] body[data-product="akibusiness"] {
 
 /* Shared five-product navigation uses the current icon identity of each site. */
 .portal-apps-heading {
-  color: var(--muted); font-size: 11px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: .12em; padding: 4px 6px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 4px 6px;
 }
-.portal-product-popover { width: 280px; }
-.portal-product-popover a { position: relative; border: 1px solid transparent !important; }
-.portal-product-popover a:hover, .portal-product-popover a:focus-visible {
+.portal-product-popover {
+  width: 280px;
+}
+.portal-product-popover a {
+  position: relative;
+  border: 1px solid transparent !important;
+}
+.portal-product-popover a:hover,
+.portal-product-popover a:focus-visible {
   border-color: var(--app-accent) !important;
-  background: color-mix(in srgb, var(--app-accent) 12%, var(--surface-alt)) !important;
+  background: color-mix(
+    in srgb,
+    var(--app-accent) 12%,
+    var(--surface-alt)
+  ) !important;
 }
-.portal-product-popover a[aria-current="page"] { border-color: var(--app-accent) !important; }
-.portal-product-popover .portal-current-app { color: var(--muted); font-size: 10px; font-weight: 750; margin-left: auto; }
+.portal-product-popover a[aria-current="page"] {
+  border-color: var(--app-accent) !important;
+}
+.portal-product-popover .portal-current-app {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 750;
+  margin-left: auto;
+}
 
 /* Two consistent actions beneath all five AkiSuite products. */
-.portal-product-actions { display: grid; gap: 8px; }
-.portal-product-actions > a, .portal-product-actions form button {
-  display: flex; align-items: center; width: 100%; min-height: 44px;
-  padding: 10px 12px; border: 1px solid var(--line);
-  border-radius: 11px; background: var(--surface-alt); color: var(--ink);
-  font: inherit; font-weight: 750; text-decoration: none; cursor: pointer;
+.portal-product-actions {
+  display: grid;
+  gap: 8px;
 }
-.portal-product-actions > a:hover, .portal-product-actions form button:hover {
+.portal-product-actions > a,
+.portal-product-actions form button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface-alt);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+.portal-product-actions > a:hover,
+.portal-product-actions form button:hover {
   background: var(--primary-soft);
 }
