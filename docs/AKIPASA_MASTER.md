@@ -1082,3 +1082,5 @@ Actual accommodation Account and Bookings server loaders now pass validated requ
 Independent discovery source now targets supported stable Next16/OpenNext after the adapter rejected the prior two-year-old major. Fixed origins, shared identity, schema, host-local cookies, EN/ES and paid readiness flags are preserved. Exact release status remains in NEXT16_SUPPORTED_RUNTIME.md; no source pin or unsupported-version bypass is authorized.
 
 The shared account-completion task contract preserves actual legacy management scope keys property/company/organisation as bounded navigation context. Destination membership/RLS remains authoritative; no permission is granted by query context.
+
+The isolated tooling maintenance candidate updates development dependencies with official advisory evidence and preserves production runtime/product contracts. Read security/TOOLING_REVIEW_20261021.md for source status and residual baseline; release requires exact-head CI.

@@ -1586,3 +1586,7 @@ Next16/OpenNext supported stable dependency upgrade. Affects build, lint, routin
 ## Completion scope preservation — 21 October 2026
 
 Shared task contract now retains bounded legacy property/company/organisation names consumed by real management destinations. Regressions cover all5/EN/ES, duplicates/URL rejection, and actual HQ pending/underage-to-complete destination consumption. No dependency, billing, DB, ownership, consent or deployment configuration change.
+
+## Patched tooling candidate — 21 October 2026
+
+Vitest/Vite and scoped build-parser dependency patches; no production feature/API/DB/identity changes. Lock-only generation avoids duplicate local dependency storage. Normal hosted npm ci must retain all scripts and run full tests/build/browser/dry-run gates. Raw baseline/candidate audits and static triage are in docs/security.

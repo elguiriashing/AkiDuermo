@@ -1,0 +1,1097 @@
+{
+  "schema_version": "triage-finding/v0",
+  "repository": {
+    "path": "/workspace/scratch/16f4e03b07aa/upgrade-AkiDuermo",
+    "revision": "65432cfde4ea376a39acd2a84cfd526348881a32"
+  },
+  "findings": [
+    {
+      "triage_item_id": "triage-001",
+      "input_id": "@vitest/mocker:GHSA-82fw-gwwq-j7x9",
+      "source_type": "advisory",
+      "title": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+      "normalized_input": {
+        "vulnerable_component": "@vitest/mocker",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/@vitest/mocker; affected >=2.1.0 <4.1.11",
+        "preconditions": [
+          "Standalone unauthenticated mocker/interceptor plugin or authenticated browser RPC",
+          "Attacker reaches its mock registration channel"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-82fw-gwwq-j7x9"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/@vitest/mocker"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 6,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-002",
+      "input_id": "brace-expansion:GHSA-mh99-v99m-4gvg",
+      "source_type": "advisory",
+      "title": "brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash",
+      "normalized_input": {
+        "vulnerable_component": "brace-expansion",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/brace-expansion; affected <1.1.17",
+        "preconditions": [
+          "Attacker-controlled YAML or glob expression reaches tooling parser"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-mh99-v99m-4gvg"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/brace-expansion"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 8,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-003",
+      "input_id": "brace-expansion:GHSA-rgw5-rvv9-x895",
+      "source_type": "advisory",
+      "title": "brace-expansion: DoS via unbounded intermediate arrays, bypassing the CVE-2026-14257 mitigation",
+      "normalized_input": {
+        "vulnerable_component": "brace-expansion",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "brace-expansion: DoS via unbounded intermediate arrays, bypassing the CVE-2026-14257 mitigation",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/brace-expansion; affected <1.1.18",
+        "preconditions": [
+          "Attacker-controlled YAML or glob expression reaches tooling parser"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-rgw5-rvv9-x895"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/brace-expansion"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 9,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-004",
+      "input_id": "brace-expansion:GHSA-q2hr-2g5m-vwhr",
+      "source_type": "advisory",
+      "title": "brace-expansion: Quadratic-time expansion of the `{a},b}` rewrite causes CPU denial of service",
+      "normalized_input": {
+        "vulnerable_component": "brace-expansion",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "brace-expansion: Quadratic-time expansion of the `{a},b}` rewrite causes CPU denial of service",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/brace-expansion; affected <1.1.21",
+        "preconditions": [
+          "Attacker-controlled YAML or glob expression reaches tooling parser"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-q2hr-2g5m-vwhr"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/brace-expansion"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 10,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-005",
+      "input_id": "brace-expansion:GHSA-qhr7-859c-m2p7",
+      "source_type": "advisory",
+      "title": "brace-expansion: DoS via uncontrolled recursion on nested brace groups causing stack exhaustion",
+      "normalized_input": {
+        "vulnerable_component": "brace-expansion",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "brace-expansion: DoS via uncontrolled recursion on nested brace groups causing stack exhaustion",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/brace-expansion; affected <1.1.20",
+        "preconditions": [
+          "Attacker-controlled YAML or glob expression reaches tooling parser"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-qhr7-859c-m2p7"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/brace-expansion"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 11,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-006",
+      "input_id": "brace-expansion:GHSA-6j4f-fj2g-mc7p",
+      "source_type": "advisory",
+      "title": "brace-expansion: DoS via uncontrolled recursion in parseCommaParts causing stack exhaustion",
+      "normalized_input": {
+        "vulnerable_component": "brace-expansion",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "brace-expansion: DoS via uncontrolled recursion in parseCommaParts causing stack exhaustion",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/brace-expansion; affected <1.1.19",
+        "preconditions": [
+          "Attacker-controlled YAML or glob expression reaches tooling parser"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-6j4f-fj2g-mc7p"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/brace-expansion"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 12,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-007",
+      "input_id": "braces:GHSA-vfj7-8cjw-p6xm",
+      "source_type": "advisory",
+      "title": "braces vulnerable to stack-exhaustion denial of service through deeply nested patterns",
+      "normalized_input": {
+        "vulnerable_component": "braces",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "braces vulnerable to stack-exhaustion denial of service through deeply nested patterns",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/braces; affected <=3.0.3",
+        "preconditions": [
+          "Attacker-controlled YAML or glob expression reaches tooling parser"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-vfj7-8cjw-p6xm"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/braces"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 13,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-008",
+      "input_id": "glob:GHSA-5j98-mcp5-4vw2",
+      "source_type": "advisory",
+      "title": "glob CLI: Command injection via -c/--cmd executes matches with shell:true",
+      "normalized_input": {
+        "vulnerable_component": "glob",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "glob CLI: Command injection via -c/--cmd executes matches with shell:true",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/@node-minify/core/node_modules/glob; affected >=10.2.0 <10.5.0",
+        "preconditions": [
+          "glob CLI invoked with -c/--cmd",
+          "Attacker-controlled matched filenames"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-5j98-mcp5-4vw2"]
+      },
+      "verdict": "not_actionable",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/@node-minify/core/node_modules/glob"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "@opennextjs/cloudflare -> @opennextjs/aws -> @node-minify/core -> globSync (safe API)"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": false,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": null,
+        "rank": null,
+        "rationale": "Effective mitigation or unaffected invocation defeats supplied claim",
+        "drivers": []
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "Installed @node-minify/core uses globSync library calls at dist/index.mjs:176,189; official advisory excludes library API.",
+        "No glob -c command in package scripts/CI."
+      ],
+      "proof_gaps": [],
+      "recommended_next_step": "Retain mitigation/guards and reassess future invocation changes",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-009",
+      "input_id": "js-yaml:GHSA-5p4m-2wfm-xmqj",
+      "source_type": "advisory",
+      "title": "JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported",
+      "normalized_input": {
+        "vulnerable_component": "js-yaml",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/js-yaml; affected >=4.0.0 <4.3.1",
+        "preconditions": [
+          "Attacker-controlled YAML or glob expression reaches tooling parser"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-5p4m-2wfm-xmqj"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/js-yaml"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 14,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-010",
+      "input_id": "js-yaml:GHSA-2883-xcg3-v3hh",
+      "source_type": "advisory",
+      "title": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+      "normalized_input": {
+        "vulnerable_component": "js-yaml",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/js-yaml; affected >=4.0.0 <4.3.2",
+        "preconditions": [
+          "Attacker-controlled YAML or glob expression reaches tooling parser"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-2883-xcg3-v3hh"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/js-yaml"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 15,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-011",
+      "input_id": "tinypool:GHSA-5gmw-xhrv-c9v3",
+      "source_type": "advisory",
+      "title": "Tinypool: Prototype Pollution gadget in worker options leads to Remote Code Execution",
+      "normalized_input": {
+        "vulnerable_component": "tinypool",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "Tinypool: Prototype Pollution gadget in worker options leads to Remote Code Execution",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/tinypool; affected <=2.1.0",
+        "preconditions": [
+          "Existing prototype pollution in the test process",
+          "Caller supplies a run options object without own filename"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-5gmw-xhrv-c9v3"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/tinypool"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 1,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-012",
+      "input_id": "tinypool:GHSA-85c8-ppgw-ccpr",
+      "source_type": "advisory",
+      "title": "Tinypool: Prototype Pollution Gadget to RCE in run() options",
+      "normalized_input": {
+        "vulnerable_component": "tinypool",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "Tinypool: Prototype Pollution Gadget to RCE in run() options",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/tinypool; affected <2.1.2",
+        "preconditions": [
+          "Existing prototype pollution in the test process",
+          "Caller supplies a run options object without own filename"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-85c8-ppgw-ccpr"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/tinypool"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 2,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-013",
+      "input_id": "vite:GHSA-698v-4r3x-3vcv",
+      "source_type": "advisory",
+      "title": "launch-editor: escapeCmdArgs() omits % escaping on Windows",
+      "normalized_input": {
+        "vulnerable_component": "vite",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "launch-editor: escapeCmdArgs() omits % escaping on Windows",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/vite; affected >=7.0.0 <=7.3.6",
+        "preconditions": [
+          "Reachable editor-launch endpoint and affected editor/platform configuration",
+          "Attacker-controlled file path"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-698v-4r3x-3vcv"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/vite"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 3,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-014",
+      "input_id": "vite:GHSA-r825-w8mm-5pxw",
+      "source_type": "advisory",
+      "title": "launch-editor: Editor CLI flag misinterpretation causing arbitrary command execution for some editors",
+      "normalized_input": {
+        "vulnerable_component": "vite",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "launch-editor: Editor CLI flag misinterpretation causing arbitrary command execution for some editors",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/vite; affected >=7.0.0 <=7.3.6",
+        "preconditions": [
+          "Reachable editor-launch endpoint and affected editor/platform configuration",
+          "Attacker-controlled file path"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-r825-w8mm-5pxw"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/vite"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 4,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-015",
+      "input_id": "vite:GHSA-587h-7wmj-h5pm",
+      "source_type": "advisory",
+      "title": "launch-editor: `fs.existsSync()` existence check can be bypassed on Windows",
+      "normalized_input": {
+        "vulnerable_component": "vite",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "launch-editor: `fs.existsSync()` existence check can be bypassed on Windows",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/vite; affected >=7.0.0 <=7.3.6",
+        "preconditions": [
+          "Reachable editor-launch endpoint and affected editor/platform configuration",
+          "Attacker-controlled file path"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-587h-7wmj-h5pm"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/vite"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 5,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    },
+    {
+      "triage_item_id": "triage-016",
+      "input_id": "vitest:GHSA-82fw-gwwq-j7x9",
+      "source_type": "advisory",
+      "title": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+      "normalized_input": {
+        "vulnerable_component": "vitest",
+        "claimed_source": "Attacker-controlled input under advisory preconditions",
+        "claimed_sink": "Vitest: Path Traversal / Arbitrary File Read via @vitest/mocker Redirect Mock",
+        "claimed_control": "Missing upstream guard identified by official advisory",
+        "affected_version_or_path": "node_modules/vitest; affected >=2.1.0 <4.1.11",
+        "preconditions": [
+          "Standalone unauthenticated mocker/interceptor plugin or authenticated browser RPC",
+          "Attacker reaches its mock registration channel"
+        ],
+        "impact": "Upstream advisory impact; not established as application exploitation",
+        "references": ["https://github.com/advisories/GHSA-82fw-gwwq-j7x9"]
+      },
+      "verdict": "needs_review",
+      "confidence": "medium",
+      "affected_locations": [
+        {
+          "label": "dependency declaration",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "node_modules/vitest"
+        },
+        {
+          "label": "supported invocation",
+          "path": "package.json",
+          "lines": "scripts/devDependencies",
+          "detail": "Next development app; Vitest CLI run; no public tool server"
+        }
+      ],
+      "reachable_path": [
+        "Development dependency installation -> configured test/lint/build tooling; no application request path found"
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "unknown",
+        "boundary_crossed": null,
+        "policy_basis": "AGENTS.md and product extraction contracts; no root/scoped SECURITY.md found"
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "needs_review",
+        "rank": 7,
+        "rationale": "Upstream affected version confirmed; deployment/user-controlled source preconditions not established",
+        "drivers": [
+          "Prerequisite input control",
+          "No configured production entrypoint",
+          "Development tooling configuration"
+        ]
+      },
+      "evidence": [
+        "Exact dependency versions and dev flags inspected from lockfile",
+        "Official GitHub Reviewed advisory inspected"
+      ],
+      "counterevidence": [
+        "All affected tooling packages are dev:true in exact lockfile.",
+        "Application src has no import of this package; Vitest configs select node/jsdom CLI run, no public mocker/browser/API plugin.",
+        "Built Duermo server module does not contain tinypool, @vitest/mocker, js-yaml, brace-expansion or node-minify references."
+      ],
+      "proof_gaps": [
+        "No established supported lower-trust source for advisory-required tooling input.",
+        "No local SECURITY.md; shared skill resolver references unavailable through skill provider; manually reviewed repository contracts."
+      ],
+      "recommended_next_step": "Apply compatible upstream patches as dependency maintenance; retain unresolved/no-upstream-fix baseline and reassess if exposing tool APIs",
+      "fix_finding_handoff": null
+    }
+  ]
+}
