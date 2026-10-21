@@ -1582,3 +1582,7 @@ Actual accommodation Account and Bookings server loaders now pass validated requ
 ## Supported runtime migration — 21 October 2026
 
 Next16/OpenNext supported stable dependency upgrade. Affects build, lint, routing/middleware, image rendering and runtime packaging; no database/API identity or paid-state changes. Refer to docs/NEXT16_SUPPORTED_RUNTIME.md for migration decisions and pending release gates.
+
+## Completion scope preservation — 21 October 2026
+
+Shared task contract now retains bounded legacy property/company/organisation names consumed by real management destinations. Regressions cover all5/EN/ES, duplicates/URL rejection, and actual HQ pending/underage-to-complete destination consumption. No dependency, billing, DB, ownership, consent or deployment configuration change.

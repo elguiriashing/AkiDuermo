@@ -310,3 +310,86 @@ it("filters actual server search records without picking a repeated referral or 
     }),
   ).toBe("/?ref=AKI12345&workspace=workspace_1");
 });
+
+it.each(["en", "es"] as const)(
+  "retains actual legacy scope names through every %s completion envelope",
+  (locale) => {
+    const scope = {
+      property: "00000000-0000-4000-8000-000000000011",
+      company: "00000000-0000-4000-8000-000000000022",
+      organisation: "00000000-0000-4000-8000-000000000033",
+      ref: "AKI12345",
+    };
+    for (const product of [
+      "pasa",
+      "duermo",
+      "coches",
+      "hq",
+      "business",
+    ] as const) {
+      const pathname =
+        product === "pasa"
+          ? "/referrals"
+          : product === "hq"
+            ? "/business/accommodations"
+            : product === "business"
+              ? "/"
+              : "/account";
+      const task = accountTaskFromSearch(product, locale, pathname, scope)!;
+      const completion = new URL(
+        suiteAccountCompletionUrl(product, locale, task),
+      );
+      const next = new URL(
+        completion.searchParams.get("next")!,
+        completion.origin,
+      );
+      const destination = new URL(
+        accountTaskResume(
+          next.searchParams.get("product"),
+          locale,
+          next.searchParams.get("path")!,
+        )!.url,
+      );
+      for (const [key, value] of Object.entries(scope))
+        expect(destination.searchParams.get(key)).toBe(value);
+      expect(destination.searchParams.getAll("property")).toHaveLength(1);
+      expect(destination.searchParams.getAll("company")).toHaveLength(1);
+      expect(destination.searchParams.getAll("organisation")).toHaveLength(1);
+      expect(next.pathname).toBe(`/${locale}/account-resume`);
+    }
+  },
+);
+
+it.each(["property", "company", "organisation"])(
+  "rejects duplicate and malicious legacy %s scopes without dropping valid referral intent",
+  (key) => {
+    for (const locale of ["en", "es"] as const) {
+      for (const value of [
+        ["owned", "foreign"],
+        "https://evil.invalid",
+        "//evil.invalid",
+        "../foreign",
+        "x".repeat(129),
+      ]) {
+        const task = accountTaskFromSearch(
+          "hq",
+          locale,
+          "/business/locations",
+          { [key]: value, ref: "AKI12345" },
+        )!;
+        const destination = new URL(accountTaskResume("hq", locale, task)!.url);
+        expect(destination.searchParams.has(key)).toBe(false);
+        expect(destination.searchParams.get("ref")).toBe("AKI12345");
+      }
+      const direct = new URL(
+        accountTaskResume(
+          "hq",
+          locale,
+          `/business/locations?${key}=owned&${key}=foreign&ref=AKI12345`,
+        )!.url,
+      );
+      expect(direct.searchParams.has(key)).toBe(false);
+      expect(direct.searchParams.get("ref")).toBe("AKI12345");
+    }
+  },
+);
