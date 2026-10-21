@@ -16,8 +16,8 @@ describe("AkiDuermo native membership release", () => {
     for (const name of [
       "AkiDuermo Premium",
       "AkiHQ",
-      "AkiBusiness Básico",
       "AkiBusiness Standard",
+      "AkiBusiness Plus",
       "AkiBusiness Pro",
     ])
       expect(page).toContain(name);
@@ -54,8 +54,8 @@ for (const locale of ["en", "es"] as const) {
     const cards = html.match(/<article\b[\s\S]*?<\/article>/g) ?? [];
     expect(cards).toHaveLength(5);
     for (const [name, price, tools, replacements] of [
-      ["Básico", "€24.99", locale === "es" ? "4 de 12" : "4 of 12", "1"],
-      ["Standard", "€44.99", locale === "es" ? "8 de 12" : "8 of 12", "2"],
+      ["Standard", "€24.99", locale === "es" ? "4 de 12" : "4 of 12", "1"],
+      ["Plus", "€44.99", locale === "es" ? "8 de 12" : "8 of 12", "2"],
       [
         "Pro",
         "€64.99",
@@ -71,9 +71,7 @@ for (const locale of ["en", "es"] as const) {
         /239\.90|431\.90|623\.90|20\s?%|yearly|al año/,
       );
     }
-    expect(html).not.toMatch(
-      /AkiBusiness Plus|Most popular|Más elegido|20\s?%/,
-    );
+    expect(html).not.toMatch(/Most popular|Más elegido|20\s?%/);
     expect(html).toContain(locale === "es" ? "8 herramientas" : "8 tools");
     expect(html).toContain(
       locale === "es" ? "rotación mensual" : "monthly rotation",
