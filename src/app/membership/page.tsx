@@ -1,5 +1,6 @@
 import { suiteHref } from "@/lib/suite-navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { headers } from "next/headers";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { StayAppShell } from "@/components/StayAppShell";
@@ -131,6 +132,15 @@ export default async function StayMembershipPage() {
                     {es ? "8 herramientas" : "8 tools"}
                   </span>
                 )}
+              </div>
+              <div className={styles.cardBrand}>
+                <Image
+                  src={plan.hue === "hq" ? "/brand/hq-mark.svg" : plan.hue === "mint" ? "/brand/duermo-icon.png" : "/brand/business-mark.svg"}
+                  alt=""
+                  width={46}
+                  height={46}
+                  unoptimized
+                />
               </div>
               <h2>{plan.name}</h2>
               <p>{plan.description}</p>
