@@ -19,7 +19,7 @@ export default async function StayAccountPage({
   searchParams,
 }: {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
-} = {}) {
+}) {
   const locale = stayLocale((await headers()).get("x-akipasa-locale"));
   const { supabase, user } = await requireUser(
     locale,
