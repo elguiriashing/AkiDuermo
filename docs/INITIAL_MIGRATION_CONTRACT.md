@@ -10,7 +10,7 @@
 ## Migration rules
 
 1. **Keep the original `akipasa` repo and live Worker unchanged.** Copy or extract; do not delete original code.
-2. Extract a *working* independently buildable application and its transitive dependencies, not just matching route files.
+2. Extract a _working_ independently buildable application and its transitive dependencies, not just matching route files.
 3. Work in an isolation branch with CI; build and test a preview before production DNS changes.
 4. No database schema changes, destructive migrations, auth provider changes, or legacy redirects as part of initial extraction.
 5. Never commit secrets or production private keys; use Cloudflare environment secrets.

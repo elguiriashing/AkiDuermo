@@ -1595,3 +1595,17 @@ Actual accommodation Account and Bookings server loaders now pass validated requ
 ## Supported runtime migration — 21 October 2026
 
 Next16/OpenNext supported stable dependency upgrade. Affects build, lint, routing/middleware, image rendering and runtime packaging; no database/API identity or paid-state changes. Refer to docs/NEXT16_SUPPORTED_RUNTIME.md for migration decisions and pending release gates.
+
+## Completion scope preservation — 21 October 2026
+
+Shared task contract now retains bounded legacy property/company/organisation names consumed by real management destinations. Regressions cover all5/EN/ES, duplicates/URL rejection, and actual HQ pending/underage-to-complete destination consumption. No dependency, billing, DB, ownership, consent or deployment configuration change.
+
+## Patched tooling candidate — 21 October 2026
+
+Vitest/Vite and scoped build-parser dependency patches; no production feature/API/DB/identity changes. Lock-only generation avoids duplicate local dependency storage. Normal hosted npm ci must retain all scripts and run full tests/build/browser/dry-run gates. Raw baseline/candidate audits and static triage are in docs/security.
+
+## Monthly operating-tier alignment — 21 October 2026
+
+The compact five-card membership design is preserved. Operating cards use approved Básico €24.99 / Standard €44.99 / Pro €64.99 monthly amounts and 4/8/12 tools, with 1/2/unrestricted monthly replacements. Unverified operations annual totals and the global annual savings control are removed; no new annual Stripe products or pricing are inferred. The Standard accent now says “8 tools”, without an unsupported popularity claim. Existing listing monthly pricing remains separate; no billing objects or personal subscription records change. Saved toolbox changes activate at the next monthly rotation, including existing annual subscribers; delegation of active tools remains instant.
+
+EN/ES functional server-render tests assert each actual card’s price, tools, replacement allowance, five-card count, locale destination and absence of annual/popularity promises. Checkout remains gated and no provider or production configuration changes are made. Scope-preservation and patched-tooling public ancestry are retained with the latest membership primary. Full exact-head hosted release gates remain required before merging.

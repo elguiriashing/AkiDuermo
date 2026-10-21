@@ -11,11 +11,11 @@ export function PortalLogo({
       ? "Business"
       : product === "coches"
         ? "Coches"
-      : product === "pasa"
-        ? "Pasa"
-        : product === "duermo"
-          ? "Duermo"
-          : "HQ";
+        : product === "pasa"
+          ? "Pasa"
+          : product === "duermo"
+            ? "Duermo"
+            : "HQ";
   return (
     <span className={`${styles.logo} ${styles[product]}`} aria-hidden="true">
       <Image
@@ -24,11 +24,11 @@ export function PortalLogo({
             ? "/pwa/akipasa-512.png"
             : product === "coches"
               ? "/brand/conduzco-icon.svg"
-            : product === "hq"
-              ? "/brand/hq-mark.svg"
-              : product === "business"
-                ? "/brand/business-mark.svg"
-                : `/brand/${product}-icon.png`
+              : product === "hq"
+                ? "/brand/hq-mark.svg"
+                : product === "business"
+                  ? "/brand/business-mark.svg"
+                  : `/brand/${product}-icon.png`
         }
         alt=""
         width={40}

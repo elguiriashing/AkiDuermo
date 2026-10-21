@@ -54,9 +54,9 @@ describe("authentication security", () => {
   });
 
   it("keeps AkiDuermo OAuth and email callbacks on the stay origin", () => {
-    expect(
-      publicRequestOrigin(new Headers({ host: "akiduermo.com" })),
-    ).toBe("https://akiduermo.com");
+    expect(publicRequestOrigin(new Headers({ host: "akiduermo.com" }))).toBe(
+      "https://akiduermo.com",
+    );
     expect(publicRequestOrigin(new Headers({ host: "attacker.example" }))).toBe(
       "https://akiduermo.com",
     );
