@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
     return webpackConfig;
   },
   images: {
+    // Preserve prior signed-media refresh behavior across the Next16 default change.
+    minimumCacheTTL: 60,
     remotePatterns: [
       {
         protocol: "https",

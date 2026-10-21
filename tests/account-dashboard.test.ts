@@ -11,7 +11,10 @@ describe("standalone AkiDuermo renter account", () => {
   );
 
   it("scopes all reservation summaries to the authenticated customer", () => {
-    expect(page).toContain('requireUser(locale, "/account")');
+    expect(page).toContain("await requireUser(");
+    expect(page).toMatch(
+      /accountTaskFromSearch\(\s*"duermo",\s*locale,\s*"\/account"/,
+    );
     expect((page.match(/\.eq\("profile_id", user\.id\)/g) || []).length).toBe(
       4,
     );
