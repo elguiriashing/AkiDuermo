@@ -236,3 +236,9 @@ Completion-resume scope correction retains the actual legacy property/company/or
 ## Isolated tooling security maintenance — 21 October 2026
 
 A separate candidate patches test/build dependencies after the scoped completion correction. Product/runtime dependencies, MapLibre backport verification, roles, consent, RLS, billing and release source pins remain authoritative. See security/TOOLING_REVIEW_20261021.md for advisory provenance, residual braces baseline and pending exact-head CI requirements.
+
+## Monthly operating-tier alignment — 21 October 2026
+
+The compact five-card membership design is preserved. Operating cards use approved Básico €24.99 / Standard €44.99 / Pro €64.99 monthly amounts and 4/8/12 tools, with 1/2/unrestricted monthly replacements. Unverified operations annual totals and the global annual savings control are removed; no new annual Stripe products or pricing are inferred. The Standard accent now says “8 tools”, without an unsupported popularity claim. Existing listing monthly pricing remains separate; no billing objects or personal subscription records change. Saved toolbox changes activate at the next monthly rotation, including existing annual subscribers; delegation of active tools remains instant.
+
+EN/ES functional server-render tests assert each actual card’s price, tools, replacement allowance, five-card count, locale destination and absence of annual/popularity promises. Checkout remains gated and no provider or production configuration changes are made. Scope-preservation and patched-tooling public ancestry are retained with the latest membership primary. Full exact-head hosted release gates remain required before merging.

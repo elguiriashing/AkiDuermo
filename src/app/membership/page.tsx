@@ -23,7 +23,6 @@ export default async function StayMembershipPage() {
         ? "Gestiona tus anuncios, propiedades y accesos de equipo sin una suscripción separada."
         : "Manage listings, properties and team access without a separate subscription.",
       monthly: es ? "Gratis" : "Free",
-      yearly: null,
       href: suiteHref("hq", locale),
       hue: "hq",
       benefits: es
@@ -37,7 +36,6 @@ export default async function StayMembershipPage() {
         ? "Haz que un alojamiento destaque con mejor presencia y contenido."
         : "Help one property stand out with stronger presence and content.",
       monthly: "€14.99",
-      yearly: "€143.90",
       href: "mailto:alex@akipasa.com?subject=AkiDuermo%20Premium",
       hue: "mint",
       benefits: es
@@ -45,13 +43,12 @@ export default async function StayMembershipPage() {
         : ["Premium presence", "Enhanced content", "More useful insights"],
     },
     {
-      name: "AkiBusiness Standard",
+      name: "AkiBusiness Básico",
       kind: es ? "Operaciones" : "Operations",
       description: es
         ? "Herramientas esenciales para una ubicación operativa."
         : "Essential operating tools for one business location.",
       monthly: "€24.99",
-      yearly: "€239.90",
       href: suiteHref("business", locale),
       hue: "gold",
       benefits: es
@@ -63,13 +60,12 @@ export default async function StayMembershipPage() {
         : ["4 of 12 tools", "1 change each monthly cycle", "Per location"],
     },
     {
-      name: "AkiBusiness Plus",
+      name: "AkiBusiness Standard",
       kind: es ? "Operaciones ampliadas" : "Expanded operations",
       description: es
         ? "Más automatización, control y colaboración para el equipo."
         : "More automation, control and collaboration for the team.",
       monthly: "€44.99",
-      yearly: "€431.90",
       href: suiteHref("business", locale),
       hue: "gold",
       featured: true,
@@ -92,16 +88,11 @@ export default async function StayMembershipPage() {
         ? "TPV, inventario y operaciones avanzadas para una ubicación."
         : "POS, inventory and advanced operations for one location.",
       monthly: "€64.99",
-      yearly: "€623.90",
       href: suiteHref("business", locale),
       hue: "gold",
       benefits: es
-        ? [
-            "Las 12 herramientas",
-            "Sin cambios necesarios",
-            "Operaciones completas",
-          ]
-        : ["All 12 tools", "No swaps needed", "Complete operations"],
+        ? ["Las 12 herramientas", "Cambios sin límite", "Operaciones completas"]
+        : ["All 12 tools", "Unrestricted replacements", "Complete operations"],
     },
   ];
   return (
@@ -137,7 +128,7 @@ export default async function StayMembershipPage() {
                 <span className={styles.eyebrow}>{plan.kind}</span>
                 {"featured" in plan && plan.featured && (
                   <span className={styles.popular}>
-                    {es ? "Más elegido" : "Most popular"}
+                    {es ? "8 herramientas" : "8 tools"}
                   </span>
                 )}
               </div>
@@ -149,12 +140,6 @@ export default async function StayMembershipPage() {
                   <span>{es ? "/ mes" : "/ month"}</span>
                 )}
               </div>
-              {plan.yearly && (
-                <small className={styles.yearly}>
-                  {plan.yearly}{" "}
-                  {es ? "al año · 20 % menos" : "yearly · 20% off"}
-                </small>
-              )}
               <ul className={styles.benefits}>
                 {plan.benefits.map((benefit) => (
                   <li key={benefit}>{benefit}</li>
@@ -169,8 +154,13 @@ export default async function StayMembershipPage() {
         </section>
         <p className={styles.note}>
           {es
-            ? "Precios de lanzamiento antes de impuestos aplicables. Esta página no inicia cargos; el checkout seguirá cerrado hasta su verificación."
-            : "Launch prices before applicable taxes. This page initiates no charge; checkout stays closed until verified."}
+            ? "Tu selección activa permite trabajar ahora. Los cambios guardados se aplican en la próxima rotación mensual, también para las suscripciones anuales existentes. Puedes delegar las herramientas activas al equipo al instante. Listing Premium y las herramientas operativas son suscripciones distintas."
+            : "Your active toolbox is available now. Saved changes apply at the next monthly rotation, including existing annual subscriptions. Delegate active tools to staff instantly. Listing Premium and operating tools are separate subscriptions."}
+        </p>
+        <p className={styles.note}>
+          {es
+            ? "Importes mensuales. Los impuestos aplicables se confirman antes del pago. Esta página no inicia cargos; el checkout seguirá cerrado hasta su verificación."
+            : "Monthly amounts. Applicable taxes are confirmed before payment. This page initiates no charge; checkout stays closed until verified."}
         </p>
       </div>
     </StayAppShell>
