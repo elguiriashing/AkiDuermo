@@ -35,6 +35,10 @@
   margin: 0 auto;
   padding: clamp(18px, 3vw, 36px);
 }
+.wide .main {
+  width: min(1580px, 100%);
+  padding: clamp(12px, 1.5vw, 22px) clamp(12px, 2vw, 24px) 36px;
+}
 .nav {
   position: fixed;
   z-index: 70;
