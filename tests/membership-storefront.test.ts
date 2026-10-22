@@ -30,11 +30,19 @@ describe("AkiDuermo native membership release", () => {
     expect(page).not.toContain("personalPremiumVisible");
     expect(page).not.toContain("startAkiSuiteCheckout");
     expect(page).toContain("<StayAppShell locale={locale}>");
-    expect(page).toContain('"/brand/hq-mark.svg"');
-    expect(page).toContain('"/brand/business-mark.svg"');
-    const style = readFileSync("src/app/membership/membership.module.css", "utf8");
+    const studio = readFileSync("src/components/AkiSuiteMembershipStudio.tsx", "utf8");
+    expect(studio).toContain('"/brand/hq-mark.svg"');
+    expect(studio).toContain('"/brand/business-mark.svg"');
+    expect(studio).toContain("hqGroup");
+    expect(studio).toContain("businessGroup");
+    expect(page).toContain("AkiSuiteMembershipStudio");
+    expect(page).not.toContain("cardBrand");
+    const style = readFileSync("src/components/AkiSuiteMembershipStudio.module.css", "utf8");
     expect(style).toContain("grid-template-columns: repeat(5, minmax(0, 1fr))");
-    expect(style).toContain("grid-auto-flow: column");
+    expect(style).toContain("grid-column: 1 / span 2");
+    expect(style).toContain("grid-column: 3 / span 3");
+    expect(style).toContain("width: 1px");
+    expect(style).toContain("overflow-x: auto");
   });
 });
 
