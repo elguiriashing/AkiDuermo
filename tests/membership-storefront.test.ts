@@ -66,6 +66,10 @@ for (const locale of ["en", "es"] as const) {
     const html = renderToStaticMarkup(await StayMembershipPage());
     const cards = html.match(/<article\b[\s\S]*?<\/article>/g) ?? [];
     expect(cards).toHaveLength(5);
+    // Brand art must sit above GROUPS, never be repeated in individual cards.
+    expect((html.match(/src="\/brand\/hq-mark.svg"/g) ?? [])).toHaveLength(1);
+    expect((html.match(/src="\/brand\/business-mark.svg"/g) ?? [])).toHaveLength(1);
+    for (const card of cards) expect(card).not.toContain("<img");
     for (const [name, price, tools, replacements] of [
       ["Standard", "€24.99", locale === "es" ? "4 de 12" : "4 of 12", "1"],
       ["Plus", "€44.99", locale === "es" ? "8 de 12" : "8 of 12", "2"],
