@@ -20,8 +20,8 @@ export default async function StayMembershipPage() {
       name: "AkiHQ",
       kind: es ? "Gestión gratuita" : "Free management hub",
       description: es
-        ? "Gestiona tus anuncios, propiedades y accesos de equipo sin una suscripción separada."
-        : "Manage listings, properties and team access without a separate subscription.",
+        ? "Tu centro para gestionar gratis tu alojamiento en AkiDuermo."
+        : "Your home for managing your free AkiDuermo property listing.",
       monthly: es ? "Gratis" : "Free",
       href: suiteHref("hq", locale),
       hue: "hq",
@@ -31,10 +31,10 @@ export default async function StayMembershipPage() {
     },
     {
       name: "AkiDuermo Premium",
-      kind: es ? "Más visibilidad" : "More visibility",
+      kind: es ? "PARA AKIHQ · MÁS VISIBILIDAD" : "FOR AKIHQ · MORE VISIBILITY",
       description: es
-        ? "Haz que un alojamiento destaque con mejor presencia y contenido."
-        : "Help one property stand out with stronger presence and content.",
+        ? "Mejora tu presencia y accede a las herramientas Premium de AkiDuermo para gestionar tu alojamiento desde AkiHQ."
+        : "Upgrade your presence and unlock the deluxe suite of AkiDuermo listing tools in AkiHQ.",
       monthly: "€14.99",
       href: "mailto:alex@akipasa.com?subject=AkiDuermo%20Premium",
       hue: "mint",
@@ -114,15 +114,15 @@ export default async function StayMembershipPage() {
   })) as [MembershipOffer, MembershipOffer, MembershipOffer, MembershipOffer, MembershipOffer];
 
   return (
-    <StayAppShell locale={locale}>
+    <StayAppShell locale={locale} wide>
       <AkiSuiteMembershipStudio
         theme="mint"
         locale={locale}
         eyebrow="AKIDUERMO / AKISUITE"
         title={es ? "Tu alojamiento. Más posibilidades." : "Your property. More possibilities."}
         description={es
-          ? "Cinco opciones claras. Elige visibilidad o el nivel de operaciones que necesitas."
-          : "Five clear choices. Pick visibility or the level of operations you need."}
+          ? "AkiHQ gestiona gratis tu alojamiento. Premium mejora tu ficha; AkiBusiness ofrece herramientas operativas independientes."
+          : "AkiHQ manages your property for free. Premium upgrades your listing; AkiBusiness offers separate operating tools."}
         offers={offers}
         footnotes={<>
           <p>{es
