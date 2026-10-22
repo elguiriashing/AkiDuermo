@@ -1,10 +1,9 @@
 import { suiteHref } from "@/lib/suite-navigation";
 import Link from "next/link";
-import Image from "next/image";
+import { AkiSuiteMembershipStudio, type MembershipOffer } from "@/components/AkiSuiteMembershipStudio";
 import { headers } from "next/headers";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { StayAppShell } from "@/components/StayAppShell";
-import styles from "./membership.module.css";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
@@ -96,83 +95,44 @@ export default async function StayMembershipPage() {
         : ["All 12 tools", "Unrestricted replacements", "Complete operations"],
     },
   ];
+  const offers = plans.map((plan, index): MembershipOffer => ({
+    id: ["suite-hq", "suite-listing", "suite-basico", "suite-standard", "suite-pro"][index],
+    name: plan.name,
+    label: plan.kind,
+    description: plan.description,
+    price: plan.monthly,
+    period: plan.monthly.startsWith("€") ? (es ? "/ mes por ubicación" : "/ month per location") : undefined,
+    benefits: plan.benefits,
+    featured: "featured" in plan && plan.featured === true,
+    action: <Link href={plan.href}>
+      {index === 0 ? (es ? "Abrir AkiHQ gratis" : "Open free AkiHQ") : (es ? "Explorar opciones" : "Explore options")}
+      <span aria-hidden="true">↗</span>
+    </Link>,
+    actionNote: index === 0
+      ? (es ? "Siempre disponible" : "Always available")
+      : (es ? "Precio previsto · activación pendiente" : "Staged pricing · checkout not yet live"),
+  })) as [MembershipOffer, MembershipOffer, MembershipOffer, MembershipOffer, MembershipOffer];
+
   return (
     <StayAppShell locale={locale}>
-      <div className={styles.page}>
-        <header className={styles.hero}>
-          <span className={styles.eyebrow}>AKIDUERMO / AKISUITE</span>
-          <h1>
-            {es
-              ? "Tu alojamiento. Más posibilidades."
-              : "Your property. More possibilities."}
-          </h1>
-          <p>
-            {es
-              ? "Cinco opciones claras. Elige visibilidad o el nivel de operaciones que necesitas."
-              : "Five clear choices. Pick visibility or the level of operations you need."}
-          </p>
-        </header>
-        <section
-          className={styles.grid}
-          aria-label={es ? "Planes disponibles" : "Available plans"}
-        >
-          {plans.map((plan) => (
-            <article
-              className={styles.card}
-              data-hue={plan.hue}
-              data-featured={
-                "featured" in plan && plan.featured ? true : undefined
-              }
-              key={plan.name}
-            >
-              <div className={styles.cardTop}>
-                <span className={styles.eyebrow}>{plan.kind}</span>
-                {"featured" in plan && plan.featured && (
-                  <span className={styles.popular}>
-                    {es ? "8 herramientas" : "8 tools"}
-                  </span>
-                )}
-              </div>
-              <div className={styles.cardBrand}>
-                <Image
-                  src={plan.hue === "hq" ? "/brand/hq-mark.svg" : plan.hue === "mint" ? "/brand/duermo-icon.png" : "/brand/business-mark.svg"}
-                  alt=""
-                  width={46}
-                  height={46}
-                  unoptimized
-                />
-              </div>
-              <h2>{plan.name}</h2>
-              <p>{plan.description}</p>
-              <div className={styles.price}>
-                <strong>{plan.monthly}</strong>
-                {plan.monthly.startsWith("€") && (
-                  <span>{es ? "/ mes" : "/ month"}</span>
-                )}
-              </div>
-              <ul className={styles.benefits}>
-                {plan.benefits.map((benefit) => (
-                  <li key={benefit}>{benefit}</li>
-                ))}
-              </ul>
-              <Link className={styles.action} href={plan.href}>
-                {es ? "Explorar opciones" : "Explore options"}{" "}
-                <span aria-hidden="true">↗</span>
-              </Link>
-            </article>
-          ))}
-        </section>
-        <p className={styles.note}>
-          {es
+      <AkiSuiteMembershipStudio
+        theme="mint"
+        locale={locale}
+        eyebrow="AKIDUERMO / AKISUITE"
+        title={es ? "Tu alojamiento. Más posibilidades." : "Your property. More possibilities."}
+        description={es
+          ? "Cinco opciones claras. Elige visibilidad o el nivel de operaciones que necesitas."
+          : "Five clear choices. Pick visibility or the level of operations you need."}
+        offers={offers}
+        footnotes={<>
+          <p>{es
             ? "Tu selección activa permite trabajar ahora. Los cambios guardados se aplican en la próxima rotación mensual, también para las suscripciones anuales existentes. Puedes delegar las herramientas activas al equipo al instante. Listing Premium y las herramientas operativas son suscripciones distintas."
-            : "Your active toolbox is available now. Saved changes apply at the next monthly rotation, including existing annual subscriptions. Delegate active tools to staff instantly. Listing Premium and operating tools are separate subscriptions."}
-        </p>
-        <p className={styles.note}>
-          {es
+            : "Your active toolbox is available now. Saved changes apply at the next monthly rotation, including existing annual subscriptions. Delegate active tools to staff instantly. Listing Premium and operating tools are separate subscriptions."}</p>
+          <p>{es
             ? "Importes mensuales. Los impuestos aplicables se confirman antes del pago. Esta página no inicia cargos; el checkout seguirá cerrado hasta su verificación."
-            : "Monthly amounts. Applicable taxes are confirmed before payment. This page initiates no charge; checkout stays closed until verified."}
-        </p>
-      </div>
+            : "Monthly amounts. Applicable taxes are confirmed before payment. This page initiates no charge; checkout stays closed until verified."}</p>
+        </>}
+      />
     </StayAppShell>
   );
 }

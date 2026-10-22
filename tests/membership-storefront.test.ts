@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { stayHostRoute } from "../src/lib/akiduermo-routing";
 
 describe("AkiDuermo native membership release", () => {
@@ -30,11 +31,19 @@ describe("AkiDuermo native membership release", () => {
     expect(page).not.toContain("personalPremiumVisible");
     expect(page).not.toContain("startAkiSuiteCheckout");
     expect(page).toContain("<StayAppShell locale={locale}>");
-    expect(page).toContain('"/brand/hq-mark.svg"');
-    expect(page).toContain('"/brand/business-mark.svg"');
-    const style = readFileSync("src/app/membership/membership.module.css", "utf8");
+    const studio = readFileSync("src/components/AkiSuiteMembershipStudio.tsx", "utf8");
+    expect(studio).toContain('"/brand/hq-mark.svg"');
+    expect(studio).toContain('"/brand/business-mark.svg"');
+    expect(studio).toContain("hqGroup");
+    expect(studio).toContain("businessGroup");
+    expect(page).toContain("AkiSuiteMembershipStudio");
+    expect(page).not.toContain("cardBrand");
+    const style = readFileSync("src/components/AkiSuiteMembershipStudio.module.css", "utf8");
     expect(style).toContain("grid-template-columns: repeat(5, minmax(0, 1fr))");
-    expect(style).toContain("grid-auto-flow: column");
+    expect(style).toContain("grid-column: 1 / span 2");
+    expect(style).toContain("grid-column: 3 / span 3");
+    expect(style).toContain("width: 1px");
+    expect(style).toContain("overflow-x: auto");
   });
 });
 
@@ -58,6 +67,10 @@ for (const locale of ["en", "es"] as const) {
     const html = renderToStaticMarkup(await StayMembershipPage());
     const cards = html.match(/<article\b[\s\S]*?<\/article>/g) ?? [];
     expect(cards).toHaveLength(5);
+    // Brand art must sit above GROUPS, never be repeated in individual cards.
+    expect((html.match(/src="\/brand\/hq-mark.svg"/g) ?? [])).toHaveLength(1);
+    expect((html.match(/src="\/brand\/business-mark.svg"/g) ?? [])).toHaveLength(1);
+    for (const card of cards) expect(card).not.toContain("<img");
     for (const [name, price, tools, replacements] of [
       ["Standard", "€24.99", locale === "es" ? "4 de 12" : "4 of 12", "1"],
       ["Plus", "€44.99", locale === "es" ? "8 de 12" : "8 of 12", "2"],
@@ -85,3 +98,21 @@ for (const locale of ["en", "es"] as const) {
     expect(html).toContain(`https://akibusiness.com/?locale=${locale}`);
   });
 }
+
+
+describe("Canonical AkiSuite membership studio source parity", () => {
+  it("uses the same reviewed template and stylesheet as all three discovery apps", () => {
+    const expected = [
+      ["src/components/AkiSuiteMembershipStudio.tsx", "28c8f7ee48d49ff91cad63c55e3aacaadfe3c28d"],
+      ["src/components/AkiSuiteMembershipStudio.module.css", "4b42977034d6a285fd355e7afcb72583779b5862"],
+    ] as const;
+    for (const [path, sha] of expected) {
+      const content = readFileSync(path);
+      const gitBlobSha = createHash("sha1")
+        .update("blob " + content.length + "\0")
+        .update(content)
+        .digest("hex");
+      expect(gitBlobSha, path).toBe(sha);
+    }
+  });
+});
