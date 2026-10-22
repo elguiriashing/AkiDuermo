@@ -30,7 +30,7 @@ describe("AkiDuermo native membership release", () => {
     expect(page).not.toContain("AkiEnterprise");
     expect(page).not.toContain("personalPremiumVisible");
     expect(page).not.toContain("startAkiSuiteCheckout");
-    expect(page).toContain("<StayAppShell locale={locale}>");
+    expect(page).toContain("<StayAppShell locale={locale} wide>");
     const studio = readFileSync("src/components/AkiSuiteMembershipStudio.tsx", "utf8");
     expect(studio).toContain('"/brand/hq-mark.svg"');
     expect(studio).toContain('"/brand/business-mark.svg"');
@@ -96,6 +96,9 @@ for (const locale of ["en", "es"] as const) {
     );
     expect(html).toContain(locale === "es" ? "al instante" : "instantly");
     expect(html).toContain(`https://akibusiness.com/?locale=${locale}`);
+    expect(html).toContain(locale === "es" ? "gratis tu alojamiento en AkiDuermo" : "free AkiDuermo property listing");
+    expect(html).toContain(locale === "es" ? "PARA AKIHQ" : "FOR AKIHQ");
+    expect(html).toContain(locale === "es" ? "herramientas Premium de AkiDuermo" : "deluxe suite of AkiDuermo listing tools");
   });
 }
 
