@@ -1,5 +1,10 @@
 # AKIPASA MASTER SYSTEM CONTRACT
 
+## 2026-10-22 | Accommodation membership product boundaries
+
+The native AkiDuermo `/membership` screen uses the existing shared AkiSuite studio and keeps the five-plan row, two grouped brand logos and mint theme. Its AkiHQ card explicitly manages the free AkiDuermo property listing; the AkiDuermo Premium card names AkiHQ as the destination for upgraded **listing** management, not the all-tools AkiBusiness subscription. The route opts into a wider `StayAppShell` content container to match AkiCoches desktop layout, without changing other pages. EN/ES, current price displays, per-location operations features, closed checkout, identity, provider and booking boundaries remain unchanged. Verify targeted render tests, responsive EN/ES preview and required release CI before deployment.
+
+
 ## 2026-10-21 | AkiDuermo five-plan membership surface
 
 The independent AkiDuermo membership route presents free AkiHQ, AkiDuermo
