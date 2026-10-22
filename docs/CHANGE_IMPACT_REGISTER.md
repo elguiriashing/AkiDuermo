@@ -1,5 +1,14 @@
 # Change Impact Register
 
+## 2026-10-22 | Membership text and desktop parity
+
+- **Scope:** independent AkiDuermo public `/membership` route, shell opt-in `wide` width, EN/ES plan descriptions and render tests.
+- **After:** AkiHQ is the free accommodation listing management hub, while AkiDuermo Premium is a premium listing extension in AkiHQ, distinct from the separately paid AkiBusiness tools.
+- **Preservation:** five-card grouped-brand shared component/CSS untouched; no price, CTA destination, checkout launch, Stripe, account authorization, backend or booking changes. Other shell pages retain existing widths.
+- **Verification:** EN/ES markup regression and required CI; desktop/tablet/mobile visual, cookie/nav overlays and production release smoke remain gates, not claimed completed.
+- **Rollback:** revert content and opt-in shell width; unaffected billing data needs no rollback.
+
+
 ## 2026-10-21 | Compact membership ladder
 
 - Standardises the public storefront on AkiHQ Free, AkiDuermo Premium and
