@@ -1,5 +1,17 @@
 # Change Impact Register
 
+## 2026-10-22 | AkiDuermo membership roles and unified audience template
+
+- Personal vs property-owner offers are separate and share the canonical
+  audience-first component with AkiPasa/AkiCoches.
+- No unsupported personal purchase or price is invented; property Listing
+  Premium remains enquiry-only at the staged €14.99/month.
+- AkiHQ manages free listings; AkiBusiness software is a separate handoff.
+- No auth, payment, subscription, RLS, accommodation, booking or data changes.
+- Verify EN/ES and keyboard/mobile, checkout inactivity, cross-product links,
+  full CI, production credential/SSL/role and exact-SHA release gate.
+
+
 ## 2026-10-21 | Compact membership ladder
 
 - Standardises the public storefront on AkiHQ Free, AkiDuermo Premium and
