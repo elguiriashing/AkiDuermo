@@ -38,8 +38,8 @@ describe("AkiDuermo audience-first membership", () => {
   }
   it("uses the matching canonical audience studio in all discovery apps", () => {
     for (const [path,sha] of [
-      ["src/components/AkiSuiteAudienceStudio.tsx","9ed87ee732c51105f2533f8ef66b6950b387b7b4"],
-      ["src/components/AkiSuiteAudienceStudio.module.css","d84e4bc5367b5b22371d27c6958aedcecf7516a9"],
+      ["src/components/AkiSuiteAudienceStudio.tsx","fbd1fac9f9ae6adae497f359fb0ef2f92cbe6c1f"],
+      ["src/components/AkiSuiteAudienceStudio.module.css","0bf1c16d123b5f7e7c93e228ef318083ef6b8a91"],
     ] as const) {
       const b=readFileSync(path);
       expect(createHash("sha1").update("blob "+b.length+"\0").update(b).digest("hex")).toBe(sha);
