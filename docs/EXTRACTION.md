@@ -1,5 +1,20 @@
 # AkiDuermo extraction contract
 
+## 2026-10-22 | Audience-first native membership storefront
+
+Supersedes the five-card sales ladder directly below. The membership
+storefront now offers Individual and Business selection, each with two
+transparent cards. Individual Free remains available; Personal Premium
+remains staged for new purchases (historical subscriptions unaffected).
+Business exposes free AkiHQ property management and a separately staged
+€14.99 property listing Premium enquiry. AkiBusiness Standard/Plus/Pro
+are accessed on the standalone software website, not sold as listing perks.
+The component and CSS are byte-identical with AkiPasa and AkiCoches. EN/ES,
+accessibility, property-vs-personal scope, safe cross-domain handoffs and no
+new checkout/Stripe/RLS/database changes are mandatory. Mobile/browser,
+CI and exact hosted-SHA release verification remain required.
+
+
 ## 2026-10-21 | Compact five-plan membership comparison
 
 The native membership route now presents exactly free AkiHQ, AkiDuermo
