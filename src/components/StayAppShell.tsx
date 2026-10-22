@@ -9,13 +9,15 @@ export function StayAppShell({
   locale,
   children,
   fullMap = false,
+  wide = false,
 }: {
   locale: StayLocale;
   children: React.ReactNode;
   fullMap?: boolean;
+  wide?: boolean;
 }) {
   return (
-    <div className={`${styles.shell} ${fullMap ? styles.fullMap : ""}`}>
+    <div className={`${styles.shell} ${fullMap ? styles.fullMap : ""} ${wide ? styles.wide : ""}`}>
       <StayHeader locale={locale} />
       <main className={styles.main}>{children}</main>
       <StayNavigation locale={locale} />
