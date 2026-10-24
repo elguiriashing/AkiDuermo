@@ -1,5 +1,19 @@
 # AkiDuermo extraction contract
 
+## 2026-10-24 | Owner-approved monthly pricing and upgrade paths
+
+The current commercial catalogue is `APPROVED_PRICING_20261024.md` and
+`config/approved-pricing.json`. It supersedes older public tier/price descriptions:
+AkiBusiness Basic/Standard/Pro €19.99/€48.99/€97.99; individuals €1.99 for each
+AkiPasa/AkiDuermo/AkiCoches Premium; businesses €11.99/€24.99/€19.99 respectively.
+Free AkiHQ access, historical machine identifiers and existing subscriber terms
+are retained. EN/ES marketing and CTAs explain product-specific Premium upgrades
+without activating billing or inventing benefits. Shared audience source remains
+identical in the three discovery apps. Source, account, Stripe, SQL guard, service
+worker and release dependencies are traced in that pricing contract and receipts.
+The 36-case local pricing/lifecycle SQL suite passes; full checks, hosted CI and
+exact-source live readback remain required before release acceptance.
+
 ## 2026-10-22 | Audience-first native membership storefront
 
 Supersedes the five-card sales ladder directly below. The membership
@@ -13,7 +27,6 @@ The component and CSS are byte-identical with AkiPasa and AkiCoches. EN/ES,
 accessibility, property-vs-personal scope, safe cross-domain handoffs and no
 new checkout/Stripe/RLS/database changes are mandatory. Mobile/browser,
 CI and exact hosted-SHA release verification remain required.
-
 
 ## 2026-10-21 | Compact five-plan membership comparison
 
