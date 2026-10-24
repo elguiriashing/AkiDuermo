@@ -45,7 +45,7 @@ export default async function StayMembershipPage() {
             "No required subscription",
           ],
       action: (
-        <Link href="/">
+        <Link href={`/?lang=${locale}`}>
           {es ? "Explorar alojamientos" : "Explore stays"} ↗
         </Link>
       ),

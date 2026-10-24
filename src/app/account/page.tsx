@@ -97,7 +97,10 @@ export default async function StayAccountPage({
                 : "Your upcoming stays, favourite places and account details in one place."}
             </p>
             <div className={styles.heroActions}>
-              <Link href="/membership" className={styles.secondaryButton}>
+              <Link
+                href={`/membership?lang=${locale}`}
+                className={styles.secondaryButton}
+              >
                 {es ? "Membresías" : "Membership"}
               </Link>
               <Link href={"/?lang=" + locale} className={styles.primaryButton}>
