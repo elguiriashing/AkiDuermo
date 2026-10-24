@@ -266,7 +266,11 @@ export default async function StayAccountPage({
                   ? "Tus datos de acceso son compartidos con AkiPasa. Tus reservas siguen separadas por producto."
                   : "Your sign-in details are shared with AkiPasa. Your bookings stay separate by product."}
               </p>
-              <a href={suiteHref("hq", locale)}>
+              <a
+                href={suiteHref("hq", locale, {
+                  path: "/business/accommodations",
+                })}
+              >
                 <span>
                   {es
                     ? "Gestionar mis alojamientos en AkiHQ"
@@ -288,9 +292,11 @@ export default async function StayAccountPage({
                 </span>
                 <span aria-hidden="true">↗</span>
               </Link>
-              <Link href={"https://akipasa.com/" + locale + "/account"}>
+              <Link href={"/settings?lang=" + locale}>
                 <span>
-                  {es ? "Abrir mi perfil AkiPasa" : "Open my AkiPasa profile"}
+                  {es
+                    ? "Editar mi perfil compartido"
+                    : "Edit my shared profile"}
                 </span>
                 <span aria-hidden="true">↗</span>
               </Link>

@@ -25,7 +25,9 @@ describe("standalone AkiDuermo renter account", () => {
 
   it("preserves host-local logout and existing linked destinations", () => {
     expect(page).toContain("signOutStay");
-    expect(page).toContain('suiteHref("hq", locale)');
+    expect(page).toMatch(
+      /suiteHref\("hq", locale, \{\s*path: "\/business\/accommodations"/,
+    );
     expect(page).toContain('suiteHref("business", locale)');
     expect(page).toContain("Manage my properties in AkiHQ");
     expect(page).toContain("Open operations in AkiBusiness");

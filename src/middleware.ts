@@ -19,6 +19,21 @@ export async function middleware(request: NextRequest) {
   );
   request.headers.set("x-akipasa-locale", locale);
   const path = request.nextUrl.pathname;
+  if (
+    /^\/(?:(en|es)\/)?account\/(?:profile|settings)\/?$/.test(
+      request.nextUrl.pathname,
+    )
+  ) {
+    if (!["GET", "HEAD"].includes(request.method))
+      return new NextResponse(null, { status: 404 });
+    const local = request.nextUrl.clone();
+    local.pathname = "/settings";
+    const prefix = request.nextUrl.pathname.match(/^\/(en|es)\//)?.[1];
+    if (prefix) local.searchParams.set("lang", prefix);
+    stripCrossProductCredentials(local);
+    return NextResponse.redirect(local, 307);
+  }
+
   if (/^\/(en|es)\/?$/.test(path)) {
     if (!["GET", "HEAD"].includes(request.method))
       return new NextResponse(null, { status: 404 });
