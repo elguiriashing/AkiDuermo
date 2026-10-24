@@ -45,7 +45,7 @@ export default async function StayMembershipPage() {
             "No required subscription",
           ],
       action: (
-        <Link href="/">
+        <Link href={`/?lang=${locale}`}>
           {es ? "Explorar alojamientos" : "Explore stays"} ↗
         </Link>
       ),
@@ -97,7 +97,9 @@ export default async function StayMembershipPage() {
         ? ["Propiedades y fichas", "Acceso del equipo", "Siempre gratis"]
         : ["Properties and listings", "Team access", "Always free"],
       action: (
-        <Link href={suiteHref("hq", locale)}>
+        <Link
+          href={suiteHref("hq", locale, { path: "/business/accommodations" })}
+        >
           {es ? "Abrir AkiHQ gratis" : "Open free AkiHQ"} ↗
         </Link>
       ),
