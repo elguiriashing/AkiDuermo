@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "AkiDuermo",
     url: "https://akiduermo.com",
   },
-  icons: { icon: "/pwa/duermo-192.png", apple: "/pwa/duermo-192.png" },
+  icons: { icon: "/brand/v3/duermo.svg", apple: "/brand/v3/duermo-180.png" },
 };
 
 export default async function RootLayout({
