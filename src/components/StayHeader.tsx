@@ -23,7 +23,7 @@ export function StayHeader({
     location.assign(url.toString());
   }
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-suite-header>
       <Link
         href={`/?lang=${locale}`}
         className={styles.brand}

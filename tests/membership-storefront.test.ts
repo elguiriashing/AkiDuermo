@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import * as React from "react";
@@ -11,6 +11,7 @@ vi.mock("@/components/StayAppShell", () => ({
 }));
 import { headers } from "next/headers";
 import StayMembershipPage from "../src/app/membership/page";
+beforeEach(() => window.history.replaceState(null, "", "/membership"));
 afterEach(cleanup);
 
 describe("AkiDuermo audience-first membership", () => {
@@ -65,7 +66,7 @@ describe("AkiDuermo audience-first membership", () => {
     for (const [path, sha] of [
       [
         "src/components/AkiSuiteAudienceStudio.tsx",
-        "e384c6c0cf0954e595aebb69079b677756cb4500",
+        "949828873ce35fd5768d497c9ea86084bc732f3d",
       ],
       [
         "src/components/AkiSuiteAudienceStudio.module.css",

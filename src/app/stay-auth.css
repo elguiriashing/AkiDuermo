@@ -3,7 +3,7 @@
   background:
     radial-gradient(
       circle at 12% 84%,
-      rgba(243, 107, 27, 0.12),
+      rgba(47, 194, 165, 0.12),
       transparent 35%
     ),
     var(--surface-alt);
@@ -142,4 +142,32 @@
   .akiduermo-auth-host .auth-theme-stay .auth-focus-panel {
     order: 2;
   }
+}
+
+/* Brand belongs to the surface, including auth and recovery. */
+.akiduermo-auth-host .auth-theme-stay {
+  --auth-brand: #2fc2a5;
+  --auth-brand-soft: #2fc2a51a;
+  --auth-brand-ink: #143c43;
+}
+.akiduermo-auth-host .auth-theme-stay .auth-intro {
+  background: linear-gradient(145deg, #143c43, #102e35);
+}
+.akiduermo-auth-host .auth-theme-stay .auth-intro::before {
+  background: #6be1c8;
+  box-shadow: -40px -12px 0 5px #143c43;
+}
+.akiduermo-auth-host .auth-theme-stay .auth-intro :is(.eyebrow, a) {
+  color: #b3f4e6;
+}
+.akiduermo-auth-host
+  .auth-theme-stay
+  .auth-focus-panel
+  .button:not(.google-button) {
+  background: #2fc2a5;
+  color: #103c35;
+}
+.akiduermo-auth-host .auth-theme-stay input:not([type="checkbox"]):focus {
+  border-color: #2fc2a5;
+  outline-color: #2fc2a560;
 }
