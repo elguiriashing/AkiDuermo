@@ -227,8 +227,23 @@ for (const locale of ["en", "es"] as const) {
               }),
             ).toBeVisible();
             const map = await page.locator(".production-map").boundingBox();
-            expect(map?.width).toBeGreaterThan(viewport.width * 0.9);
+            const navigation = await page
+              .locator(".suite-discovery-nav")
+              .boundingBox();
+            expect(navigation).not.toBeNull();
+            const railWidth = viewport.width >= 1024 ? navigation!.width : 0;
+            expect(map?.width).toBeGreaterThan(
+              (viewport.width - railWidth) * 0.9,
+            );
             expect(map?.height).toBeGreaterThan(viewport.height * 0.6);
+            if (railWidth) {
+              expect(navigation!.x).toBe(0);
+              expect(map!.x).toBeGreaterThanOrEqual(navigation!.x + railWidth);
+            } else {
+              expect(map!.y + map!.height).toBeLessThanOrEqual(
+                navigation!.y + 1,
+              );
+            }
           }
           if (path === "/saved" || path === "/map") {
             const links = await page

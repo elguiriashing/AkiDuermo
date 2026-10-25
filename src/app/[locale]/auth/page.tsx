@@ -1,4 +1,4 @@
-import { suiteHref } from "@/lib/suite-navigation";
+import { WorkspaceSelector } from "@/components/WorkspaceSelector";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { config, isLocale } from "@/lib/config";
@@ -142,47 +142,7 @@ export default async function AuthPage({
             </p>
           )}
         </div>
-        {!isStayHost && !isConduzcoHost && (
-          <aside className="auth-product-portals">
-            <span>{es ? "Elige tu espacio" : "Choose your workspace"}</span>
-            <a
-              className={`auth-product-card ${!isBusinessHost ? "active" : ""}`}
-              href={`https://akipasa.com/${locale}/auth`}
-            >
-              <i
-                className="auth-product-dot auth-product-dot-akipasa"
-                aria-hidden="true"
-              />
-              <span>
-                <strong>AkiPasa</strong>
-              </span>
-            </a>
-            <a
-              className={`auth-product-card ${isBusinessHost ? "active" : ""}`}
-              href={suiteHref("hq", locale, { path: "/auth" })}
-            >
-              <i
-                className="auth-product-dot auth-product-dot-business"
-                aria-hidden="true"
-              />
-              <span>
-                <strong>AkiHQ</strong>
-              </span>
-            </a>
-            <a
-              className="auth-product-card"
-              href={suiteHref("business", locale)}
-            >
-              <i
-                className="auth-product-dot auth-product-dot-hq"
-                aria-hidden="true"
-              />
-              <span>
-                <strong>AkiBusiness</strong>
-              </span>
-            </a>
-          </aside>
-        )}
+        <WorkspaceSelector locale={locale} current={"duermo"} />
       </section>
       {businessIntent && (
         <aside
