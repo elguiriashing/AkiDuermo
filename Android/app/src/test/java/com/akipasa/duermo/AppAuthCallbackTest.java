@@ -23,4 +23,19 @@ public class AppAuthCallbackTest {
         assertNull(AppAuthCallback.toWebUrl(null));
         assertNull(AppAuthCallback.toWebUrl("akiduermo://auth/callback?code=" + "x".repeat(9000)));
     }
+    @Test public void legacyHttpsReturnsAreNativeExactlyOnce() {
+        String url = "https://akiduermo.com/en/auth/callback?android=1&code=abc";
+        assertEquals(url + "&native=1", AppAuthCallback.nativeHttpsCallback(url));
+        assertEquals(url + "&native=1", AppAuthCallback.nativeHttpsCallback(url + "&native=1"));
+        for (String bad : new String[]{
+            "https://evil.example/en/auth/callback?android=1&code=abc",
+            "https://user@akiduermo.com/en/auth/callback?android=1&code=abc",
+            "https://akiduermo.com:443/en/auth/callback?android=1&code=abc",
+            "https://akiduermo.com/en/auth/callback?android=1&android=0&code=abc",
+            "https://akiduermo.com/en/auth/callback?android=1&code=abc#secret",
+            "https://akiduermo.com/en/auth/callback?code=abc",
+            "https://akiduermo.com/en/auth/callback?android=1&native=1&native=1&code=abc"}) assertNull(bad, AppAuthCallback.nativeHttpsCallback(bad));
+        assertNull(AppAuthCallback.toWebUrl("akiduermo://%61uth/callback?code=abc"));
+        assertNull(AppAuthCallback.toWebUrl("akiduermo://auth/callback?locale=en&locale=es&code=abc"));
+    }
 }
