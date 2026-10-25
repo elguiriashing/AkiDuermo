@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+import { createHash } from "node:crypto";
+import { androidOAuthScript } from "./src/lib/android-oauth";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -80,6 +82,19 @@ const nextConfig: NextConfig = {
           {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains",
+          },
+        ],
+      },
+      {
+        source: "/:locale(en|es)/auth/callback",
+        has: [{ type: "query", key: "android", value: "1" }],
+        missing: [{ type: "query", key: "native", value: "1" }],
+        headers: [
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "Cache-Control", value: "no-store" },
+          {
+            key: "Content-Security-Policy",
+            value: `default-src 'none'; script-src 'sha256-${createHash("sha256").update(androidOAuthScript).digest("base64")}'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`,
           },
         ],
       },
