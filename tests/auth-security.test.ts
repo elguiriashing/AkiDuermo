@@ -1,4 +1,59 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+const oauthBoundary = vi.hoisted(() => ({ create: vi.fn() }));
+vi.mock("@/lib/supabase/server", () => ({
+  createSupabaseServerClient: oauthBoundary.create,
+}));
+import { GET as oauthCallbackRoute } from "../src/app/[locale]/auth/callback/route";
+
+it("does not touch session state in Chrome, but exchanges after native return", async () => {
+  oauthBoundary.create.mockReset();
+  oauthBoundary.create.mockRejectedValue(new Error("exchange-in-original-webview"));
+  const callbackUrl = "https://akiduermo.com/en/auth/callback?android=1&code=one-time&next=https://evil.test";
+  const response = await oauthCallbackRoute(new Request(callbackUrl), { params: Promise.resolve({ locale: "en" }) });
+  expect(oauthBoundary.create).not.toHaveBeenCalled();
+  expect(await response.text()).not.toContain("evil.test");
+  await expect(oauthCallbackRoute(new Request(callbackUrl + "&native=1"), { params: Promise.resolve({ locale: "en" }) })).rejects.toThrow("exchange-in-original-webview");
+  expect(oauthBoundary.create).toHaveBeenCalledOnce();
+  oauthBoundary.create.mockClear();
+  await expect(oauthCallbackRoute(new Request("https://akiduermo.com/es/auth/callback?code=browser"), { params: Promise.resolve({ locale: "es" }) })).rejects.toThrow("exchange-in-original-webview");
+  expect(oauthBoundary.create).toHaveBeenCalledOnce();
+});
+
+import { androidOAuthHandoff, googleOAuthCallback } from "../src/lib/android-oauth";
+
+describe("Android OAuth browser boundary", () => {
+  it("marks only this product's native Google callback", () => {
+    const callback = new URL(googleOAuthCallback("https://akiduermo.com", "en", "/bookings?lang=en", "Mozilla AkiDuermoAndroid/1.0.1"));
+    expect(callback.searchParams.get("android")).toBe("1");
+    expect(callback.searchParams.get("next")).toBe("/bookings?lang=en");
+    expect(new URL(googleOAuthCallback("https://akiduermo.com", "es", "/account", "Mozilla")).searchParams.has("android")).toBe(false);
+  });
+  it("returns code to this app without forwarding session material", async () => {
+    const response = androidOAuthHandoff(new URL("https://akiduermo.com/en/auth/callback?android=1&code=one-time&access_token=secret&refresh_token=secret&next=https://evil.test"), "en", "/bookings");
+    expect(response?.headers.get("cache-control")).toBe("no-store");
+    expect(response?.headers.get("referrer-policy")).toBe("no-referrer");
+    const html = await response!.text();
+    expect(html).toContain("akiduermo://auth/callback?");
+    expect(html).toContain("code=one-time");
+    expect(html).toContain("},2000)");
+    expect(html).toContain('id="native-return"');
+    expect(response?.headers.get("content-security-policy")).toContain("script-src 'nonce-");
+    expect(html).toContain("next=%2Fbookings");
+    expect(html).not.toContain("secret");
+    expect(html).not.toContain("evil.test");
+  });
+  it("hands errors back too, without loops or altering normal browser callbacks", async () => {
+    const error = new URL("https://akiduermo.com/es/auth/callback?android=1&error=access_denied&error_description=%22%3E%3Cscript%3E");
+    const response = androidOAuthHandoff(error, "es", "/account");
+    expect(await response!.text()).toContain("error=access_denied");
+    expect(await androidOAuthHandoff(error, "es", "/account")!.text()).not.toContain("<script>");
+    error.searchParams.set("native", "1");
+    expect(androidOAuthHandoff(error, "es", "/account")).toBeNull();
+    error.searchParams.delete("android");
+    expect(androidOAuthHandoff(error, "es", "/account")).toBeNull();
+  });
+});
+
 import { hasSupabaseAuthCookie } from "../src/lib/supabase/auth-cookie";
 import { publicRequestOrigin } from "../src/lib/public-request-origin";
 import {

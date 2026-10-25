@@ -3,6 +3,7 @@ import {
   accountCompletionUrl,
 } from "@/lib/account-eligibility";
 import { NextResponse } from "next/server";
+import { androidOAuthHandoff } from "@/lib/android-oauth";
 import { cookies } from "next/headers";
 import { config, isLocale } from "@/lib/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -27,6 +28,9 @@ export async function GET(
     requested ?? undefined,
     publicOrigin,
   );
+  // Chrome must not exchange a code against a different browser's PKCE cookie.
+  const handoff = androidOAuthHandoff(url, safeLocale, next);
+  if (handoff) return handoff;
   if (code) {
     const supabase = await createSupabaseServerClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);

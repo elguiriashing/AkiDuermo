@@ -1,5 +1,14 @@
 # Change Impact Register
 
+## 2026-10-25 | Android Google OAuth return
+
+English/Spanish Google action and callback now preserve the native WebView PKCE
+boundary using a product-specific code-only app return. Existing roles, terms,
+onboarding and safe local destinations remain authoritative. No SQL, storage,
+provider configuration or cookie-domain changes. See android-oauth-return.md.
+Regression tests cover browser/native exchange ordering, errors, token exclusion
+and handoff encoding. Hosted CI and paired real-device acceptance remain gates.
+
 ## 2026-10-24 | Owner-approved monthly pricing and upgrade paths
 
 The current commercial catalogue is `APPROVED_PRICING_20261024.md` and

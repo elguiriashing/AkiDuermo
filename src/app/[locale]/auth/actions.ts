@@ -1,4 +1,5 @@
 "use server";
+import { googleOAuthCallback } from "@/lib/android-oauth";
 import {
   accountFeaturesAllowed,
   accountCompletionUrl,
@@ -200,7 +201,7 @@ export async function signInWithGoogle(formData: FormData) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/${locale}/auth/callback?next=${encodeURIComponent(next)}`,
+      redirectTo: googleOAuthCallback(origin, locale, next, (await headers()).get("user-agent") ?? ""),
       queryParams: { access_type: "offline", prompt: "consent" },
     },
   });
