@@ -124,7 +124,7 @@ describe("Android OAuth browser boundary", () => {
     const html = await response!.text();
     expect(html).toContain("akiduermo://auth/callback?");
     expect(html).toContain("code=one-time");
-    expect(html).toContain("},2000)");
+    expect(html).toContain("},5000)");
     expect(html).toContain('id="native-return"');
     expect(response?.headers.get("content-security-policy")).toContain(
       "script-src 'nonce-",
