@@ -94,7 +94,7 @@ const nextConfig: NextConfig = {
           { key: "Cache-Control", value: "no-store" },
           {
             key: "Content-Security-Policy",
-            value: `default-src 'none'; script-src 'sha256-${createHash("sha256").update(androidOAuthScript).digest("base64")}'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`,
+            value: `default-src 'none'; script-src 'sha256-${createHash("sha256").update(androidOAuthScript).digest("base64")}'; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`,
           },
         ],
       },
