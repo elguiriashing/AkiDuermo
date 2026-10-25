@@ -1,5 +1,9 @@
 # AkiDuermo extraction contract
 
+Android Google OAuth requires the product-specific code-only browser return and
+paired custom-scheme Android client described in android-oauth-return.md. The
+original WebView performs PKCE exchange; sessions never transfer across hosts.
+
 ## 2026-10-24 | Owner-approved monthly pricing and upgrade paths
 
 The current commercial catalogue is `APPROVED_PRICING_20261024.md` and
