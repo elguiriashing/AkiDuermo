@@ -201,7 +201,12 @@ export async function signInWithGoogle(formData: FormData) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: googleOAuthCallback(origin, locale, next, (await headers()).get("user-agent") ?? ""),
+      redirectTo: googleOAuthCallback(
+        origin,
+        locale,
+        next,
+        (await headers()).get("user-agent") ?? "",
+      ),
       queryParams: { access_type: "offline", prompt: "consent" },
     },
   });
