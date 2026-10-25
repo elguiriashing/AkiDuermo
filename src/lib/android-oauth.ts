@@ -1,6 +1,7 @@
+import { renderAndroidReturnPage } from "./android-return-page";
 /** Preserve the WebView PKCE cookie: only the one-time code returns to the app. */
 export const androidOAuthScript =
-  'setTimeout(function(){window.location.href=document.getElementById("native-return").href;},2000);';
+  "var seconds=5;var counter=document.getElementById(\"return-seconds\");var ticker=setInterval(function(){seconds=Math.max(0,seconds-1);if(counter)counter.textContent=String(seconds);if(seconds===0)clearInterval(ticker)},1000);setTimeout(function(){location.assign(document.getElementById(\"native-return\").href)},5000);";
 export function googleOAuthCallback(
   origin: string,
   locale: "en" | "es",
@@ -33,20 +34,13 @@ export function androidOAuthHandoff(
     const value = url.searchParams.get(key);
     if (value) handoff.searchParams.set(key, value);
   }
-  const href = handoff
-    .toString()
-    .replaceAll("&", "&amp;")
-    .replaceAll('"', "&quot;");
   const nonce = crypto.randomUUID().replaceAll("-", "");
-  const label = locale === "es" ? "Volver a AkiDuermo" : "Return to AkiDuermo";
-  return new Response(
-    `<!doctype html><html lang="${locale}"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>AkiDuermo</title></head><body style="font:16px system-ui;padding:24px;max-width:30rem;margin:12vh auto"><h1>AkiDuermo</h1><p>${locale === "es" ? "Abriendo la aplicación en 2 segundos. Si no se abre, pulsa el botón." : "Opening the app in 2 seconds. If it does not open, tap the button."}</p><a id="native-return" style="display:inline-block;padding:16px 24px" href="${href}">${label}</a><script nonce="${nonce}">${androidOAuthScript}</script></body></html>`,
-    {
+  return new Response(renderAndroidReturnPage({brand:"duermo",name:"AkiDuermo",locale,target:handoff,nonce,script:androidOAuthScript,id:"native-return"}), {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
         "Cache-Control": "no-store",
         "Referrer-Policy": "no-referrer",
-        "Content-Security-Policy": `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'`,
+        "Content-Security-Policy": `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'`,
       },
     },
   );
