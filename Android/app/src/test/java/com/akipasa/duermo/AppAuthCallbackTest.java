@@ -1,0 +1,26 @@
+package com.akipasa.duermo;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class AppAuthCallbackTest {
+    @Test public void mapsOnlyToOwnFixedOriginWithNativeMarkers() {
+        String result = AppAuthCallback.toWebUrl("akiduermo://auth/callback?locale=en&code=one%2Btwo&next=%2Fen%2Faccount");
+        assertEquals("https://akiduermo.com/en/auth/callback?android=1&native=1&code=one%2Btwo&next=%2Fen%2Faccount", result);
+        assertTrue(AppAuthCallback.toWebUrl("akiduermo://auth/callback?code=abc").startsWith("https://akiduermo.com/es/auth/callback?android=1&native=1"));
+    }
+    @Test public void cancellationReturnsToOwnWebCallback() {
+        assertTrue(AppAuthCallback.toWebUrl("akiduermo://auth/callback?locale=es&error=access_denied&error_description=Cancelled%20by%20user").contains("error=access_denied&error_description=Cancelled+by+user"));
+    }
+    @Test public void rejectsCrossAppAndAmbiguousOrTokenCallbacks() {
+        for (String value : new String[]{
+            "otherapp://auth/callback?code=abc", "akiduermo://evil/callback?code=abc",
+            "akiduermo://auth/callback/extra?code=abc", "akiduermo://user@auth/callback?code=abc",
+            "akiduermo://auth:443/callback?code=abc", "akiduermo://auth/callback?code=abc#access_token=secret",
+            "akiduermo://auth/callback?code=abc&code=second", "akiduermo://auth/callback?code=abc&access_token=secret",
+            "akiduermo://auth/callback?code=abc&redirect=https%3A%2F%2Fevil.example", "akiduermo://auth/callback?locale=en",
+            "akiduermo://auth/callback?code=", "akiduermo://auth/callback?code=%ZZ", "akiduermo://auth/%63allback?code=abc"}) assertNull(value, AppAuthCallback.toWebUrl(value));
+        assertNull(AppAuthCallback.toWebUrl(null));
+        assertNull(AppAuthCallback.toWebUrl("akiduermo://auth/callback?code=" + "x".repeat(9000)));
+    }
+}
