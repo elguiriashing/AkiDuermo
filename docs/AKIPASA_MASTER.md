@@ -1187,3 +1187,23 @@ no framework runtime or third-party dependency added. The private lab keeps
 its administrator-only route. No pricing, session, tenant, permissions or
 provider setting changes. Source revert is rollback. Source, responsive
 browser, exact live source and physical device acceptance remain distinct.
+
+## 2026-10-26 | Actionable accommodation map recovery
+
+Duermo's full-screen map exposes localized Retry map and Browse stays actions
+when initialization or marker reads fail. The catalogue handoff retains the
+applied destination and validated property type, rather than promising a list
+without an action. Retry retains the filters and latest known map camera;
+failed retries restore keyboard focus. The catalogue now accepts only its
+existing allowlisted property types as initial URL state. No automatic location
+permission, booking, payment, schema, role, provider or storage change.
+
+Dependencies: /map client filters, ProductionMap/MapLibre lifecycle and existing
+/api/map/stays reads; root server query validation, AkiDuermo's existing
+/api/stays filter request and #stays results. EN/ES, light/dark and phone/tablet/
+desktop remain required. Unit failure/retry regressions and a deterministic
+WebGL-unavailable browser journey verify filter retention and actual catalogue
+requests. The healthy-map fixture now returns the real markers/truncated shape.
+Full checks, hosted CI, exact live source and visual inspection remain required;
+fixtures do not establish provider, authenticated or physical-device acceptance.
+Rollback is a source revert; no data restoration.

@@ -2,6 +2,7 @@ import { tripSchema } from "@/lib/trip-links";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { AkiDuermo } from "@/components/AkiDuermo";
+import { stayQuerySchema } from "@/lib/akiduermo";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { optionalUser } from "@/lib/auth";
 import { queueSuitePortalWelcome } from "@/lib/suite-welcome";
@@ -31,11 +32,13 @@ export default async function AkiDuermoPage({
   const locale = stayLocale((await headers()).get("x-akipasa-locale"));
   const { user } = await optionalUser();
   if (user) await queueSuitePortalWelcome("akiduermo", locale);
-  const trip = tripSchema.safeParse(await searchParams);
+  const query = await searchParams;
+  const trip = tripSchema.safeParse(query);
   return (
     <AkiDuermo
       initialLocale={locale}
       initialTrip={trip.success ? trip.data : undefined}
+      initialType={stayQuerySchema.shape.type.catch("all").parse(query.type)}
     />
   );
 }
