@@ -1,4 +1,6 @@
 /** Preserve the WebView PKCE cookie: only the one-time code returns to the app. */
+export const androidOAuthScript =
+  'setTimeout(function(){window.location.href=document.getElementById("native-return").href;},2000);';
 export function googleOAuthCallback(
   origin: string,
   locale: "en" | "es",
@@ -38,7 +40,7 @@ export function androidOAuthHandoff(
   const nonce = crypto.randomUUID().replaceAll("-", "");
   const label = locale === "es" ? "Volver a AkiDuermo" : "Return to AkiDuermo";
   return new Response(
-    `<!doctype html><html lang="${locale}"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>AkiDuermo</title></head><body style="font:16px system-ui;padding:24px;max-width:30rem;margin:12vh auto"><h1>AkiDuermo</h1><p>${locale === "es" ? "Abriendo la aplicación en 2 segundos. Si no se abre, pulsa el botón." : "Opening the app in 2 seconds. If it does not open, tap the button."}</p><a id="native-return" style="display:inline-block;padding:16px 24px" href="${href}">${label}</a><script nonce="${nonce}">setTimeout(function(){window.location.href=document.getElementById("native-return").href;},2000);</script></body></html>`,
+    `<!doctype html><html lang="${locale}"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>AkiDuermo</title></head><body style="font:16px system-ui;padding:24px;max-width:30rem;margin:12vh auto"><h1>AkiDuermo</h1><p>${locale === "es" ? "Abriendo la aplicación en 2 segundos. Si no se abre, pulsa el botón." : "Opening the app in 2 seconds. If it does not open, tap the button."}</p><a id="native-return" style="display:inline-block;padding:16px 24px" href="${href}">${label}</a><script nonce="${nonce}">${androidOAuthScript}</script></body></html>`,
     {
       headers: {
         "Content-Type": "text/html; charset=utf-8",

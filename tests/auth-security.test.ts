@@ -1,4 +1,35 @@
 import { describe, expect, it, vi } from "vitest";
+import { createHash } from "node:crypto";
+import nextConfig from "../next.config";
+import { androidOAuthScript } from "../src/lib/android-oauth";
+
+it("keeps handoff headers strict after global Next headers are applied", async () => {
+  const rules = await nextConfig.headers!();
+  const handoff = rules.find(
+    (rule) => rule.source === "/:locale(en|es)/auth/callback",
+  );
+  expect(handoff?.has).toContainEqual({
+    type: "query",
+    key: "android",
+    value: "1",
+  });
+  expect(handoff?.missing).toContainEqual({
+    type: "query",
+    key: "native",
+    value: "1",
+  });
+  expect(handoff?.headers).toContainEqual({
+    key: "Referrer-Policy",
+    value: "no-referrer",
+  });
+  const csp = handoff?.headers.find(
+    (header) => header.key === "Content-Security-Policy",
+  )?.value;
+  expect(csp).toContain(
+    `script-src 'sha256-${createHash("sha256").update(androidOAuthScript).digest("base64")}'`,
+  );
+  expect(csp).not.toContain("script-src 'self'");
+});
 const oauthBoundary = vi.hoisted(() => ({ create: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({
   createSupabaseServerClient: oauthBoundary.create,
