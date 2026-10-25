@@ -47,6 +47,17 @@ html[data-theme="light"] .suite-discovery-nav[data-product="coches"] {
   font-weight: 800;
   letter-spacing: 0.06em;
 }
+/* Root consent controls must remain outside the navigation dock. */
+body:has(.suite-discovery-nav) > .privacy-preferences {
+  position: fixed;
+  z-index: 80;
+  left: auto;
+  right: max(12px, env(safe-area-inset-right, 0px));
+  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  max-width: calc(100vw - 24px);
+  margin: 0;
+  padding: 0;
+}
 @media (min-width: 1024px) {
   body:has(.suite-discovery-nav) {
     padding-left: 216px;
