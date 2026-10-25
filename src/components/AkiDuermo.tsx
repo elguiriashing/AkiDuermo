@@ -3,7 +3,12 @@ import { nearbyEventsHref, type TripIntent } from "../lib/trip-links";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { stayTypeNames, staySchema, type Stay } from "../lib/akiduermo";
+import {
+  stayTypeNames,
+  staySchema,
+  stayQuerySchema,
+  type Stay,
+} from "../lib/akiduermo";
 import { stayText, type StayLocale } from "../lib/akiduermo-i18n";
 import { filterSavedStays } from "../lib/stay-filters";
 import { stayPath } from "../lib/akiduermo-routing";
@@ -44,10 +49,12 @@ const destinations = [
 export function AkiDuermo({
   initialLocale = "en",
   initialTrip,
+  initialType = "all",
   initialView = "explore",
 }: {
   initialLocale?: StayLocale;
   initialTrip?: TripIntent;
+  initialType?: string;
   initialView?: "explore" | "saved";
 }) {
   const [locale, setLocale] = useState<StayLocale>(initialLocale);
@@ -72,7 +79,9 @@ export function AkiDuermo({
   }, [locale]);
   const [destination, setDestination] = useState(initialTrip?.q || "");
   const [search, setSearch] = useState(initialTrip?.q || "");
-  const [type, setType] = useState("all");
+  const [type, setType] = useState<string>(() =>
+    stayQuerySchema.shape.type.catch("all").parse(initialType),
+  );
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState<Stay[]>([]);
   const [total, setTotal] = useState(0);

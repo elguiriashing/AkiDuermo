@@ -1,6 +1,8 @@
 "use client";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import Link from "next/link";
+import recoveryStyles from "./MapRecovery.module.css";
 import { useEffect, useRef, useState } from "react";
 import {
   compactMarkerSchema,
@@ -196,11 +198,13 @@ export function ProductionMap({
   venueDestination = "akipasa",
   venueIds = null,
   stayFilters,
+  fallbackHref,
 }: {
   locale: Locale;
   venueDestination?: "akipasa" | "akiduermo";
   venueIds?: ReadonlySet<string> | null;
   stayFilters?: { type: string; q: string };
+  fallbackHref?: string;
   initialVertical?: DiscoveryVertical;
   showVerticalTabs?: boolean;
   fullScreen?: boolean;
@@ -210,6 +214,10 @@ export function ProductionMap({
 }) {
   const [mapTruncated, setMapTruncated] = useState(false);
   const [mapUnavailable, setMapUnavailable] = useState(false);
+  const [mapAttempt, setMapAttempt] = useState(0);
+  const cameraZoomRef = useRef(10.5);
+  const retryButtonRef = useRef<HTMLButtonElement>(null);
+  const retryRequestedRef = useRef(false);
   const stayType = stayFilters?.type;
   const stayQuery = stayFilters?.q;
   const stayFiltersRef = useRef({ type: stayType, q: stayQuery });
@@ -222,6 +230,17 @@ export function ProductionMap({
     "loading",
   );
   const [loadedVenues, setLoadedVenues] = useState(0);
+  useEffect(() => {
+    if (
+      retryRequestedRef.current &&
+      (mapUnavailable || venueStatus === "error")
+    ) {
+      retryButtonRef.current?.focus({ preventScroll: true });
+      retryRequestedRef.current = false;
+    } else if (venueStatus === "ready" && !mapUnavailable) {
+      retryRequestedRef.current = false;
+    }
+  }, [mapUnavailable, venueStatus]);
   const [vertical, setVertical] = useState<DiscoveryVertical>(initialVertical);
   const venueIdsRef = useRef(venueIds);
   const verticalRef = useRef<DiscoveryVertical>(initialVertical);
@@ -243,7 +262,11 @@ export function ProductionMap({
       entityId: crypto.randomUUID(),
       metadata: { result_count: initialPointsRef.current.length },
     });
-    if (!container.current || !styleUrl) return;
+    if (!container.current) return;
+    if (!styleUrl) {
+      setMapUnavailable(true);
+      return;
+    }
     setMapUnavailable(false);
     let disposed = false;
     const initialPoints = initialPointsRef.current;
@@ -280,7 +303,7 @@ export function ProductionMap({
           container: container.current,
           style: styleUrl,
           center: [initialCenter.longitude, initialCenter.latitude],
-          zoom: 10.5,
+          zoom: cameraZoomRef.current,
           attributionControl: false,
           maxPitch: 48,
           cooperativeGestures: !fullScreen,
@@ -790,6 +813,11 @@ export function ProductionMap({
           refreshStaysRef.current = () => void loadVenues();
           const publishMapCenter = () => {
             const current = map.getCenter();
+            initialCenterRef.current = {
+              latitude: current.lat,
+              longitude: current.lng,
+            };
+            cameraZoomRef.current = map.getZoom();
             window.dispatchEvent(
               new CustomEvent("akipasa:map-center", {
                 detail: {
@@ -842,7 +870,7 @@ export function ProductionMap({
       popupRequest?.abort();
       cleanup();
     };
-  }, [locale, styleUrl, fullScreen, venueDestination]);
+  }, [locale, styleUrl, fullScreen, venueDestination, mapAttempt]);
 
   return (
     <section className="map-panel" aria-labelledby="production-map-title">
@@ -894,24 +922,50 @@ export function ProductionMap({
           </button>
         </div>
       )}
-      <p className="result-caption" role="status">
-        {mapUnavailable
-          ? locale === "es"
-            ? "Este navegador no puede mostrar el mapa. Usa la vista de lista para seguir explorando."
-            : "This browser cannot display the map. Use list view to keep exploring."
-          : venueStatus === "loading"
+      {!mapUnavailable && venueStatus !== "error" && (
+        <p className="result-caption" role="status">
+          {venueStatus === "loading"
             ? locale === "es"
-              ? "Cargando locales de esta zona…"
-              : "Loading venues in this area…"
-            : venueStatus === "error"
-              ? locale === "es"
-                ? "No se pudo completar esta zona. Mueve el mapa para reintentar; los locales cargados se conservan."
-                : "Could not finish loading this area. Move the map to retry; loaded venues are retained."
-              : locale === "es"
-                ? `Locales cargados: ${loadedVenues.toLocaleString(locale)}.`
-                : `Loaded venues: ${loadedVenues.toLocaleString(locale)}.`}
-      </p>
+              ? "Cargando alojamientos de esta zona…"
+              : "Loading stays in this area…"
+            : locale === "es"
+              ? `Alojamientos cargados: ${loadedVenues.toLocaleString(locale)}.`
+              : `Loaded stays: ${loadedVenues.toLocaleString(locale)}.`}
+        </p>
+      )}
       <div className="production-map-wrap">
+        {(mapUnavailable || venueStatus === "error") && (
+          <div className={recoveryStyles.panel} role="status">
+            <h3>
+              {locale === "es"
+                ? "No se pudo cargar el mapa"
+                : "The map couldn’t load"}
+            </h3>
+            <p>
+              {locale === "es"
+                ? "Tus filtros se conservan. Reintenta o explora los alojamientos en la lista."
+                : "Your filters are kept. Retry or browse stays in the list."}
+            </p>
+            <div className={recoveryStyles.actions}>
+              <button
+                ref={retryButtonRef}
+                type="button"
+                onClick={() => {
+                  retryRequestedRef.current = true;
+                  if (mapUnavailable) setMapAttempt((attempt) => attempt + 1);
+                  else refreshStaysRef.current?.();
+                }}
+              >
+                {locale === "es" ? "Reintentar mapa" : "Retry map"}
+              </button>
+              {fallbackHref && (
+                <Link href={fallbackHref}>
+                  {locale === "es" ? "Ver alojamientos" : "Browse stays"}
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
         <div
           className="production-map"
           ref={container}

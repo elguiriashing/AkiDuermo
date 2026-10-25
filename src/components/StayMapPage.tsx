@@ -77,6 +77,7 @@ export function StayMapPage({ locale }: { locale: StayLocale }) {
         fullScreen
         venueDestination="akiduermo"
         stayFilters={{ type, q: search }}
+        fallbackHref={`/?${new URLSearchParams({ lang: locale, q: search, type })}#stays`}
       />
     </StayAppShell>
   );

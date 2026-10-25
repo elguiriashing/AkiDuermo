@@ -51,7 +51,7 @@ for (const locale of ["en", "es"] as const) {
             });
           }
           if (path === "/api/map/stays")
-            return route.fulfill({ json: { ids: [], total: 0 } });
+            return route.fulfill({ json: { markers: [], truncated: false } });
           // Only document requests need the canonical virtual host to exercise
           // middleware. Proxying Next image optimisation and other subresources
           // through route.fetch while replacing Host can close the underlying
