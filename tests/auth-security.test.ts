@@ -29,6 +29,25 @@ it("keeps handoff headers strict after global Next headers are applied", async (
     `script-src 'sha256-${createHash("sha256").update(androidOAuthScript).digest("base64")}'`,
   );
   expect(csp).not.toContain("script-src 'self'");
+  for (const locale of ["en", "es"] as const) {
+    const url = new URL(
+      `https://akiduermo.com/${locale}/auth/callback?android=1&error=access_denied`,
+    );
+    const html = await androidOAuthHandoff(url, locale, "/account")!.text();
+    const serializedScript = html.match(
+      /<script nonce="[^"]+">([\s\S]*?)<\/script>/,
+    )![1];
+    expect(csp).toContain(
+      `'sha256-${createHash("sha256").update(serializedScript).digest("base64")}'`,
+    );
+    expect(html).toContain('id="native-return"');
+    url.searchParams.set("native", "1");
+    expect(androidOAuthHandoff(url, locale, "/account")).toBeNull();
+    url.searchParams.delete("android");
+    expect(androidOAuthHandoff(url, locale, "/account")).toBeNull();
+    url.searchParams.delete("native");
+    expect(androidOAuthHandoff(url, locale, "/account")).toBeNull();
+  }
 });
 const oauthBoundary = vi.hoisted(() => ({ create: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({
