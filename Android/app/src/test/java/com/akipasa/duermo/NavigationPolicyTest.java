@@ -30,4 +30,13 @@ public class NavigationPolicyTest {
         assertFalse(NavigationPolicy.canDownload("https://evil.example/payload.apk"));
         assertFalse(NavigationPolicy.canDownload("data:text/plain,secret"));
     }
+    @Test
+    public void nativeOAuthCallbackIsStrictlyScopedToTheApp() {
+        assertTrue(NavigationPolicy.appCallbackUrl("akiduermo://auth/callback?locale=en&code=test") != null);
+        assertTrue(NavigationPolicy.appCallbackUrl("akiduermo://auth/callback?locale=es&error=denied") != null);
+        assertFalse(NavigationPolicy.appCallbackUrl("akiduermo://wrong/callback?code=test") != null);
+        assertFalse(NavigationPolicy.appCallbackUrl("akiduermo://auth/other?code=test") != null);
+        assertFalse(NavigationPolicy.appCallbackUrl("akiduermo://auth/callback#token") != null);
+        assertFalse(NavigationPolicy.appCallbackUrl("https://evil.example/auth/callback?code=test") != null);
+    }
 }
