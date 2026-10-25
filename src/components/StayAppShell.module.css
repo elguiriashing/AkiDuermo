@@ -71,12 +71,14 @@
 }
 
 .fullMap {
-  height: 100dvh;
+  min-height: 0;
+  padding-bottom: 0;
+  height: calc(100dvh - var(--suite-navigation-offset, 0px));
   overflow: hidden;
 }
 .fullMap .main {
   width: 100%;
-  height: calc(100dvh - 68px);
+  height: calc(100dvh - 68px - var(--suite-navigation-offset, 0px));
   padding: 0;
 }
 .fullMap .main :global(.map-panel) {

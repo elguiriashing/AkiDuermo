@@ -15,7 +15,10 @@ export function StayAppShell({
   fullMap?: boolean;
 }) {
   return (
-    <div className={`${styles.shell} ${fullMap ? styles.fullMap : ""}`}>
+    <div
+      className={`${styles.shell} ${fullMap ? styles.fullMap : ""}`}
+      data-suite-fullscreen={fullMap || undefined}
+    >
       <StayHeader locale={locale} />
       <main className={styles.main}>{children}</main>
       <StayNavigation locale={locale} />

@@ -58,6 +58,12 @@ body:has(.suite-discovery-nav) > .privacy-preferences {
   margin: 0;
   padding: 0;
 }
+body:has(.suite-discovery-nav) {
+  --suite-navigation-offset: 0px;
+}
+body:has([data-suite-fullscreen]) {
+  padding-bottom: 0;
+}
 @media (min-width: 1024px) {
   body:has(.suite-discovery-nav) {
     padding-left: 216px;
@@ -83,7 +89,11 @@ body:has(.suite-discovery-nav) > .privacy-preferences {
 }
 @media (max-width: 1023px) {
   body:has(.suite-discovery-nav) {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    --suite-navigation-offset: calc(72px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: var(--suite-navigation-offset);
+  }
+  body:has([data-suite-fullscreen]) {
+    padding-bottom: 0;
   }
   .suite-discovery-nav {
     left: 0;
