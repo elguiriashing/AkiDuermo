@@ -7,6 +7,7 @@ import {
   render,
   screen,
   act,
+  within,
 } from "@testing-library/react";
 import { DiscoveryNavigation } from "../src/components/DiscoveryNavigation";
 import { AkiSuiteAudienceStudio } from "../src/components/AkiSuiteAudienceStudio";
@@ -15,6 +16,7 @@ vi.mock("next/navigation", () => ({ usePathname: () => navigation.path }));
 beforeEach(() => {
   vi.stubGlobal("React", React);
   navigation.path = "/";
+  localStorage.clear();
   window.history.replaceState({ marker: "keep" }, "", "/");
 });
 afterEach(() => {
@@ -26,7 +28,11 @@ describe("shared discovery shell", () => {
     navigation.path = "/settings";
     render(<DiscoveryNavigation locale="es" product="duermo" />);
     expect(
-      screen.getAllByRole("link").map((x) => x.getAttribute("href")),
+      within(
+        screen.getByRole("navigation", { name: "Navegación de AkiDuermo" }),
+      )
+        .getAllByRole("link")
+        .map((x) => x.getAttribute("href")),
     ).toEqual([
       "/?lang=es",
       "/map?lang=es",
@@ -49,6 +55,47 @@ describe("shared discovery shell", () => {
     expect(
       screen.getByRole("link", { name: "Bookings" }).getAttribute("href"),
     ).toBe("/bookings?lang=en");
+  });
+  it("retains collapse state, brands the rail and orders footer controls like Pasa", () => {
+    const language = vi.fn();
+    const view = render(
+      <DiscoveryNavigation
+        locale="en"
+        product="coches"
+        onLanguageChange={language}
+      />,
+    );
+    const rail = screen.getByRole("complementary", {
+      name: "Primary navigation",
+    });
+    expect(rail.getAttribute("data-compact")).toBe("false");
+    expect(
+      rail.querySelector(".suite-discovery-brand img")?.getAttribute("src"),
+    ).toBe("/brand/v3/coches.svg");
+    const footer = rail.querySelector(".suite-discovery-footer")!;
+    expect([...footer.children].map((node) => node.className)).toEqual([
+      "suite-discovery-menu",
+      "suite-discovery-signin",
+      "suite-discovery-tools",
+      "suite-discovery-collapse",
+    ]);
+    fireEvent.click(screen.getByRole("button", { name: "Cambiar a español" }));
+    expect(language).toHaveBeenCalledOnce();
+    fireEvent.click(screen.getByRole("button", { name: "Collapse sidebar" }));
+    expect(rail.getAttribute("data-compact")).toBe("true");
+    expect(localStorage.getItem("akicoches.sidebar.collapsed")).toBe("1");
+    view.unmount();
+    render(<DiscoveryNavigation locale="en" product="coches" />);
+    expect(
+      screen
+        .getByRole("complementary", { name: "Primary navigation" })
+        .getAttribute("data-compact"),
+    ).toBe("true");
+    expect(
+      screen
+        .getByRole("button", { name: "Expand sidebar" })
+        .getAttribute("aria-expanded"),
+    ).toBe("false");
   });
 });
 const offer = (id: string) => ({

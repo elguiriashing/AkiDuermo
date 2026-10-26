@@ -112,7 +112,7 @@ it("shows saved stays on their own route with local filters and dedicated naviga
     Array.from(
       screen.getByRole("navigation", { name: "AkiDuermo navigation" }).children,
     ).map((link) => link.textContent),
-  ).toEqual(["AkiDuermo", "Explore", "Map", "Saved", "Bookings", "Account"]);
+  ).toEqual(["Explore", "Map", "Saved", "Bookings", "Account"]);
 });
 
 it("sends trip dates and guests to live availability search", async () => {

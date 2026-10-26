@@ -695,7 +695,7 @@ export function AkiDuermo({
           </div>
         </footer>
       </main>
-      <StayNavigation locale={locale} />
+      <StayNavigation locale={locale} onLanguageChange={changeLanguage} />
     </div>
   );
 }

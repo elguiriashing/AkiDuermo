@@ -129,6 +129,61 @@ for (const locale of ["en", "es"] as const) {
               ),
             ),
           ).toEqual([]);
+          if (path === "/" && viewport.width >= 1024) {
+            const rail = page.locator(".suite-discovery-nav");
+            await expect(page.locator("[data-suite-header]")).toBeHidden();
+            expect((await rail.boundingBox())!.y).toBe(0);
+            expect((await rail.boundingBox())!.height).toBe(viewport.height);
+            await expect(
+              page.locator(".suite-discovery-brand img"),
+            ).toHaveAttribute("src", "/brand/v3/duermo.svg");
+            const collapse = page.getByRole("button", {
+              name:
+                locale === "es" ? "Contraer barra lateral" : "Collapse sidebar",
+              exact: true,
+            });
+            await collapse.click();
+            await expect(rail).toHaveAttribute("data-compact", "true");
+            await expect(
+              page.locator(".suite-discovery-brand strong"),
+            ).toBeHidden();
+            await page.evaluate(() =>
+              window.scrollTo(0, document.body.scrollHeight),
+            );
+            expect((await rail.boundingBox())!.y).toBe(0);
+
+            for (const control of await page
+              .locator(
+                ".suite-discovery-tools button,.suite-discovery-collapse,.suite-discovery-signin,.suite-discovery-menu > summary",
+              )
+              .all()) {
+              const box = await control.boundingBox();
+              expect(box!.height).toBeGreaterThanOrEqual(44);
+              expect(box!.height).toBeLessThanOrEqual(64);
+            }
+            await page.setViewportSize({ width: viewport.width, height: 480 });
+            await page.locator(".suite-discovery-menu summary").click();
+            const menu = page.locator(".suite-discovery-popover");
+            await expect(menu).toBeVisible();
+            const bounds = await menu.boundingBox();
+            expect(bounds!.y).toBeGreaterThanOrEqual(0);
+            expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(480);
+            await expect(
+              menu.getByRole("navigation").getByRole("link"),
+            ).toHaveCount(5);
+            await page.keyboard.press("Escape");
+            await expect(menu).toBeHidden();
+            await page
+              .getByRole("button", {
+                name:
+                  locale === "es" ? "Expandir barra lateral" : "Expand sidebar",
+                exact: true,
+              })
+              .click();
+            await expect(rail).toHaveAttribute("data-compact", "false");
+            await page.setViewportSize(viewport);
+            await page.evaluate(() => window.scrollTo(0, 0));
+          }
           if (path === "/") {
             const checkIn = new Date(Date.now() + 86_400_000)
               .toISOString()
@@ -184,14 +239,14 @@ for (const locale of ["en", "es"] as const) {
           }
           if (path.includes("/auth?")) {
             await expect(
-              page.getByRole("banner").getByRole("link", {
-                name: "AkiDuermo",
-                exact: true,
-              }),
+              viewport.width >= 1024
+                ? page.locator(".suite-discovery-brand")
+                : page.getByRole("banner").getByRole("link", {
+                    name: "AkiDuermo",
+                    exact: true,
+                  }),
             ).toBeVisible();
-            await expect(
-              page.getByRole("complementary", { name: "Primary navigation" }),
-            ).toHaveCount(0);
+            await expect(page.locator(".app-rail")).toHaveCount(0);
           }
           expect(
             await page.evaluate(() => document.documentElement.scrollWidth),

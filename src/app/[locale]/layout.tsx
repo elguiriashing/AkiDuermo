@@ -1,5 +1,6 @@
 import "../stay-auth.css";
 import Link from "next/link";
+import { StayNavigation } from "@/components/StayNavigation";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/config";
 import { LocaleDocumentLanguage } from "@/components/LocaleDocumentLanguage";
@@ -18,7 +19,7 @@ export default async function LocaleLayout({
     <>
       <LocaleDocumentLanguage locale={locale} />
       <div className="akiduermo-auth-host">
-        <header className="akiduermo-auth-header">
+        <header className="akiduermo-auth-header" data-suite-header>
           <Link
             href={`/?lang=${locale}`}
             className="akiduermo-auth-brand"
@@ -29,6 +30,7 @@ export default async function LocaleLayout({
           <PortalHeaderTools locale={locale} product="duermo" />
         </header>
         {children}
+        <StayNavigation locale={locale} />
       </div>
     </>
   );
