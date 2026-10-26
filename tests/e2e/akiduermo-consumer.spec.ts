@@ -184,7 +184,7 @@ for (const locale of ["en", "es"] as const) {
           }
           if (path.includes("/auth?")) {
             await expect(
-              page.getByRole("link", {
+              page.getByRole("banner").getByRole("link", {
                 name: "AkiDuermo",
                 exact: true,
               }),
