@@ -79,7 +79,10 @@
 .fullMap .main {
   position: relative;
   width: 100%;
-  height: calc(100dvh - 68px - var(--suite-navigation-offset, 0px));
+  height: calc(
+    100dvh - var(--suite-header-height, 68px) -
+      var(--suite-navigation-offset, 0px)
+  );
   padding: 0;
 }
 .fullMap .main :global(.map-panel) {

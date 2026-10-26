@@ -543,7 +543,7 @@ export function StayProperty({
           </div>
         </footer>
       </main>
-      <StayNavigation locale={locale} />
+      <StayNavigation locale={locale} onLanguageChange={changeLanguage} />
       <div className={styles.mobileBar}>
         <span>
           <strong>{text("Your next escape", "Tu próxima escapada")}</strong>

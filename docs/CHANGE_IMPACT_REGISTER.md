@@ -1783,3 +1783,31 @@ no footer/actions, localized/referral-safe URLs and zero scene scroll. Complete
 hosted source/browser/Cloudflare checks and exact live-source verification are
 required before release; installed native/device acceptance remains separate.
 Rollback is a source revert and renewed Business asset/cache versions.
+
+## 2026-10-26 | Headerless desktop discovery rails
+
+Owner requested matching Pasa's desktop shell on Duermo and Coches. The desktop
+rail now starts at the viewport top, uses a v3 icon plus expanded wordmark,
+collapses to the icon, and persists its own product-local collapse preference.
+The separate top header is removed from desktop layout. The footer order is
+AkiSuite links, prominent sign-in, appearance/language, then collapse. Existing
+settings/sign-out and bounded referral handoffs remain available. Phone/narrow
+tablet retain the compact header and one bottom dock, like Pasa's mobile shell.
+
+The same rail component/CSS are copied into both independent apps. Desktop
+content padding follows the actual expanded/collapsed width. Fullscreen map
+and rental layouts use the available height rather than retaining a hidden
+header offset; map canvases resize without a camera reset. Menus remain within
+short viewports. Duermo auth/legal routes join its local rail; in-place language
+callbacks retain public exploration/property drafts, while other routes retain
+local language navigation. No auth session, permission, identity, price, booking,
+provider, schema, analytics or customer-data change; existing server actions
+remain authoritative. Revert source for rollback; the optional UI collapse
+preference is harmless and does not grant access.
+
+Validation: navigation/collapse persistence/footer/language component tests;
+actual EN/ES light/dark guest-route browser checks for zero desktop header/gap,
+fixed rail during scroll, compact brand, reachable 480px menu, dock/rail map
+boundaries and responsive rental flows. Complete hosted check/build/browser and
+exact production source/visual acceptance remain required. Physical device and
+authenticated production writes are not inferred from fixtures.
