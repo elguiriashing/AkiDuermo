@@ -1882,3 +1882,14 @@ No production data, SQL, storage, billing, analytics, provider configuration or
 Android binary changes. Source revert plus fresh static versions is rollback.
 GitHub publication is still awaiting the explicit authorization requested earlier;
 no push, PR, merge or deployment is implied by this design refinement.
+
+## 2026-10-26 | Staged adult assurance and experience review policy
+
+Provider-neutral v1 rule module and fail-closed caller-only age reader are shared
+across the three discovery apps. Optional enforcement branches are staged in the
+existing account-tracking helper/root layout; all flags remain off. AkiPasa owns
+the disabled private-registry/check-in-guard migration. No existing account is
+verified or enrolled, no provider connected and no reviews launched. Dependency,
+privacy, moderation, database, EN/ES/browser and activation holds are explicit in
+VERIFIED_REVIEWS_20261026.md. Keep current behavior until complete coordinated
+acceptance; do not describe the foundation as a live privacy/review rollout.
