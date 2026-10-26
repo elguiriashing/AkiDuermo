@@ -1,4 +1,4 @@
-/* AkiDuermo uses the same root tokens, typeface and icon set as AkiPasa. */
+/* Stay discovery: coastal surfaces and a photography-led welcome. */
 .app {
   color: var(--ink);
   min-height: 100vh;
@@ -108,7 +108,7 @@
 .heroShade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #14213def, #14213d80 65%, #14213d33);
+  background: linear-gradient(90deg, #14213def, #062c3280 65%, #14213d33);
 }
 .heroContent {
   position: relative;
@@ -154,7 +154,7 @@
   border: 1px solid #ffffff40;
   border-radius: 999px;
   padding: 7px 12px;
-  background: #14213d80;
+  background: #062c3280;
 }
 .searchWrap {
   position: relative;
@@ -301,7 +301,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(transparent 25%, #14213ded);
+  background: linear-gradient(transparent 25%, #062c32ed);
 }
 .destinationCard > span {
   position: absolute;
@@ -1029,40 +1029,43 @@
   max-width: 100%;
 }
 
-/* Compact stay discovery: the booking controls sit directly beneath the welcome. */
+/* A spacious welcome with the booking controls directly beneath it. */
 .app {
   font-family: "Avenir Next", "Montserrat", "Inter", "Segoe UI", sans-serif;
 }
 .hero {
-  height: 250px;
-  min-height: 0;
-  margin-top: 20px;
-  border-radius: 20px;
+  height: auto;
+  min-height: 340px;
+  margin-top: 24px;
+  border-radius: 28px;
 }
 .heroShade {
-  background: linear-gradient(90deg, #143c43f2, #143c4399 65%, #143c4340);
+  background:
+    linear-gradient(90deg, #062c32f2, #062c3299 52%, #062c3220),
+    linear-gradient(0deg, #062c3270, transparent 70%);
 }
 .heroContent {
-  padding: 28px 32px;
+  padding: clamp(28px, 4vw, 56px);
 }
 .hero h1 {
-  font-size: clamp(28px, 3.2vw, 40px);
-  margin: 10px 0;
+  font-size: clamp(36px, 4.6vw, 64px);
+  max-width: 17ch;
+  margin: 14px 0;
 }
 .hero h1 em,
 .hero .eyebrow {
   color: #b3f4cd;
 }
 .hero p {
-  font-size: 13px;
-  margin: 10px 0;
+  font-size: 15px;
+  margin: 14px 0;
 }
 .searchWrap {
   margin-top: 14px;
 }
 .search {
-  border-radius: 16px;
-  box-shadow: none;
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
 }
 .searchNote {
   margin-top: 8px;
@@ -1077,15 +1080,16 @@
   font-size: clamp(22px, 2.3vw, 28px);
 }
 .destinationCard {
-  height: 190px;
+  height: 230px;
 }
 @media (max-width: 600px) {
   .hero {
-    height: 190px;
+    height: auto;
+    min-height: 260px;
     margin: 14px 16px 0;
   }
   .heroContent {
-    padding: 20px;
+    padding: 24px 24px 60px;
   }
   .hero h1 {
     font-size: clamp(26px, 6vw, 34px);
