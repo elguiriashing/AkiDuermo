@@ -300,6 +300,12 @@ for (const locale of ["en", "es"] as const) {
               );
             }
           }
+          if (path === "/") {
+            await page.screenshot({
+              path: `test-results/duermo-home-${locale}-${theme}-${viewport.width}.png`,
+              fullPage: true,
+            });
+          }
           if (path === "/saved" || path === "/map") {
             const links = await page
               .getByRole("navigation", {
