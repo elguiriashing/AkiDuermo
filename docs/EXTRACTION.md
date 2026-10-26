@@ -412,3 +412,16 @@ fixed rail during scroll, compact brand, reachable 480px menu, dock/rail map
 boundaries and responsive rental flows. Complete hosted check/build/browser and
 exact production source/visual acceptance remain required. Physical device and
 authenticated production writes are not inferred from fixtures.
+
+## 2026-10-26 | Coastal stay identity and photographic welcome
+
+AkiDuermo default dark surfaces use deep coastal teal with warm ivory text; light
+mode uses warm linen and green ink. Product tokens flow into navigation, account,
+search and booking screens. Explicit owner background choices remain preserved.
+Explore uses a larger photographic welcome with a restrained teal overlay, a larger
+headline, more generous spacing and destination photography. Responsive search
+controls retain their original queries, dates and submission behavior. Existing
+media assets, layout routes, locale/identity/permissions, APIs, booking logic,
+analytics, provider settings and data are unchanged. No new imagery is fetched.
+Source/type/lint, full build/browser CI and EN/ES light/dark phone/tablet/desktop
+visual review remain release requirements. Revert source for rollback.

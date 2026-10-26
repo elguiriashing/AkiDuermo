@@ -13,6 +13,38 @@ body[data-product="akiduermo"] {
 html[data-theme="dark"] body[data-product="akiduermo"] {
   --primary-text: #6be1c8;
 }
+/* Coastal night / warm linen: default product surfaces, preserving saved owner themes. */
+html:not([data-owner-background]):has(body[data-product="akiduermo"]),
+html:not([data-owner-background]) body[data-product="akiduermo"] {
+  --surface-alt: #092c30;
+  --surface: #153e40;
+  --sand: #214d4c;
+  --ink: #f7f3e9;
+  --muted: #b6cec7;
+  --line: #ffffff24;
+  --primary-text: #82e1cb;
+  --shadow-soft: 0 16px 40px #031c2433;
+  --shadow-strong: 0 26px 56px #031c2466;
+  background:
+    radial-gradient(ellipse at 95% 0%, #2fc2a518, transparent 55%),
+    var(--surface-alt);
+}
+html[data-theme="light"]:not([data-owner-background]):has(
+    body[data-product="akiduermo"]
+  ),
+html[data-theme="light"]:not([data-owner-background])
+  body[data-product="akiduermo"] {
+  --surface-alt: #f2f0e7;
+  --surface: #fcfaf3;
+  --sand: #e5e8d9;
+  --ink: #143c3a;
+  --muted: #526a61;
+  --line: #143c3a30;
+  --primary-text: #08735e;
+  background:
+    radial-gradient(ellipse at 95% 0%, #2fc2a514, transparent 55%),
+    var(--surface-alt);
+}
 body[data-product="akibusiness"] {
   --primary: #ffd447;
   --primary-dark: #e9ba20;
@@ -191,7 +223,7 @@ html[data-theme="dark"] body[data-product="akibusiness"] {
   --auth-brand-ink: #143c43;
 }
 .akiduermo-auth-host .auth-theme-stay .auth-intro {
-  background: linear-gradient(145deg, #143c43, #192b48);
+  background: linear-gradient(145deg, #143c43, #092c30);
 }
 .akiduermo-auth-host .auth-theme-stay .auth-intro :is(.eyebrow, a) {
   color: #b3f4cd;
