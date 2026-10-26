@@ -151,6 +151,16 @@ for (const locale of ["en", "es"] as const) {
               window.scrollTo(0, document.body.scrollHeight),
             );
             expect((await rail.boundingBox())!.y).toBe(0);
+
+            for (const control of await page
+              .locator(
+                ".suite-discovery-tools button,.suite-discovery-collapse,.suite-discovery-signin,.suite-discovery-menu > summary",
+              )
+              .all()) {
+              const box = await control.boundingBox();
+              expect(box!.height).toBeGreaterThanOrEqual(44);
+              expect(box!.height).toBeLessThanOrEqual(64);
+            }
             await page.setViewportSize({ width: viewport.width, height: 480 });
             await page.locator(".suite-discovery-menu summary").click();
             const menu = page.locator(".suite-discovery-popover");

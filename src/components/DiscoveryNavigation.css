@@ -19,6 +19,11 @@ html[data-theme="light"] .suite-discovery-nav[data-product="coches"] {
   --surface: #fff;
   --ink: #17181c;
 }
+.suite-discovery-nav svg {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 auto;
+}
 .suite-discovery-nav a {
   color: inherit;
   text-decoration: none;

@@ -153,7 +153,7 @@ export function DiscoveryNavigation({
               es ? "Cambiar aplicación AkiSuite" : "Switch AkiSuite app"
             }
           >
-            <Icon name="more" />
+            <Icon name="more" size={20} />
             <span>AkiSuite</span>
           </summary>
           <div className="suite-discovery-popover">
@@ -206,7 +206,7 @@ export function DiscoveryNavigation({
           aria-label={es ? "Entrar" : "Sign in"}
           title={compact ? (es ? "Entrar" : "Sign in") : undefined}
         >
-          <Icon name="account" />
+          <Icon name="account" size={21} />
           <span>{es ? "Entrar" : "Sign in"}</span>
         </Link>
         <div className="suite-discovery-tools">
@@ -234,7 +234,7 @@ export function DiscoveryNavigation({
                 : "Collapse sidebar"
           }
         >
-          <Icon name="chevron" />
+          <Icon name="chevron" size={20} />
           <span>{es ? "Contraer barra" : "Collapse sidebar"}</span>
         </button>
       </div>
