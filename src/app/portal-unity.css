@@ -14,6 +14,7 @@ html[data-theme="dark"] body[data-product="akiduermo"] {
   --primary-text: #6be1c8;
 }
 /* Coastal night / warm linen: default product surfaces, preserving saved owner themes. */
+html:not([data-owner-background]):has(body[data-product="akiduermo"]),
 html:not([data-owner-background]) body[data-product="akiduermo"] {
   --surface-alt: #092c30;
   --surface: #153e40;
@@ -28,6 +29,9 @@ html:not([data-owner-background]) body[data-product="akiduermo"] {
     radial-gradient(ellipse at 95% 0%, #2fc2a518, transparent 55%),
     var(--surface-alt);
 }
+html[data-theme="light"]:not([data-owner-background]):has(
+    body[data-product="akiduermo"]
+  ),
 html[data-theme="light"]:not([data-owner-background])
   body[data-product="akiduermo"] {
   --surface-alt: #f2f0e7;
