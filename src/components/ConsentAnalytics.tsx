@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { readPrivacyChoices } from "../lib/privacy-consent";
-const measurementId = "G-PW8547QDGD";
+const measurementId = "G-1747PJ2DKZ";
 const adsId = "AW-18500420718";
 type GoogleWindow = Window & {
   dataLayer?: unknown[];
@@ -34,8 +34,10 @@ export function ConsentAnalytics({
       w.dataLayer = w.dataLayer || [];
       w.gtag =
         w.gtag ||
-        function (...args: unknown[]) {
-          w.dataLayer!.push(args);
+        function () {
+          // Google tag commands require the native arguments object.
+          // eslint-disable-next-line prefer-rest-params
+          w.dataLayer!.push(arguments);
         };
 
       // Consent must be set before configuring either destination.
