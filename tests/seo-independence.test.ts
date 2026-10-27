@@ -1,11 +1,14 @@
 import { readFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+vi.mock("next/headers", () => ({
+  headers: async () => new Headers({ host: "akiduermo.com" }),
+}));
 import robots from "../src/app/robots";
 import { languageUrls, siteOrigin } from "../src/lib/seo";
 
 describe("independent AkiDuermo SEO", () => {
-  it("publishes its own sitemap while keeping private journeys out of crawl", () => {
-    const policy = robots();
+  it("publishes its own sitemap while keeping private journeys out of crawl", async () => {
+    const policy = await robots();
     expect(policy.host).toBe("https://akiduermo.com");
     expect(policy.sitemap).toBe("https://akiduermo.com/sitemap.xml");
     expect(JSON.stringify(policy.rules)).toContain("/stays/");
