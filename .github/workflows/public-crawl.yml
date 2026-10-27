@@ -1,0 +1,23 @@
+name: Public crawler regression
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:3997
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: crawl-disposable-fixture
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: node --experimental-strip-types --test tests/public-crawl.test.mjs
+      - run: npx vitest run --environment node tests/public-crawl-middleware.test.ts
