@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
+// @vitest-environment-options {"url":"https://akiduermo.com"}
 import React from "react";
 import "@testing-library/jest-dom/vitest";
-import { afterEach, expect, it, vi } from "vitest";
+import { afterAll, afterEach, expect, it, vi } from "vitest";
 import {
   cleanup,
   fireEvent,
@@ -16,11 +17,16 @@ import {
   writePrivacyChoices,
 } from "../src/lib/privacy-consent";
 import { readMotionPreference } from "../src/lib/passport-motion";
-const navigation = vi.hoisted(() => ({ pathname: "/en", search: "" }));
+const navigation = vi.hoisted(() => {
+  // Disposable web-stream fixture, set before the component's module evaluation.
+  vi.stubEnv("NEXT_PUBLIC_GA4_MEASUREMENT_ID", "G-TEST000001");
+  return { pathname: "/en", search: "" };
+});
 vi.mock("next/navigation", () => ({
   usePathname: () => navigation.pathname,
   useSearchParams: () => new URLSearchParams(navigation.search),
 }));
+afterAll(() => vi.unstubAllEnvs());
 afterEach(() => {
   navigation.pathname = "/en";
   navigation.search = "";
@@ -28,6 +34,15 @@ afterEach(() => {
   for (const c of document.cookie.split("; "))
     document.cookie = c.split("=")[0] + "=; Max-Age=0; Path=/";
   document.getElementById("ak-consented-ga")?.remove();
+  for (const key of [
+    "gtag",
+    "dataLayer",
+    "__akGa4ConsentInitialized",
+    "__akGa4ConfiguredId",
+    "ga-disable-G-TEST000001",
+  ]) {
+    Reflect.deleteProperty(window, key);
+  }
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
@@ -422,6 +437,10 @@ it("does not load Google analytics until measurement is explicitly selected", as
   await waitFor(() =>
     expect(document.getElementById("ak-consented-ga")).not.toBeNull(),
   );
+  expect(document.getElementById("ak-consented-ga")).toHaveAttribute(
+    "src",
+    "https://www.googletagmanager.com/gtag/js?id=G-TEST000001",
+  );
   expect(readPrivacyChoices().marketing).toBe(false);
   writePrivacyChoices({
     analytics: false,
@@ -429,7 +448,7 @@ it("does not load Google analytics until measurement is explicitly selected", as
     marketing: false,
   });
   expect(
-    (window as unknown as Record<string, unknown>)["ga-disable-G-PW8547QDGD"],
+    (window as unknown as Record<string, unknown>)["ga-disable-G-TEST000001"],
   ).toBe(true);
 });
 it("withdraws locally and shows a retry error when saving fails", async () => {
