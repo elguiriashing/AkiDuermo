@@ -522,3 +522,14 @@ only loss on the scene cancels its gesture. Mouse movement with no primary
 button held clears a pending gesture after an uncaptured outside release.
 Acceptance now uses real Chromium touch input originating on a card descendant,
 and covers outside vertical release followed by ordinary mouse hover.
+
+
+## 2026-10-28 | Product reset launch waitlist staged gate (PR #60)
+
+AkiDuermo's root landing is proposed to display honest bilingual under-development messaging and a segmented signup form. This is a separate product; existing signed-in account, trip/deep links, and /hq-login access must continue working. AkiBusiness remains independent.
+
+The form collects name, email, city/area, person/business audience, optional interests, preferred language, mandatory launch-notification consent, and separately unchecked optional marketing consent. It sends only to the allowlisted cross-origin `https://akipasa.com/api/launch-waitlist` backend (AkiPasa PR #318), using mandatory Cloudflare Turnstile site verification and abuse limits. Neither service-role nor mail secrets belong in the browser. Its Turnstile widget renders explicitly when the script is ready and removes itself on unmount; client-side route return must be tested.
+
+Dependencies: approved privacy/retention language; real Turnstile site key and server-side hostname/action check; shared Supabase `launch_waitlist_private_optin_20261028` migration; AkiPasa deployment exact git source check; Resend verification/withdrawal mail acceptance; active and observed retention cleanup; CSP/CORS allowlisting; accessible ES/EN UI. Without a site key the frontend must disable collection. A green CI alone does not authorize public list collection.
+
+Release gates: desktop/phone/tablet browser checks, consent denied/accepted, duplicate/resend and throttle tests, Turnstile remount after internal /hq-login navigation, native OAuth/account/deep-link regression, valid verification/unsubscribe/delete and actual email inbox acceptance, crawler/SEO review, full hosted CI and Cloudflare source-SHA verification. The alternative /launch preview PR #61 must be reconciled; do not merge two conflicting landing implementations. Rollback is reverting frontend to the prior root experience while retaining existing accounts and backend records. No signup data migration, bulk mail, billing or deletion is authorized by this frontend PR.
