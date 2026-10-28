@@ -67,13 +67,14 @@ const nextConfig: NextConfig = {
               "form-action 'self' https://accounts.google.com",
               "frame-ancestors 'none'",
               "object-src 'none'",
-              `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/${
+              "frame-src https://challenges.cloudflare.com",
+              `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/${
                 isDevelopment ? " 'unsafe-eval'" : ""
               }`,
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://akipasa.supabase.co https://vhpbvcfkcteswlsdjrfl.supabase.co https://tiles.openfreemap.org https://tile.openstreetmap.org https://*.google-analytics.com https://*.analytics.google.com https://pagead2.googlesyndication.com https://www.googleadservices.com https://www.google.com https://www.google.es",
               "font-src 'self' data:",
-              "connect-src 'self' https://akipasa.supabase.co wss://akipasa.supabase.co https://vhpbvcfkcteswlsdjrfl.supabase.co wss://vhpbvcfkcteswlsdjrfl.supabase.co https://tiles.openfreemap.org https://tile.openstreetmap.org https://*.google-analytics.com https://*.analytics.google.com https://pagead2.googlesyndication.com https://www.googleadservices.com https://www.google.com https://www.google.es",
+              "connect-src 'self' https://akipasa.com https://challenges.cloudflare.com https://akipasa.supabase.co wss://akipasa.supabase.co https://vhpbvcfkcteswlsdjrfl.supabase.co wss://vhpbvcfkcteswlsdjrfl.supabase.co https://tiles.openfreemap.org https://tile.openstreetmap.org https://*.google-analytics.com https://*.analytics.google.com https://pagead2.googlesyndication.com https://www.googleadservices.com https://www.google.com https://www.google.es",
               "manifest-src 'self'",
               "worker-src 'self' blob:",
               "upgrade-insecure-requests",
