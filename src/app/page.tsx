@@ -2,10 +2,17 @@ import { tripSchema } from "@/lib/trip-links";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { AkiDuermo } from "@/components/AkiDuermo";
+import { LaunchWaitlist } from "@/components/LaunchWaitlist";
 import { stayQuerySchema } from "@/lib/akiduermo";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { optionalUser } from "@/lib/auth";
 import { queueSuitePortalWelcome } from "@/lib/suite-welcome";
+
+const launchSiteKey =
+  process.env.NEXT_PUBLIC_LAUNCH_WAITLIST_ENABLED === "true"
+    ? process.env.NEXT_PUBLIC_LAUNCH_WAITLIST_TURNSTILE_SITE_KEY ||
+      "0x4AAAAAAFpBhxqGpSL9Cqgg"
+    : null;
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = stayLocale((await headers()).get("x-akipasa-locale"));
@@ -13,13 +20,13 @@ export async function generateMetadata(): Promise<Metadata> {
     title: {
       absolute:
         locale === "es"
-          ? "AkiDuermo · Un buen día merece una gran estancia"
-          : "AkiDuermo · A good day deserves a great stay",
+          ? "AkiDuermo · Estamos preparando algo nuevo"
+          : "AkiDuermo · Something new is on the way",
     },
     description:
       locale === "es"
-        ? "Encuentra hoteles, casas rurales, apartamentos y alojamientos en toda España."
-        : "Find hotels, rural escapes, apartments and places to stay across Spain.",
+        ? "AkiDuermo está en desarrollo. Apúntate para saber cuándo llegará a tu zona. Aún no admitimos reservas."
+        : "AkiDuermo is under development. Join the launch list for your area. Bookings are not available yet.",
     robots: { index: true, follow: true },
     alternates: { canonical: "https://akiduermo.com" },
   };
@@ -30,9 +37,13 @@ export default async function AkiDuermoPage({
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
   const locale = stayLocale((await headers()).get("x-akipasa-locale"));
+  const query = await searchParams;
+  const legacyIntent = ["q", "type", "checkIn", "checkOut", "guests", "latitude", "longitude"].some((key) => key in query);
+  if (!legacyIntent) return (
+    <LaunchWaitlist product="duermo" locale={locale} siteKey={launchSiteKey} />
+  );
   const { user } = await optionalUser();
   if (user) await queueSuitePortalWelcome("akiduermo", locale);
-  const query = await searchParams;
   const trip = tripSchema.safeParse(query);
   return (
     <AkiDuermo

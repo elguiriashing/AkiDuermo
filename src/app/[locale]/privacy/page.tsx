@@ -70,6 +70,22 @@ export default async function PrivacyPage({
             ? "AkiDuermo conserva la identidad compartida y los registros de alojamiento existentes de AkiSuite. Solo se comparten con el alojamiento los datos necesarios para gestionar tu solicitud."
             : "AkiDuermo retains the existing shared AkiSuite identity and accommodation records. Only the details needed to handle your request are shared with the accommodation provider."}
         </p>
+        <h2>{es ? "Lista de lanzamiento" : "Launch waitlist"}</h2>
+        <p>
+          {es
+            ? "Si solicitas noticias del lanzamiento, recogemos nombre, email, ciudad o zona, perfil de interés (particular o empresa), idioma, intereses opcionales y tus elecciones de consentimiento. La lista no requiere crear una cuenta ni realizar reservas. Enviamos un enlace de verificación antes de confirmar la suscripción."
+            : "If you request launch updates, we collect your name, email, city or area, audience (individual or business), language, optional interests and consent choices. Joining the list does not require an account or a booking. We send an email verification link before confirming your subscription."}
+        </p>
+        <p>
+          {es
+            ? "Los avisos relacionados con el lanzamiento requieren tu consentimiento y email verificado. Las promociones requieren un consentimiento adicional, separado y opcional. Usamos Cloudflare Turnstile contra abusos y un proveedor de correo para entregar la verificación. Los contadores antiabuso se almacenan como identificadores cifrados con clave, no como una lista pública de IP."
+            : "Launch-related notices require your consent and a verified email. Promotional messages require separate, optional consent. We use Cloudflare Turnstile to prevent abuse and an email provider to deliver verification. Anti-abuse counters use keyed hashes rather than public IP lists."}
+        </p>
+        <p>
+          {es
+            ? "El plazo previsto es de 30 días para solicitudes no verificadas y hasta 12 meses para las verificadas; los registros de límite de solicitudes se depuran tras 2 días. Puedes retirar el consentimiento y solicitar acceso o eliminación en privacy@akipasa.com. El responsable es AkiPasa Marketing S.L."
+            : "Retention is planned for 30 days for unverified requests and up to 12 months after verification; rate-limit records are cleared after two days. You can withdraw consent and request access or deletion at privacy@akipasa.com. The data controller is AkiPasa Marketing S.L."}
+        </p>
         <h2>{es ? "Tus derechos" : "Your rights"}</h2>
         <p>
           {es
@@ -87,8 +103,8 @@ export default async function PrivacyPage({
         </p>
         <small>
           {es
-            ? "Última actualización: 19 de octubre de 2026. Pendiente de revisión jurídica profesional antes del lanzamiento comercial."
-            : "Last updated: 19 October 2026. Pending professional legal review before commercial launch."}
+            ? "Última actualización: 28 de octubre de 2026. Pendiente de revisión jurídica profesional antes del lanzamiento comercial."
+            : "Last updated: 28 October 2026. Pending professional legal review before commercial launch."}
         </small>
       </section>
     </main>
