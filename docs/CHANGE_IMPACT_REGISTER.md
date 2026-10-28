@@ -1,5 +1,13 @@
 # Change Impact Register
 
+## 2026-10-28 | Consumer chooser and branded AkiHQ entry
+
+- Restrict public workspace selector/popover to Pasa/Duermo/Coches; keep internal product identity, premium plans and all existing auth/account/booking routes unchanged.
+- Add `/hq-login` as a local, noindex, EN/ES branded entry to AkiHQ's existing host-local sign-in. Do not transfer cross-domain cookies or tokens. AkiBusiness continues as independent operations software.
+- Preserve origin/routing protections, direct bookings, standalone branding and Android PKCE return. No live waitlist or data collection is implied by this preparatory change; coming-soon/waitlist is a separate step.
+- Require CI, Cloudflare package, browser/mobile/auth/deep-link and exact deployed SHA evidence before release. Rollback source only; no schema/Stripe/cloud settings.
+
+
 ## 2026-10-25 | Android Google OAuth return
 
 English/Spanish Google action and callback now preserve the native WebView PKCE
