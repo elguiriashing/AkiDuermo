@@ -186,12 +186,10 @@ export function LaunchWaitlist({
     } catch {
       setStatus("temporarily_unavailable");
     }
-    if (status !== "check_email") {
-      const challengeWindow = window as Window & {
-        turnstile?: { reset: () => void };
-      };
-      challengeWindow.turnstile?.reset();
-    }
+    const challengeWindow = window as Window & {
+      turnstile?: { reset: () => void };
+    };
+    challengeWindow.turnstile?.reset();
   }
 
   return (
