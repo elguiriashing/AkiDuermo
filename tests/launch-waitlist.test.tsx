@@ -98,3 +98,27 @@ describe("Turnstile client-side navigation", () => {
     expect(removeWidget).toHaveBeenCalledWith("widget-2");
   });
 });
+
+
+describe("launch theme and business CTA", () => {
+  it("uses readable explicit heading tones in both theme modes", () => {
+    const { container } = render(
+      <LaunchWaitlist product="coches" locale="en" siteKey={null} />,
+    );
+    const root = container.querySelector("[data-waitlist-product]");
+    expect(root?.getAttribute("data-theme")).toBe("dark");
+    fireEvent.click(screen.getByRole("button", { name: "Switch to light mode" }));
+    expect(root?.getAttribute("data-theme")).toBe("light");
+    fireEvent.click(screen.getByRole("button", { name: "Switch to dark mode" }));
+    expect(root?.getAttribute("data-theme")).toBe("dark");
+  });
+
+  it("routes business audiences to the form, not the management login", () => {
+    render(<LaunchWaitlist product="coches" locale="en" siteKey={null} />);
+    const business = screen.getByRole("link", { name: /rental business/i });
+    expect(business.getAttribute("href")).toBe("#launch-form");
+    fireEvent.click(business);
+    const select = document.querySelector<HTMLSelectElement>('#launch-form select[name="audience"]');
+    expect(select?.value).toBe("business");
+  });
+});
