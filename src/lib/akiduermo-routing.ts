@@ -43,6 +43,7 @@ export function stayHostRoute(pathname: string) {
   if (pathname === "/akiduermo")
     return { kind: "canonical" as const, path: "/" };
   if (pathname === "/") return { kind: "public" as const, path: pathname };
+  if (pathname === "/hq-login") return { kind: "public" as const, path: pathname };
   if (/^\/stays\/[^/]+\/?$/.test(pathname))
     return { kind: "public" as const, path: pathname };
   if (stayMemberPaths.includes(pathname))
