@@ -37,7 +37,7 @@ describe("under-development launch form", () => {
     expect(boxes[0].checked).toBe(false);
     expect(boxes[1].checked).toBe(false);
     expect(screen.getByText(/Bookings are not open here yet/)).toBeTruthy();
-    expect(screen.getByRole("link", { name: /rental business/i }).getAttribute("href")).toContain("/hq-login");
+    expect(screen.getByRole("link", { name: /rental business/i }).getAttribute("href")).toBe("#launch-form");
   });
 
   it("submits only explicit consents, product and a Turnstile response to central API", async () => {
