@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import styles from "./LaunchWaitlist.module.css";
 
 type Product = "duermo" | "coches";
@@ -132,6 +132,30 @@ export function LaunchWaitlist({
   siteKey: string | null;
 }) {
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [scriptReady, setScriptReady] = useState(false);
+  const challengeRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!siteKey || !scriptReady || !challengeRef.current) return;
+    const api = (window as Window & {
+      turnstile?: {
+        render: (element: HTMLElement, options: Record<string, string>) => string;
+        remove: (widgetId: string) => void;
+      };
+    }).turnstile;
+    if (!api || widgetIdRef.current) return;
+    const widgetId = api.render(challengeRef.current, {
+      sitekey: siteKey,
+      action: "launch_waitlist",
+      theme: "dark",
+    });
+    widgetIdRef.current = widgetId;
+    return () => {
+      api.remove(widgetId);
+      widgetIdRef.current = null;
+    };
+  }, [siteKey, scriptReady]);
   const content = COPY[product][locale];
   const labels = formCopy[locale];
   const name = product === "duermo" ? "AkiDuermo" : "AkiCoches";
@@ -187,9 +211,9 @@ export function LaunchWaitlist({
       setStatus("temporarily_unavailable");
     }
     const challengeWindow = window as Window & {
-      turnstile?: { reset: () => void };
+      turnstile?: { reset: (widgetId?: string) => void };
     };
-    challengeWindow.turnstile?.reset();
+    if (widgetIdRef.current) challengeWindow.turnstile?.reset(widgetIdRef.current);
   }
 
   return (
@@ -322,13 +346,9 @@ export function LaunchWaitlist({
                     <Script
                       src="https://challenges.cloudflare.com/turnstile/v0/api.js"
                       strategy="afterInteractive"
+                      onReady={() => setScriptReady(true)}
                     />
-                    <div
-                      className="cf-turnstile"
-                      data-sitekey={siteKey}
-                      data-action="launch_waitlist"
-                      data-theme="dark"
-                    />
+                    <div ref={challengeRef} />
                   </>
                 ) : (
                   <p className={styles.notice}>{labels.no_challenge}</p>
