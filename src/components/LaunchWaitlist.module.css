@@ -108,3 +108,19 @@
 .landing[data-theme="light"] .formPanel a {color:#253d67;}
 .landing[data-theme="light"] .orbitRing {border-color:rgba(20,27,43,.2);box-shadow:0 0 0 24px #10182008,0 0 0 52px #10182006;}
 @media(prefers-reduced-motion:reduce){.landing{scroll-behavior:auto;}}
+
+
+/* Explicit headline tokens override global application heading rules on the
+   standalone launch experience. Keep the two products visually consistent. */
+.landing[data-theme="dark"] .intro h1,
+.landing[data-theme="dark"] .formPanel h2 {
+  color: #f8faff !important;
+  -webkit-text-fill-color: #f8faff;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, .16);
+}
+.landing[data-theme="light"] .intro h1,
+.landing[data-theme="light"] .formPanel h2 {
+  color: #141b2a !important;
+  -webkit-text-fill-color: #141b2a;
+  text-shadow: none;
+}
