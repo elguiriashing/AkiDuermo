@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import Script from "next/script";
 import { useState, type FormEvent } from "react";
 import styles from "./LaunchWaitlist.module.css";
@@ -198,7 +199,7 @@ export function LaunchWaitlist({
       <div className={styles.aurora} aria-hidden="true" />
       <div className={styles.wrapper}>
         <header className={styles.header}>
-          <a className={styles.brand} href="/">
+          <Link className={styles.brand} href="/">
             <Image
               src={
                 product === "duermo"
@@ -210,12 +211,12 @@ export function LaunchWaitlist({
               height={46}
             />
             <span>{name}</span>
-          </a>
+          </Link>
           <nav className={styles.navigation} aria-label="Navigation">
-            <a href={"/?lang=" + (locale === "es" ? "en" : "es")}>
+            <Link href={"/?lang=" + (locale === "es" ? "en" : "es")}>
               {locale === "es" ? "EN" : "ES"}
-            </a>
-            <a href={"/hq-login?lang=" + locale}>{content.business}</a>
+            </Link>
+            <Link href={"/hq-login?lang=" + locale}>{content.business}</Link>
           </nav>
         </header>
 
@@ -349,13 +350,13 @@ export function LaunchWaitlist({
             )}
             <p className={styles.legal}>
               {labels.legal}{" "}
-              <a href={"/" + locale + "/privacy"}>{labels.privacy}</a>
+              <Link href={"/" + locale + "/privacy"}>{labels.privacy}</Link>
               {" · "}
               <a href="mailto:support@akipasa.com">support@akipasa.com</a>
             </p>
             <div className={styles.existing}>
               <span>{labels.existing}</span>{" "}
-              <a href={"/account?lang=" + locale}>{labels.account}</a>
+              <Link href={"/account?lang=" + locale}>{labels.account}</Link>
             </div>
           </section>
         </div>
