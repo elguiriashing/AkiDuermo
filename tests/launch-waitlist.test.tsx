@@ -9,7 +9,8 @@ vi.mock("next/image", () => ({
 }));
 vi.mock("next/script", () => ({
   default: function MockScript({ onReady }: { onReady?: () => void }) {
-    React.useEffect(() => { onReady?.(); }, [onReady]);
+    const callback = React.useRef(onReady);
+    React.useEffect(() => { callback.current?.(); }, []);
     return null;
   },
 }));
