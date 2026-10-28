@@ -7,7 +7,12 @@ import { LaunchWaitlist } from "../src/components/LaunchWaitlist";
 vi.mock("next/image", () => ({
   default: ({ alt }: { alt: string }) => <span data-testid="brand-image">{alt}</span>,
 }));
-vi.mock("next/script", () => ({ default: () => null }));
+vi.mock("next/script", () => ({
+  default: ({ onReady }: { onReady?: () => void }) => {
+    React.useEffect(() => { onReady?.(); }, []);
+    return null;
+  },
+}));
 
 afterEach(() => {
   cleanup();
@@ -71,5 +76,24 @@ describe("under-development launch form", () => {
     await waitFor(() =>
       expect(screen.getByText(/Check your inbox/)).toBeTruthy(),
     );
+  });
+});
+
+describe("Turnstile client-side navigation", () => {
+  it("renders explicitly again after a remount and removes stale widgets", () => {
+    const renderWidget = vi.fn().mockReturnValueOnce("widget-1").mockReturnValueOnce("widget-2");
+    const removeWidget = vi.fn();
+    vi.stubGlobal("turnstile", { render: renderWidget, remove: removeWidget, reset: vi.fn() });
+    const first = render(<LaunchWaitlist product="duermo" locale="en" siteKey="test-sitekey" />);
+    expect(renderWidget).toHaveBeenCalledTimes(1);
+    expect(renderWidget.mock.calls[0][1]).toMatchObject({
+      sitekey: "test-sitekey", action: "launch_waitlist", theme: "dark",
+    });
+    first.unmount();
+    expect(removeWidget).toHaveBeenCalledWith("widget-1");
+    const second = render(<LaunchWaitlist product="duermo" locale="en" siteKey="test-sitekey" />);
+    expect(renderWidget).toHaveBeenCalledTimes(2);
+    second.unmount();
+    expect(removeWidget).toHaveBeenCalledWith("widget-2");
   });
 });
