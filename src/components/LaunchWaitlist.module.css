@@ -57,3 +57,54 @@
   .intro h1 { font-size: clamp(2.6rem, 12vw, 4rem); }
 }
 @media (prefers-reduced-motion: reduce) { .orbitRing { animation: none; } }
+
+
+/* Launch-only contrast and accessible theme controls; never alter account/dashboard themes. */
+.landing { scroll-behavior: smooth; }
+.landing .header,
+.landing .header a,
+.landing .header .brand,
+.landing .header .navigation a { color: #ffffff; }
+.landing .navigation .themeToggle {
+  display: inline-grid; place-items: center; flex-shrink: 0;
+  width: 44px; height: 44px; padding: 0;
+  border: 1px solid rgba(255,255,255,.42); border-radius: 999px;
+  background: rgba(255,255,255,.08); color: #fff;
+  font-size: 1.3rem; line-height: 1; cursor: pointer;
+}
+.landing .navigation :is(a,button):hover { background: rgba(255,255,255,.15); }
+.landing .navigation :is(a,button):focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 3px;
+}
+.formPanel { scroll-margin-top: 1.5rem; }
+.landing[data-theme="light"] {
+  color: #141b2a;
+  background: radial-gradient(ellipse at 10% 15%,var(--soft),transparent 42%),linear-gradient(145deg,#fbfcff,#e6edf4);
+}
+.landing[data-theme="light"][data-waitlist-product="coches"] {
+  background: radial-gradient(ellipse at 10% 15%,var(--soft),transparent 42%),linear-gradient(145deg,#fff5f6,#f4e9ef);
+}
+.landing[data-theme="light"] .header a,
+.landing[data-theme="light"] .brand,
+.landing[data-theme="light"] .navigation a {color:#161b2b;}
+.landing[data-theme="light"] .navigation .themeToggle {
+  color:#161b2b; background:rgba(20,27,43,.06);border-color:rgba(20,27,43,.35);
+}
+.landing[data-theme="light"] .navigation :is(a,button):hover {background:rgba(20,27,43,.09);}
+.landing[data-theme="light"] .description,
+.landing[data-theme="light"] .launchHint,
+.landing[data-theme="light"] .legal,
+.landing[data-theme="light"] .existing,
+.landing[data-theme="light"] .checkLabel,
+.landing[data-theme="light"] .discover {color:#39465a;}
+.landing[data-theme="light"] .formPanel,
+.landing[data-theme="light"][data-waitlist-product="coches"] .formPanel {
+  color:#161b2b;background:rgba(255,255,255,.88);border-color:rgba(30,40,60,.18);
+}
+.landing[data-theme="light"] .form input:not([type="checkbox"]),
+.landing[data-theme="light"] .form select {
+  color:#172034; background:#fff;border-color:#a4afbf;
+}
+.landing[data-theme="light"] .formPanel a {color:#253d67;}
+.landing[data-theme="light"] .orbitRing {border-color:rgba(20,27,43,.2);box-shadow:0 0 0 24px #10182008,0 0 0 52px #10182006;}
+@media(prefers-reduced-motion:reduce){.landing{scroll-behavior:auto;}}
