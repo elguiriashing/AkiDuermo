@@ -42,7 +42,7 @@ describe("under-development launch form", () => {
     render(<LaunchWaitlist product="duermo" locale="en" siteKey="test-sitekey" />);
     const form = screen.getByRole("button", { name: "Notify me at launch" }).closest("form")!;
     const fill = (name: string, value: string) =>
-      fireEvent.change(form.elements.namedItem(name)!, { target: { value } });
+      fireEvent.change(form.elements.namedItem(name) as HTMLInputElement, { target: { value } });
     fill("fullName", "Example Traveller");
     fill("email", "example@example.com");
     fill("city", "Fuengirola");
