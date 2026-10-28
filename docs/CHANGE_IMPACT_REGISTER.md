@@ -7,7 +7,6 @@
 - Preserve origin/routing protections, direct bookings, standalone branding and Android PKCE return. No live waitlist or data collection is implied by this preparatory change; coming-soon/waitlist is a separate step.
 - Require CI, Cloudflare package, browser/mobile/auth/deep-link and exact deployed SHA evidence before release. Rollback source only; no schema/Stripe/cloud settings.
 
-
 ## 2026-10-25 | Android Google OAuth return
 
 English/Spanish Google action and callback now preserve the native WebView PKCE
