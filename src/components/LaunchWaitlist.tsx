@@ -132,6 +132,7 @@ export function LaunchWaitlist({
   siteKey: string | null;
 }) {
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [scriptReady, setScriptReady] = useState(false);
   const challengeRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
@@ -217,7 +218,7 @@ export function LaunchWaitlist({
   }
 
   return (
-    <main className={styles.landing} data-waitlist-product={product}>
+    <main className={styles.landing} data-waitlist-product={product} data-theme={theme}>
       <div className={styles.aurora} aria-hidden="true" />
       <div className={styles.wrapper}>
         <header className={styles.header}>
@@ -238,7 +239,8 @@ export function LaunchWaitlist({
             <Link href={"/?lang=" + (locale === "es" ? "en" : "es")}>
               {locale === "es" ? "EN" : "ES"}
             </Link>
-            <Link href={"/hq-login?lang=" + locale}>{content.business}</Link>
+            <button type="button" className={styles.themeToggle} aria-label={theme === "dark" ? (locale === "es" ? "Activar modo claro" : "Switch to light mode") : (locale === "es" ? "Activar modo oscuro" : "Switch to dark mode")} aria-pressed={theme === "light"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>{theme === "dark" ? "☀" : "☾"}</button>
+            <a href="#launch-form" onClick={() => { const input = document.querySelector<HTMLSelectElement>('#launch-form select[name="audience"]'); if (input) input.value = "business"; }}>{content.business}</a>
           </nav>
         </header>
 
@@ -266,7 +268,7 @@ export function LaunchWaitlist({
             </a>
           </section>
 
-          <section className={styles.formPanel} aria-labelledby="launch-title">
+          <section id="launch-form" className={styles.formPanel} aria-labelledby="launch-title">
             <p className={styles.tag}>
               {locale === "es" ? "PRÓXIMAMENTE" : "COMING SOON"}
             </p>
