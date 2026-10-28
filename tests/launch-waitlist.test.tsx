@@ -8,8 +8,8 @@ vi.mock("next/image", () => ({
   default: ({ alt }: { alt: string }) => <span data-testid="brand-image">{alt}</span>,
 }));
 vi.mock("next/script", () => ({
-  default: ({ onReady }: { onReady?: () => void }) => {
-    React.useEffect(() => { onReady?.(); }, []);
+  default: function MockScript({ onReady }: { onReady?: () => void }) {
+    React.useEffect(() => { onReady?.(); }, [onReady]);
     return null;
   },
 }));
