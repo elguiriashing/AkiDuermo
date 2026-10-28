@@ -19,7 +19,7 @@ module.exports = async function exercisePointerBrowsing(page, expect, locale) {
   await previous.click();
   await selected("AkiPasa");
   await previous.click();
-  await selected("AkiBusiness");
+  await selected("AkiCoches");
   await next.click();
   await selected("AkiPasa");
   const bounds = await scene.boundingBox();
@@ -147,8 +147,6 @@ module.exports = async function exercisePointerBrowsing(page, expect, locale) {
     "rgb(242, 107, 29)",
     "rgb(47, 194, 165)",
     "rgb(255, 48, 71)",
-    "rgb(255, 197, 51)",
-    "rgb(154, 112, 250)",
   ]);
   for (const f of fonts) {
     expect(f.family).toContain("Aki Selector Poppins");

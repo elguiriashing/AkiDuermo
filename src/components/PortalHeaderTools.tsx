@@ -42,18 +42,6 @@ export function PortalHeaderTools({
       href: suiteHref("coches", locale, { referralCode }),
       accent: "#FF3047",
     },
-    {
-      product: "hq",
-      name: "AkiHQ",
-      href: suiteHref("hq", locale, { referralCode }),
-      accent: "#FFC533",
-    },
-    {
-      product: "business",
-      name: "AkiBusiness",
-      href: suiteHref("business", locale, { referralCode }),
-      accent: "#A778FF",
-    },
   ] as const;
 
   useEffect(() => {
