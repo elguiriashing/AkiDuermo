@@ -8,6 +8,12 @@ import { stayLocale } from "@/lib/akiduermo-i18n";
 import { optionalUser } from "@/lib/auth";
 import { queueSuitePortalWelcome } from "@/lib/suite-welcome";
 
+const launchSiteKey =
+  process.env.NEXT_PUBLIC_LAUNCH_WAITLIST_ENABLED === "true"
+    ? process.env.NEXT_PUBLIC_LAUNCH_WAITLIST_TURNSTILE_SITE_KEY ||
+      "0x4AAAAAAFpBhxqGpSL9Cqgg"
+    : null;
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = stayLocale((await headers()).get("x-akipasa-locale"));
   return {
@@ -34,7 +40,7 @@ export default async function AkiDuermoPage({
   const query = await searchParams;
   const legacyIntent = ["q", "type", "checkIn", "checkOut", "guests", "latitude", "longitude"].some((key) => key in query);
   if (!legacyIntent) return (
-    <LaunchWaitlist product="duermo" locale={locale} siteKey={process.env.NEXT_PUBLIC_LAUNCH_WAITLIST_TURNSTILE_SITE_KEY || "0x4AAAAAAFpBhxqGpSL9Cqgg"} />
+    <LaunchWaitlist product="duermo" locale={locale} siteKey={launchSiteKey} />
   );
   const { user } = await optionalUser();
   if (user) await queueSuitePortalWelcome("akiduermo", locale);
