@@ -34,7 +34,7 @@ export default async function AkiDuermoPage({
   const query = await searchParams;
   const legacyIntent = ["q", "type", "checkIn", "checkOut", "guests", "latitude", "longitude"].some((key) => key in query);
   if (!legacyIntent) return (
-    <LaunchWaitlist product="duermo" locale={locale} siteKey={process.env.NEXT_PUBLIC_LAUNCH_WAITLIST_TURNSTILE_SITE_KEY || null} />
+    <LaunchWaitlist product="duermo" locale={locale} siteKey={process.env.NEXT_PUBLIC_LAUNCH_WAITLIST_TURNSTILE_SITE_KEY || "0x4AAAAAAFpBhxqGpSL9Cqgg"} />
   );
   const { user } = await optionalUser();
   if (user) await queueSuitePortalWelcome("akiduermo", locale);
