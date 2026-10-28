@@ -101,7 +101,7 @@ for (const locale of ["en", "es"] as const) {
                   ? "Tengo un alojamiento"
                   : "I manage accommodation",
               }),
-            ).toHaveAttribute("href", `/hq-login?lang=${locale}`);
+            ).toHaveAttribute("href", "#launch-form");
             await page.screenshot({
               path: `test-results/duermo-coming-soon-${locale}-${theme}-${viewport.width}.png`,
               fullPage: true,
