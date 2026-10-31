@@ -1,4 +1,4 @@
-name: AkiDuermo Android bundle
+name: AkiDuermo Android artifacts
 on:
   pull_request:
     paths: ["Android/**", ".github/workflows/android-play.yml"]
@@ -27,12 +27,32 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "9.5.0"
-      - run: gradle --no-daemon test lint bundleRelease
+      - name: Generate Android Studio Gradle wrapper
+        run: |
+          gradle --no-daemon wrapper --gradle-version 9.5.0 --distribution-type bin
+          printf 'Repository: %s\nCommit: %s\n' "$GITHUB_REPOSITORY" "$(git rev-parse HEAD)" > BUILD-SOURCE.txt
+      - run: ./gradlew --no-daemon test lint bundleRelease assembleRelease assembleDebug
       - uses: actions/upload-artifact@v4
         with:
-          name: akiduermo-unsigned-aab
+          name: akiduermo-android-artifacts
           path: |
             Android/app/build/outputs/bundle/release/*.aab
+            Android/app/build/outputs/apk/release/*-unsigned.apk
+            Android/app/build/outputs/apk/debug/*.apk
             Android/store-listing/**
             public/brand/duermo-icon.png
+          if-no-files-found: error
+      - name: Upload importable Android Studio project
+        uses: actions/upload-artifact@v4
+        with:
+          name: akiduermo-android-studio-project
+          path: |
+            Android/**
+            !Android/**/build/**
+            !Android/**/.gradle/**
+            !Android/**/local.properties
+            !Android/**/*.jks
+            !Android/**/*.keystore
+            !Android/**/keystore.properties
+            !Android/**/signing.properties
           if-no-files-found: error

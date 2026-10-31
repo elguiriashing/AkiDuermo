@@ -1359,3 +1359,50 @@ only loss on the scene cancels its gesture. Mouse movement with no primary
 button held clears a pending gesture after an uncaptured outside release.
 Acceptance now uses real Chromium touch input originating on a card descendant,
 and covers outside vertical release followed by ordinary mouse hover.
+
+## 2026-10-31 | Consolidated open-PR source completion
+
+This candidate reconciles AkiDuermo PRs #43, #47, #55, #56 and #58 with
+current main `d6401a91a6e6c5ae13da654d2ddce6f2cf637cad`. The latest owner instruction
+authorizes completing and merging the remaining PRs after validation. Older
+per-PR preparation notes remain historical evidence, not current release proof.
+
+- Privacy and shared account settings add the public EN/ES deletion handoff,
+  accurate AkiDuermo data scope, manual request handling and retention exceptions.
+  The 28 October launch-waitlist disclosures are preserved in the new component;
+  both-locale regressions assert their consent, Turnstile and retention content.
+- ConsentAnalytics uses the confirmed public AkiDuermo stream `G-1747PJ2DKZ`
+  recorded in #58 when no build override is supplied. Explicit blank, malformed
+  or copied AkiPasa overrides disable collection. Only the canonical/www host can
+  load the tag, only after server eligibility and analytics consent. Native
+  Arguments, denied advertising, cookie cleanup and remount deduplication from
+  #56 remain. Source tests do not establish Google reporting receipt.
+- Android accepts one validated code/error-only callback implementation. The
+  current NavigationPolicy delegates to the stricter pure-JVM AppAuthCallback;
+  restored-Activity returns use the same resolver, and legacy native markers are
+  not duplicated. CI exports unsigned AAB/APKs and the importable project. No
+  signing, Play publication, provider configuration or physical-device acceptance
+  is implied by source integration.
+- The age/review policy is a disabled foundation only. No provider is selected,
+  no attestation schema is installed here, no flags are enabled, and no review
+  persistence/UI or verified-review launch is claimed. Unknown/untrusted proof
+  fails closed if separately enabled. Activation remains blocked by the complete
+  provider and privacy lifecycle described in VERIFIED_REVIEWS_20261026.md.
+
+Affected routes are root-mounted analytics, EN/ES privacy, shared Settings and
+native auth returns across roles. Existing host-local sessions, account eligibility,
+shared Supabase/RLS, bookings, prices, launch waitlist, paid activation and data
+remain authoritative and unchanged. AkiPasa continues to own shared migrations.
+Rollback is a source revert; analytics can be disabled with a blank build override.
+No customer-data mutation, schema migration, provider signup, money movement or
+external communication is included.
+
+The local executor cannot reach its inherited proxy. Focused local component
+checks therefore use the already-installed workspace runtime as preliminary
+regression evidence; fresh GitHub exact-lockfile CI/Cloudflare dry-run/browser and
+Android workflows gate merge. Production source and Google receipt are separate
+post-merge evidence. Consolidated status is recorded on PR #56.
+
+### 2026-10-31 — Final integration release checkpoint
+
+The shared public deletion dependency is now verified live in EN/ES at AkiPasa merge `6151fea31ba397bde0e266072a95ce243a6ce015` (#342). The final Android callback adapter also rejects an existing `native` marker unless it is exactly `1`, preventing an ambiguous duplicate marker; its rejected-input regression case joins the existing JVM suite. Final local flags-off age tests pass 33/33. Fresh integrated hosted web, browser and Android checks remain required before merge. No provider, schema, age flag, signed distribution or real-device acceptance is claimed by this source checkpoint.
