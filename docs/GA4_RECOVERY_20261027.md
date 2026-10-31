@@ -17,3 +17,16 @@ Twenty executable tests against the actual transpiled component passed locally o
 Before release: recover and verify the already-created AkiDuermo stream's G- measurement ID, configure NEXT_PUBLIC_GA4_MEASUREMENT_ID in the production build trigger, rebuild the reviewed SHA, verify the live source stamp, then check one correct destination and GA4 Realtime/DebugView receipt in an eligible consented session. Reject/withdrawn consent, restricted accounts and preview hosts must not collect. Verify both locales. Preserve the existing Search Console property/link; verify its published sitemap and private-page index restrictions separately.
 
 Rollback: remove the measurement-ID build setting and rebuild. Do not restore the incorrect AkiPasa fallback. No data rollback is needed. This source-only recovery does not overwrite uncommitted Alex-Laptop work.
+
+
+## 31 October reconciliation
+
+PR #58 subsequently recorded the confirmed public AkiDuermo stream as
+`G-1747PJ2DKZ`. The consolidated candidate uses that product-specific default
+when the build override is absent; explicit blank/invalid/copied overrides remain
+closed. The earlier missing-ID gate above is historical. No Google property is
+created or replaced. Analytics remains subject to canonical host, existing
+server eligibility and visitor consent. Revoke/deny/preview/remount and actual
+native Arguments are tested; live Google receipt is reported separately.
+
+

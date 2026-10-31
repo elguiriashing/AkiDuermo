@@ -2,8 +2,11 @@
 import { useEffect } from "react";
 import { readPrivacyChoices } from "../lib/privacy-consent";
 
-// Next inlines this public value at build time; no other product is a fallback.
-const measurementId = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID?.trim() || "";
+// Public AkiDuermo stream confirmed in PR #58; never fall back to another product.
+// An explicitly blank/invalid build override still disables collection.
+const measurementId = (
+  process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID ?? "G-1747PJ2DKZ"
+).trim();
 const canonicalHost = "akiduermo.com";
 const validMeasurementId =
   /^G-[A-Z0-9]{4,32}$/.test(measurementId) && measurementId !== "G-PW8547QDGD";

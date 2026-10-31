@@ -90,7 +90,7 @@ try {
         await page.goto(
           `http://127.0.0.1:${server.address().port}/?lang=${locale}&theme=${theme}&ref=AKI12345`,
         );
-        await expect(page.getByRole("link")).toHaveCount(5);
+        await expect(page.getByRole("link")).toHaveCount(3);
         await exercisePointerBrowsing(page, expect, locale);
         if (locale === "en" && theme === "light" && width === 820) {
           const scene = page.locator(".aks-selector__scene");
@@ -139,7 +139,7 @@ try {
           await page.mouse.move(0, 0);
           await expect(first).toHaveAttribute("data-energized", "true");
           await first.focus();
-          for (const name of ["pasa", "duermo", "coches", "hq", "business"]) {
+          for (const name of ["pasa", "duermo", "coches"]) {
             await expect
               .poll(() =>
                 page
@@ -217,8 +217,6 @@ try {
           "AkiPasa",
           "AkiDuermo",
           "AkiCoches",
-          "AkiHQ",
-          "AkiBusiness",
         ]) {
           await expect(
             page.getByRole("link", { name, exact: true }),
@@ -274,7 +272,7 @@ try {
         expect(errors).toEqual([]);
         for (
           let i = 0;
-          i < ["pasa", "duermo", "coches", "hq"].indexOf(product);
+          i < ["pasa", "duermo", "coches"].indexOf(product);
           i++
         )
           await page.keyboard.press("ArrowRight");

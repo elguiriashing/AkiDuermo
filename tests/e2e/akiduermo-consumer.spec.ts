@@ -77,6 +77,42 @@ for (const locale of ["en", "es"] as const) {
             { waitUntil: "domcontentloaded" },
           );
           await expect(page.locator("main")).toBeVisible();
+          if (path === "/") {
+            // First-time visitors see an honest under-development landing.
+            // Existing search deep links still open the legacy marketplace,
+            // which we retain for the remaining regression assertions.
+            await expect(
+              page.getByRole("heading", {
+                name: locale === "es"
+                  ? "Los mejores viajes empiezan antes de hacer la maleta."
+                  : "Better trips start before you pack.",
+              }),
+            ).toBeVisible();
+            await expect(
+              page.getByRole("button", {
+                name: locale === "es"
+                  ? "Avisadme del lanzamiento"
+                  : "Notify me at launch",
+              }),
+            ).toBeDisabled();
+            await expect(
+              page.getByRole("link", {
+                name: locale === "es"
+                  ? "Tengo un alojamiento"
+                  : "I manage accommodation",
+              }),
+            ).toHaveAttribute("href", "#launch-form");
+            await page.screenshot({
+              path: `test-results/duermo-coming-soon-${locale}-${theme}-${viewport.width}.png`,
+              fullPage: true,
+            });
+            await page.goto(`/?lang=${locale}&q=Fuengirola`, {
+              waitUntil: "domcontentloaded",
+            });
+            await expect(page.getByRole("textbox", {
+              name: locale === "es" ? "Destino" : "Destination",
+            })).toBeVisible();
+          }
           // A first visitor must be able to dismiss the initially open panel
           // without making a consent decision before using the stay controls.
           const privacy = page.getByRole("complementary", {

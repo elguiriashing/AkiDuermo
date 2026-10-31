@@ -1,5 +1,14 @@
 import type { MetadataRoute } from "next";
-export default function robots(): MetadataRoute.Robots {
+import { headers } from "next/headers";
+import { isCanonicalCrawlHost } from "@/lib/public-crawl";
+
+export const dynamic = "force-dynamic";
+
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const host = (await headers()).get("host") || "";
+  if (!isCanonicalCrawlHost(host))
+    return { rules: { userAgent: "*", disallow: "/" } };
+
   return {
     rules: {
       userAgent: "*",
@@ -12,6 +21,9 @@ export default function robots(): MetadataRoute.Robots {
         "/es/auth",
         "/saved",
         "/settings",
+        "/map",
+        "/en/terms/accept",
+        "/es/terms/accept",
       ],
     },
     sitemap: "https://akiduermo.com/sitemap.xml",

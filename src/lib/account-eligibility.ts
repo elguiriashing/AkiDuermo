@@ -1,3 +1,7 @@
+import {
+  accountAgeVerified,
+  ageAssuranceEnforced,
+} from "./age-assurance-server";
 import { suiteAccountCompletionUrl } from "./account-task-resume";
 import type { SupabaseClient } from "@supabase/supabase-js";
 /** Shared contract: AkiPasa PR #212 owns schema and completion. No local cohort. */
@@ -26,6 +30,7 @@ export async function accountTrackingAllowed(
   userId: string,
 ) {
   if (!(await accountFeaturesAllowed(db))) return false;
+  if (ageAssuranceEnforced()) return accountAgeVerified(db);
   const { data, error } = await db
     .from("profiles")
     .select("birth_year")

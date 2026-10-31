@@ -8,7 +8,7 @@ vi.mock("../src/components/ThemeModeControls", () => ({
 vi.mock("../src/components/PortalLogo", () => ({ PortalLogo: () => null }));
 describe("actual desktop/mobile suite selector destinations", () => {
   for (const locale of ["en", "es"] as const) {
-    it(`renders all five canonical ${locale} destinations`, () => {
+    it(`renders three consumer ${locale} destinations`, () => {
       const html = renderToStaticMarkup(
         <PortalHeaderTools locale={locale} product="business" />,
       );
@@ -16,8 +16,6 @@ describe("actual desktop/mobile suite selector destinations", () => {
         `https://akipasa.com/${locale}`,
         `https://akiduermo.com/?lang=${locale}`,
         `https://akicoches.com/?lang=${locale}`,
-        `https://akihq.app/${locale}/business`,
-        `https://akibusiness.com/?locale=${locale}`,
       ])
         expect(html).toContain(`href="${expected}"`);
     });

@@ -4,6 +4,11 @@ import { isStayRequestOrigin } from "@/lib/public-request-origin";
 import { stayLocale } from "@/lib/akiduermo-i18n";
 import { stayHostRoute, stayHostMethodAllowed } from "@/lib/akiduermo-routing";
 import { stripCrossProductCredentials } from "@/lib/cross-product-query";
+import {
+  isCanonicalCrawlHost,
+  isCrawlerMetadata,
+  isPublicCrawlPage,
+} from "@/lib/public-crawl";
 export async function middleware(request: NextRequest) {
   const host = request.headers.get("host") || request.nextUrl.host;
   const protocol = ["localhost", "127.0.0.1"].includes(host.split(":")[0])
@@ -19,6 +24,15 @@ export async function middleware(request: NextRequest) {
   );
   request.headers.set("x-akipasa-locale", locale);
   const path = request.nextUrl.pathname;
+  // Public crawler documents must not depend on an authentication refresh.
+  if (isCrawlerMetadata(path)) {
+    if (!["GET", "HEAD"].includes(request.method))
+      return new NextResponse(null, { status: 404 });
+    const response = NextResponse.next({ request: { headers: request.headers } });
+    if (!isCanonicalCrawlHost(host))
+      response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return response;
+  }
   if (
     /^\/(?:(en|es)\/)?account\/(?:profile|settings)\/?$/.test(
       request.nextUrl.pathname,
@@ -83,7 +97,8 @@ export async function middleware(request: NextRequest) {
     .forEach(({ name, value, ...options }) =>
       response.cookies.set(name, value, options),
     );
-  response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  if (!isCanonicalCrawlHost(host) || !isPublicCrawlPage(path))
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
   return response;
 }
 export const config = {
